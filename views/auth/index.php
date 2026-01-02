@@ -213,6 +213,7 @@
               method="POST"
               class="space-y-4"
             >
+            ////////////////////////////
               <input type="hidden" name="action" value="signup" />
               <div class="grid grid-cols-2 gap-3">
                 <div class="space-y-1">
@@ -228,6 +229,7 @@
                     placeholder="votre prenom"
                   />
                 </div>
+                ////////////////////////////
                 <div class="space-y-1">
                   <label
                     class="text-xs font-semibold text-gray-400 uppercase ml-1"
