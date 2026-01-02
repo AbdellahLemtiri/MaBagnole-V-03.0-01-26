@@ -6,7 +6,7 @@ App\Autoloader::register();
 // 2. ضروري دير import للكلاس بالمسار الكامل ديالها
 use App\Controllers\AuthController; 
 
-// 3. دابا عاد تقدر تعيط ليها
+
 $authController = new AuthController();
 
 $action = $_POST['action'] ?? $_GET['action'] ?? 'auth';
