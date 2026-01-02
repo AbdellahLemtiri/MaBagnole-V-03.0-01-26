@@ -4,7 +4,7 @@ require_once __DIR__ . '/App/Autoloader.php';
 App\Autoloader::register();
 
 
-use App\Controllers\AuthController; 
+use App\Controllers\AuthController;
 
 
 $authController = new AuthController();
@@ -19,11 +19,15 @@ switch ($action) {
     case 'signup':
         $authController->signup();
         break;
-
+    case 'addVoiture':
+        $authController->signup();
+        break;
     case 'home':
+        break;
+    case 'indexadmin':
+        require_once __DIR__ . '/views/admin/index.php';
+        break;
     default:
-        // تأكد أن المسار صحيح (واش views كاينة برا App؟)
-        require_once __DIR__ . '/views/auth/index.php'; 
+        require_once __DIR__ . '/views/auth/index.php';
         break;
 }
-?>
