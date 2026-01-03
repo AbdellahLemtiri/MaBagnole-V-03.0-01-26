@@ -1,0 +1,15 @@
+[2026-01-02 00:35:07] ERREUR : SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.users' doesn't exist
+[2026-01-02 00:35:59] ERREUR : SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.users' doesn't exist
+[2026-01-02 00:37:01] ERREUR : SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.users' doesn't exist
+[2026-01-02 00:37:12] ERREUR : SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.users' doesn't exist
+[2026-01-02 22:37:08] ERREUR : SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.user' doesn't exist
+[2026-01-02 23:41:58] ERREUR : SQLSTATE[42S22]: Column not found: 1054 Unknown column 'idVoiture' in 'where clause'
+[2026-01-03 01:30:10] ERREUR : SQLSTATE[42S22]: Column not found: 1054 Unknown column 'prix' in 'field list'
+
+
+
+ [2026-01-03 13:09:18] ERREUR : SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.categorie' doesn't exist
+[2026-01-03 13:09:24] ERREUR : SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.categorie' doesn't exist
+[2026-01-03 14:52:01] ERREUR : SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.categorie' doesn't exist
+[2026-01-03 14:53:02] ERREUR : SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.categorie' doesn't exist
+[2026-01-03 14:53:08] ERREUR : SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.categorie' doesn't exist
