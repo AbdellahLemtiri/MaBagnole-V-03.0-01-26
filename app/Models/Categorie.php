@@ -9,144 +9,141 @@ use Exception;
 
 class Categorie
 {
-    protected int $idC;
-    protected int $titre;
-    protected int $description;
 
-    function setIdCategorie($id): bool
+    protected int $idCategorie;
+    protected string $titre;
+    protected string $description;
+
+
+    public function setIdC($id): bool
     {
-        if ($id <= 0) {
-            return false;
-        } else {
-            return true;
-        }
+        if ($id <= 0) return false;
+        $this->idCategorie = $id;
+        return true;
     }
-    function getIdCategorie(): int
+
+    public function getIdC(): int
     {
-        return $this->idC;
+        return $this->idCategorie;
     }
-    function setTitreCategorie($titre): bool
+
+    public function setTitre($nom): bool
     {
-        if (strlen($titre) < 4) {
-            return false;
-        } else {
-            return true;
-        }
+        if (strlen($nom) < 3) return false;
+        $this->titre = $nom;
+        return true;
     }
-    function getTitreCategorie(): string
+
+    public function getTitre(): string
     {
         return $this->titre;
     }
-    function setDescriptionCategorie($description): bool
+    public function setDescription($description): bool
     {
-        if (strlen($description) < 4) {
-            return false;
-        } else {
-            return true;
-        }
+        if (strlen($description) < 5) return false;
+        $this->description = $description;
+        return true;
     }
-    function getDescriptionCategorie(): string
+
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    static function getAllCategorie(): array
+
+    public static function getAll(): array
     {
         try {
             $conn = (new Database())->getConnection();
-            $sql = "SELECT * FROM categorie ";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $les_categorie = [];
+            $sql = "SELECT * FROM categorie ORDER BY idCategorie DESC";
+            $stmt = $conn->query($sql);
 
-            foreach ($res as $r) {
+            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $categories = [];
+
+            foreach ($res as $row) {
                 $obj = new Categorie();
-                $obj->setDescriptionCategorie($r['description']);
-                $obj->setIdCategorie($r['idC']);
-                $obj->setTitreCategorie($r['titre']);
-                $les_categorie[] = $obj;
+                $obj->setIdC($row['idCategorie']);
+                $obj->setTitre($row['titre']);
+                $categories[] = $obj;
             }
-            return $les_categorie;
+            return $categories;
         } catch (Exception $e) {
             Logger::log($e->getMessage());
             return [];
         }
     }
-      static  function getAllCategorieByTitre(): array
+     public static function getAllByName(): array
     {
         try {
             $conn = (new Database())->getConnection();
-            $sql = "SELECT DISTINCT titre FROM categorie ";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $les_categorie = [];
+            $sql = "  SELECT DISTINCT titre  FROM categorie ORDER BY titre DESC";
+            $stmt = $conn->query($sql);
 
-            foreach ($res as $r) {
+            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $categories = [];
+
+            foreach ($res as $row) {
                 $obj = new Categorie();
-                $obj->setDescriptionCategorie($r['description']);
-                $obj->setIdCategorie($r['idC']);
-                $obj->setTitreCategorie($r['titre']);
-                $les_categorie[] = $obj;
+                $obj->setTitre($row['titre']);
+                $categories[] = $obj;
             }
-            return $les_categorie;
+            return $categories;
         } catch (Exception $e) {
             Logger::log($e->getMessage());
             return [];
         }
     }
-    public function setCategorie(): bool
+
+    public function create(): bool
     {
-     $conn = (new  Database())->getConnection();
-     $sql = "INSERT INTO categorie (titre,description) value (':titre',':description')";
-    try
-    {
-       $stmt = $conn->prepare($sql);
-       $stmt->bindParam(":titre",$this->titre);
-       $stmt->bindParam(":description",$this->description);
-       $stmt->execute();    
-       return true;
-     }catch(Exception $e){
-     Logger::log($e->getMessage());
-     return false;
-    }
-    }
-     public function UpdateCategorie(): bool
-    {
-     $conn = (new  Database())->getConnection();
-     $sql = "UPDATE  categorie  set titre = ':titre' ,description  = ':description'where id = ':id'";
-    try
-    {
-       $stmt = $conn->prepare($sql);
-       $stmt->bindParam(":id",$this->idC);
-       $stmt->bindParam(":titre",$this->titre);
-       $stmt->bindParam(":description",$this->description);
-       $stmt->execute();    
-       return true;
-     }catch(Exception $e){
-     Logger::log($e->getMessage());
-     return false;
-    }
-    }
-    public function deleteCategorie(): bool
-    {
-     $conn = (new  Database())->getConnection();
-     $sql = "DELETE FROM  categorie where id = ':id'";
-    try
-    {
-       $stmt = $conn->prepare($sql);
-       $stmt->bindParam(":id",$this->idC);
-       $stmt->execute();    
-       return true;
-     }
-    catch(Exception $e){
-    Logger::log($e->getMessage());
-     return false;
-    }
+
+        $sql = "INSERT INTO categories (titre,description) VALUES (:titre,:description)";
+
+        try {
+            $conn = (new Database())->getConnection();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(":titre", $this->titre);
+            $stmt->bindParam(":description", $this->description);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            Logger::log($e->getMessage());
+            return false;
+        }
     }
 
-    
+
+    public function update(): bool
+    {
+        $sql = "UPDATE categorie SET titre = :titre,description = :desc WHERE idCategorie = :id";
+
+        try {
+            $conn = (new Database())->getConnection();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(":id", $this->idCategorie);
+            $stmt->bindParam(":titre", $this->titre);
+            $stmt->bindParam(":desc", $this->description);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            Logger::log($e->getMessage());
+            return false;
+        }
+    }
 
 
+    public function delete($id): bool
+    {
+        $sql = "DELETE FROM categorie WHERE idCategorie = :id";
+
+        try {
+            $conn = (new Database())->getConnection();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(":id", $id);
+            return $stmt->execute();
+        } 
+        catch (Exception $e) {
+            Logger::log($e->getMessage());
+            return false;
+        }
+    }
 }
