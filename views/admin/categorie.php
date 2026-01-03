@@ -161,7 +161,22 @@
                   <?php
 
 
-               
+                  foreach ($categories as $cat): ?>
+                    <tr class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                      <td class="p-5">
+                        <div class="flex items-center gap-3">
+                          <?php
+                          $colors = ['bg-blue-100 text-blue-600', 'bg-green-100 text-green-600', 'bg-red-100 text-red-600', 'bg-purple-100 text-purple-600'];
+                          $colorClass = $colors[$cat->getIdC() % 4];
+                          ?>
+                          <div class="h-10 w-10 rounded-lg <?= $colorClass ?> dark:bg-opacity-20 flex items-center justify-center">
+                            <span class="material-symbols-outlined"><?= $cat->getIcone() ?></span>
+                          </div>
+                          <span class="font-bold text-slate-900 dark:text-white text-base">
+                            <?= htmlspecialchars($cat->getTitre()) ?>
+                          </span>
+                        </div>
+                      </td>
 
                       <td class="p-5 text-slate-600 dark:text-slate-300 max-w-xs truncate">
                         <?= htmlspecialchars($cat->getDescription() ?? 'Aucune description') ?>
