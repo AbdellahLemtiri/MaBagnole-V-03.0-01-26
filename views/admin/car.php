@@ -206,9 +206,13 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100 dark:divide-gray-700 text-sm">
-
-              
-
+                <?php if (empty($voitures)): ?>
+                  <tr>
+                    <td colspan="5" class="p-4 text-center text-slate-500">
+                      Aucune voiture trouvée.
+                    </td>
+                  </tr>
+                <?php else: ?>
                   <?php foreach ($voitures as $v): ?>
                     <tr class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
 
