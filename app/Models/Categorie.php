@@ -13,36 +13,42 @@ class Categorie
     protected int $idCategorie;
     protected string $titre;
     protected string $description;
-
-
-    public function setIdC($id): bool
+    protected string $icone;
+    public function __construct() {}
+    public function setIdC($id)
     {
-        if ($id <= 0) return false;
+
         $this->idCategorie = $id;
-        return true;
     }
 
     public function getIdC(): int
     {
         return $this->idCategorie;
     }
-
-    public function setTitre($nom): bool
+    public function setIcone($icone): void
     {
-        if (strlen($nom) < 3) return false;
-        $this->titre = $nom;
-        return true;
+
+        $this->icone = $icone;
+    }
+
+    public function getIcone(): string
+    {
+        return $this->icone;
+    }
+
+    public function setTitre($titre): void
+    {
+        $this->titre = $titre;
     }
 
     public function getTitre(): string
     {
         return $this->titre;
     }
-    public function setDescription($description): bool
+
+    public function setDescription($description): void
     {
-        if (strlen($description) < 5) return false;
         $this->description = $description;
-        return true;
     }
 
     public function getDescription(): string
@@ -54,10 +60,13 @@ class Categorie
     public static function getAll(): array
     {
         try {
-            $conn = (new Database())->getConnection();
-            $sql = "SELECT * FROM categorie ORDER BY idCategorie DESC";
-            $stmt = $conn->query($sql);
 
+            $sql = "SELECT * FROM categories ORDER BY idCategorie DESC";
+            $db = Database::getInstance()->getConnection();
+            $stmt = $db->prepare($sql);
+
+
+            $stmt->execute();
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $categories = [];
 
@@ -65,19 +74,23 @@ class Categorie
                 $obj = new Categorie();
                 $obj->setIdC($row['idCategorie']);
                 $obj->setTitre($row['titre']);
+                $obj->setIcone($row['icone']);
+                $obj->setDescription($row['description']);
                 $categories[] = $obj;
             }
+
             return $categories;
         } catch (Exception $e) {
             Logger::log($e->getMessage());
             return [];
         }
     }
-     public static function getAllByName(): array
+    public static function getAllByName(): array
     {
         try {
-            $conn = (new Database())->getConnection();
-            $sql = "  SELECT DISTINCT titre  FROM categorie ORDER BY titre DESC";
+
+            $conn = Database::getInstance()->getConnection();
+            $sql = "  SELECT DISTINCT titre  FROM categories ORDER BY titre DESC";
             $stmt = $conn->query($sql);
 
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -88,6 +101,7 @@ class Categorie
                 $obj->setTitre($row['titre']);
                 $categories[] = $obj;
             }
+
             return $categories;
         } catch (Exception $e) {
             Logger::log($e->getMessage());
@@ -101,7 +115,7 @@ class Categorie
         $sql = "INSERT INTO categories (titre,description) VALUES (:titre,:description)";
 
         try {
-            $conn = (new Database())->getConnection();
+            $conn = Database::getInstance()->getConnection();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(":titre", $this->titre);
             $stmt->bindParam(":description", $this->description);
@@ -115,10 +129,10 @@ class Categorie
 
     public function update(): bool
     {
-        $sql = "UPDATE categorie SET titre = :titre,description = :desc WHERE idCategorie = :id";
+        $sql = "UPDATE categories SET titre = :titre,description = :desc WHERE idCategorie = :id";
 
         try {
-            $conn = (new Database())->getConnection();
+            $conn = Database::getInstance()->getConnection();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(":id", $this->idCategorie);
             $stmt->bindParam(":titre", $this->titre);
@@ -131,17 +145,16 @@ class Categorie
     }
 
 
-    public function delete($id): bool
+    public function delete(): bool
     {
-        $sql = "DELETE FROM categorie WHERE idCategorie = :id";
+        $sql = "DELETE FROM categories WHERE idCategorie = :id";
 
         try {
-            $conn = (new Database())->getConnection();
+            $conn = Database::getInstance()->getConnection();
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":id", $this->idCategorie);
             return $stmt->execute();
-        } 
-        catch (Exception $e) {
+        } catch (Exception $e) {
             Logger::log($e->getMessage());
             return false;
         }
