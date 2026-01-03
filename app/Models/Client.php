@@ -1,12 +1,14 @@
 <?php
+
 namespace App\Models;
+
 use App\Database\Database;
 use app\Models\User;
 use PDO;
 use Exception;
 use App\Utils\Logger;
 use PDOException;
- 
+
 class Client extends User
 {
     private $phone;
@@ -34,18 +36,17 @@ class Client extends User
     }
     public function signup(): bool
     {
-        
-        $conn = (new Database)->getConnection();
 
 
-        $sql = "INSERT INTO user (nomUser, lastName, email, password, phone, role, status) 
+
+
+        $sql = "INSERT INTO users (name, lastName, email, password, phone, role, status) 
                 VALUES (:nom, :prenom, :email, :password, :phone, 'client', 1)";
 
         try {
-            $stmt = $conn->prepare($sql);
-
+            $stmt = Database::getInstance()->getConnection()->prepare($sql);
             $stmt->execute([
-                ':nom'      => $this->getNomUser(),
+                ':nom'      => $this->getName(),
                 ':prenom'   => $this->getLastName(),
                 ':email'    => $this->getEmail(),
                 ':password' => $this->getPassword(),
@@ -59,6 +60,5 @@ class Client extends User
             Logger::log($e->getMessage());
             return false;
         }
-
     }
 }
