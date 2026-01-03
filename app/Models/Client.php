@@ -94,4 +94,34 @@ class Client extends User
             return [];
         }
     }
+
+    public function activateUser($id): bool
+    {
+        $conn = Database::getInstance()->getConnection();
+        $sql = "UPDATE Users set status = '1' WHERE idUser = :id";
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(":id", $id);
+
+            return  $stmt->execute();
+        } catch (Exception $e) {
+            Logger::log($e->getMessage());
+            return false;
+        }
+    }
+
+    public function blockUser($id): bool
+    {
+        $conn = Database::getInstance()->getConnection();
+        $sql = "UPDATE Users set status = '0' WHERE idUser = :id";
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(":id", $id);
+
+            return  $stmt->execute();
+        } catch (Exception $e) {
+            Logger::log($e->getMessage());
+            return false;
+        }
+    }
 }
