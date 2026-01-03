@@ -1,14 +1,16 @@
 <?php
+session_start(); 
+
 define('BASE_PATH', __DIR__);
 require_once __DIR__ . '/App/Autoloader.php';
 App\Autoloader::register();
-
 
 use App\Controllers\AuthController;
 use App\Controllers\AdminController;
 
 $authController = new AuthController();
-$AdminController = new AdminController();
+$adminController = new AdminController(); 
+
 $action = $_POST['action'] ?? $_GET['action'] ?? 'auth';
 
 switch ($action) {
@@ -21,33 +23,44 @@ switch ($action) {
         $authController->signup();
         break;
     case 'addVoiture':
-        $AdminController->setVoiture();
+        $adminController->setVoiture();
         break;
     case 'home':
+       
         break;
     case 'carAdmin':
-        $AdminController->afficherDashboard();
+        $adminController->afficherDashboard();
         break;
     case 'update_voiture':
-        $AdminController->updateVoiture();
+        $adminController->updateVoiture();
         break;
     case 'delete_voiture':
-        $AdminController->deleteVoiture();
+        $adminController->deleteVoiture();
         break;
     case 'categories':
-        $AdminController->openCategory();
+        $adminController->openCategory();
         break;
     case 'delete_categorie':
-        $AdminController->supprimerCategorie();
+        $adminController->supprimerCategorie();
         break;
     case 'add_categorie':
-        $AdminController->ajouterCategorie();
+        $adminController->ajouterCategorie();
         break;
     case 'update_categorie':
-        $AdminController->modifierCategorie();
+        $adminController->modifierCategorie();
         break;
-    case 'usersAdmin';
+
+    case 'usersAdmin':   
+        $adminController->usersAdmin();
         break;
+    case 'activate_user': 
+        $adminController->ActiveUser();
+        break;
+
+    case 'block_user':    
+        $adminController->desActiveUser();
+        break;
+
     default:
         require_once __DIR__ . '/views/auth/auth.php';
         break;
