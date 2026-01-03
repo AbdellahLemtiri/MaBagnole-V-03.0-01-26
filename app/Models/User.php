@@ -8,7 +8,7 @@ use Exception;
 class User
 {
     protected int $idUser;
-    protected string $nomUser;
+    protected string $name;
     protected string $lastName;
     protected string $email;
     protected string $password;
@@ -36,16 +36,16 @@ class User
     }
 
    
-    public function getNomUser(): string
+    public function getName(): string
     {
-        return $this->nomUser;
+        return $this->name;
     }
 
-    public function setNomUser(string $nom): bool
+    public function setName(string $nom): bool
     {
         
         if (preg_match("/^[a-zA-Z\s]+$/", $nom)) {
-            $this->nomUser = strtoupper(trim($nom));
+            $this->name = strtoupper(trim($nom));
             return true;
         }
         return false;
@@ -131,13 +131,11 @@ class User
     
     public static function Login(string $email, string $passwordRaw)
     {
-                $conn = (new Database)->getConnection();
-
-       
-        $sql = "SELECT * FROM user WHERE email = :email";
+     
+        $sql = "SELECT * FROM users WHERE email = :email";
 
         try {
-            $stmt = $conn->prepare($sql);
+            $stmt = Database::getInstance()->getConnection()->prepare($sql);
             $stmt->bindParam(':email', $email);
             $stmt->execute();
             
@@ -159,7 +157,7 @@ class User
                     session_start();
                 }
                 
-                $_SESSION['userName'] = $userData['nomUser'];
+                $_SESSION['userName'] = $userData['name'];
                 $_SESSION['userId'] = $userData['idUser'];
                 $_SESSION['userRole'] = $userData['role'];
 
