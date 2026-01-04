@@ -118,4 +118,22 @@ LEFT JOIN categories c ON v.idC = c.idCategorie;
 
 ALTER TABLE reservations 
 ADD totalPrix DECIMAL(10, 2) NOT NULL AFTER status;
+DROP PROCEDURE IF EXISTS AjouterReservation;
+
+DELIMITER //
+
+CREATE PROCEDURE AjouterReservation(
+    IN p_dateDebut DATE,
+    IN p_dateFin DATE,
+    IN p_lieu VARCHAR(255),
+    IN p_totalPrix DECIMAL(10, 2),  
+    IN p_idVoiture INT,
+    IN p_idUser INT
+)
+BEGIN
+    INSERT INTO reservations (dateDebut, dateFin, lieuChange, totalPrix, status, idVoiture, idUser)
+    VALUES (p_dateDebut, p_dateFin, p_lieu, p_totalPrix, 'en cours', p_idVoiture, p_idUser);
+END //
+
+DELIMITER ;
 
