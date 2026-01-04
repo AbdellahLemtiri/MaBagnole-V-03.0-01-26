@@ -100,3 +100,21 @@ CREATE TABLE reagir_avis (
     FOREIGN KEY (idAvis) REFERENCES avis(idAvis) ON DELETE CASCADE,
     FOREIGN KEY (idClient) REFERENCES users(idUser) ON DELETE CASCADE
 );
+
+CREATE OR REPLACE VIEW ListeVehicules AS
+SELECT 
+    v.*, 
+    c.titre AS category_name
+FROM voitures v 
+LEFT JOIN categories c ON v.idC = c.idCategorie;
+
+
+CREATE OR REPLACE VIEW uneVehicule AS
+SELECT 
+    v.*, 
+    c.titre AS category_name
+FROM voitures v 
+LEFT JOIN categories c ON v.idC = c.idCategorie;
+
+    
+
