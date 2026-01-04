@@ -50,7 +50,7 @@ CREATE TABLE reservations (
     idUser INT NOT NULL,
     FOREIGN KEY (idVoiture) REFERENCES voitures(idV) ON DELETE CASCADE,
     FOREIGN KEY (idUser) REFERENCES users(idUser) ON DELETE CASCADE
-)  
+) ; 
 
 
 CREATE TABLE options (
