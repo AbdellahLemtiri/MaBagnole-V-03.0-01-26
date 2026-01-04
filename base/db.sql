@@ -82,7 +82,7 @@ CREATE TABLE avis (
     FOREIGN KEY (idClient) REFERENCES users(idUser) ON DELETE CASCADE
 )  
 
--- 9. Table: Favoris
+-- . Table: Favoris
 CREATE TABLE favoris (
     idFavoris INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     idClient INT NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE favoris (
     FOREIGN KEY (idV) REFERENCES voitures(idV) ON DELETE CASCADE
 )  
 
--- 10. Table: ReagirAvis (Likes/Dislikes sur les avis - Bonus)
+-- . Table: ReagirAvis (Likes/Dislikes sur les avis - Bonus)
 CREATE TABLE reagir_avis (
     idReagirAvis INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     idAvis INT NOT NULL,
@@ -102,8 +102,8 @@ CREATE TABLE reagir_avis (
 );
 
 USE MaBagnole;
--- 1. INSERTION DES CATEGORIES (10)
--- Bach n-3mro l-data jdida (Ila knti khawiti la table)
+-- . INSERTION DES CATEGORIES 
+
 INSERT INTO categories (titre, description, icone) VALUES 
 ('Economique', 'Voitures compactes, idéales pour la ville.', 'directions_car'),
 ('Luxe', 'Berlines de prestige pour un confort optimal.', 'stars'),
@@ -116,7 +116,7 @@ INSERT INTO categories (titre, description, icone) VALUES
 ('Monospace', 'Grandes voitures pour plus de 7 passagers.', 'groups'),
 ('Compacte', 'Équilibre parfait entre confort et consommation.', 'commute');
 -- 2. INSERTION DES USERS (10)
--- Password: password123
+
 INSERT INTO users (name, LastName, phone, email, password, role, status) VALUES 
 ('Anas', 'Admin', '0600112233', 'admin@mabagnole.com', 'password123', 'admin', '1'),
 ('Amine', 'Ben', '0644556677', 'amine@gmail.com', 'password123', 'client', '1'),
@@ -129,7 +129,7 @@ INSERT INTO users (name, LastName, phone, email, password, role, status) VALUES
 ('Khadija', 'Bennani', '0688990011', 'khadija@gmail.com', 'password123', 'client', '1'),
 ('Mehdi', 'Zaki', '0699001122', 'mehdi@gmail.com', 'password123', 'client', '1');
 
--- 3. INSERTION DES VOITURES (10)
+-- 3. INSERTION DES VOITURES 
 INSERT INTO voitures (marque, modele, matricule, image, boite, carburant, prixJr, idC, places, status) VALUES 
 ('Dacia', 'Logan', '12345-A-6', 'https://images.remote.com/dacia-logan.jpg', 'manuelle', 'diesel', 250.00, 1, 5, '1'),
 ('Mercedes', 'Classe C', '7890-B-33', 'https://images.remote.com/merc-c.jpg', 'automatique', 'essence', 1200.00, 2, 5, '1'),
@@ -142,7 +142,7 @@ INSERT INTO voitures (marque, modele, matricule, image, boite, carburant, prixJr
 ('VW', 'Touran', '55443-V-2', 'https://images.remote.com/touran.jpg', 'manuelle', 'diesel', 600.00, 9, 7, '1'),
 ('Golf', '8', '88888-G-8', 'https://images.remote.com/golf8.jpg', 'automatique', 'diesel', 550.00, 10, 5, '1');
 
--- 4. INSERTION DES OPTIONS (10)
+-- 4. INSERTION DES OPTIONS 
 INSERT INTO options (titre, description, prix) VALUES 
 ('Siège Bébé', 'Sécurité enfant.', 50.00),
 ('GPS', 'Navigation satellite.', 30.00),
@@ -155,7 +155,7 @@ INSERT INTO options (titre, description, prix) VALUES
 ('Glacière', 'Électrique 12V.', 25.00),
 ('Nettoyage', 'Forfait retour sale.', 150.00);
 
--- 5. INSERTION DES RESERVATIONS (10)
+-- 5. INSERTION DES RESERVATIONS 
 INSERT INTO reservations (dateDebut, dateFin, lieuChange, status, idVoiture, idUser) VALUES 
 ('2024-05-01', '2024-05-05', 'Aéroport Casa', 'terminee', 1, 2),
 ('2024-05-10', '2024-05-15', 'Gare Rabat', 'terminee', 2, 3),
