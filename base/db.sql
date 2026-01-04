@@ -116,5 +116,6 @@ SELECT
 FROM voitures v 
 LEFT JOIN categories c ON v.idC = c.idCategorie;
 
-    
+ALTER TABLE reservations 
+ADD totalPrix DECIMAL(10, 2) NOT NULL AFTER status;
 
