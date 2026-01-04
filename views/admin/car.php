@@ -73,11 +73,11 @@
         <span class="material-symbols-outlined filled">dashboard</span>
         Tableau de bord
       </a>
-      <a href="index.php?action=category" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+      <a href="index.php?action=categories" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
         <span class="material-symbols-outlined">category</span>
         Catégories
       </a>
-      <a href="index.php?Acton=usersAdmin"  class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+      <a href="index.php?Action=usersAdmin"  class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
         <span class="material-symbols-outlined">group</span>
         Clients
       </a>
@@ -238,7 +238,7 @@
                         <?= number_format($v->getPrixJourV(), 2) ?> DH
                       </td>
                       <td class="p-4 font-bold text-slate-900 dark:text-white">
-                        <?= htmlspecialchars($v->getTitre()) ?>
+                        <?= htmlspecialchars($v->getCategoryName()) ?>
                       </td>
                       <td class="p-4">
                         <?php if ($v->getStatusV() === 1): ?>
@@ -264,7 +264,7 @@
                           data-carburant="<?= $v->getCarburantV() ?>"
                           data-status="<?= $v->getStatusV() ?>"
                           data-image="<?= htmlspecialchars($v->getImageUrlV()) ?>"
-                          data-categorie="<?= $v->getTitre() ?>"
+                          data-categorie="<?= $v->getCategoryName() ?>"
                           data-idCategorie="<?= $v->getIdCV() ?>"
                           class="text-slate-400 hover:text-blue-600 transition-colors cursor-pointer">
                           <span class="material-symbols-outlined text-[20px]">edit</span>
