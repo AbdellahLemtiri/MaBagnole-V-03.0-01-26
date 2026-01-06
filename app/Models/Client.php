@@ -37,9 +37,6 @@ class Client extends User
     public function signup(): bool
     {
 
-
-
-
         $sql = "INSERT INTO users (name, lastName, email, password, phone, role, status) 
                 VALUES (:nom, :prenom, :email, :password, :phone, 'client', 1)";
 
@@ -95,31 +92,33 @@ class Client extends User
         }
     }
 
-    public function activateUser($id): bool
+   
+    public static function activateUser(int $id): bool
     {
         $conn = Database::getInstance()->getConnection();
-        $sql = "UPDATE Users set status = '1' WHERE idUser = :id";
+     
+        $sql = "UPDATE users SET status = '1' WHERE idUser = :id";
+        
         try {
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(":id", $id);
-
-            return  $stmt->execute();
-        } catch (Exception $e) {
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) { 
             Logger::log($e->getMessage());
             return false;
         }
     }
 
-    public function blockUser($id): bool
+    public static function blockUser(int $id): bool
     {
         $conn = Database::getInstance()->getConnection();
-        $sql = "UPDATE Users set status = '0' WHERE idUser = :id";
+        $sql = "UPDATE users SET status = '0' WHERE idUser = :id";
+        
         try {
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(":id", $id);
-
-            return  $stmt->execute();
-        } catch (Exception $e) {
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
             Logger::log($e->getMessage());
             return false;
         }

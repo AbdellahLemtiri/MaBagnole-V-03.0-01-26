@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Database\Database;
+use App\Config\Database;
 use App\Utils\Logger;
 use PDO;
 use Exception;

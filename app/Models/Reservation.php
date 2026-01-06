@@ -6,7 +6,7 @@ use App\Config\Database;
 use PDOException;
 use Exception;
 use PDO;
-
+use App\Utils\Logger;
 class Reservation
 {
 
@@ -18,7 +18,7 @@ class Reservation
     private $idVoiture;
     private $idUser;
     private $totalPrix;
-
+   
     public function getTotalPrix()
     {
         return $this->totalPrix;
@@ -96,20 +96,31 @@ class Reservation
     }
 
 
-    public function ajouterReservation()
-    {
-        $sql = "CALL AjouterReservation(:dateDebut, :dateFin, :lieu, :idVoiture, :idUser)";
+   public function ajouterReservation() {
 
-        $stmt = $this->db->prepare($sql);
-
-        return $stmt->execute([
-            ':dateDebut' => $this->dateDebut,
-            ':dateFin'   => $this->dateFin,
-            ':lieu'      => $this->lieuChange,
-            ':idVoiture' => $this->idVoiture,
-            ':idUser'    => $this->idUser
-        ]);
+    if ($this->dateFin <= $this->dateDebut) {
+      Logger::log("reservation : La date de fin doit être supérieure à la date de début.");
     }
+
+    
+    $sql = "CALL AjouterReservation(:dateDebut, :dateFin, :lieu, :total, :idVoiture, :idUser)";
+   try{
+   $stmt = $this->db->prepare($sql);
+    
+    return $stmt->execute([
+        ':dateDebut' => $this->dateDebut,
+        ':dateFin'   => $this->dateFin,
+        ':lieu'      => $this->lieuChange,
+        ':total'     => $this->totalPrix,
+        ':idVoiture' => $this->idVoiture,
+        ':idUser'    => $this->idUser
+    ]);
+
+   }catch(Exception $e){
+      Logger::log($e->getMessage());
+   } 
+ 
+}
 
 
     public function getReservationsByUser($userId)
