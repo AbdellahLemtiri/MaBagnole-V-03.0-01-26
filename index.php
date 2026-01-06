@@ -1,16 +1,17 @@
 <?php
-session_start(); 
-
-define('BASE_PATH', __DIR__);
+session_start();
 require_once __DIR__ . '/App/Autoloader.php';
 App\Autoloader::register();
-
+use public\api\listCarClient;
 use App\Controllers\AuthController;
 use App\Controllers\AdminController;
+use App\Controllers\VoitureController;
+use App\Controllers\ReseravtionController;
 
+$reseravtionController = new ReseravtionController();
 $authController = new AuthController();
-$adminController = new AdminController(); 
-
+$adminController = new AdminController();
+$voitureController = new VoitureController();
 $action = $_POST['action'] ?? $_GET['action'] ?? 'auth';
 
 switch ($action) {
@@ -26,7 +27,6 @@ switch ($action) {
         $adminController->setVoiture();
         break;
     case 'home':
-       
         break;
     case 'carAdmin':
         $adminController->afficherDashboard();
@@ -50,17 +50,28 @@ switch ($action) {
         $adminController->modifierCategorie();
         break;
 
-    case 'usersAdmin':   
+    case 'usersAdmin':
         $adminController->usersAdmin();
         break;
-    case 'activate_user': 
+    case 'activate_user':
         $adminController->ActiveUser();
         break;
 
-    case 'block_user':    
+    case 'block_user':
         $adminController->desActiveUser();
         break;
-
+    case 'carList':
+        $voitureController->carList();
+        break;
+    case 'CarDetaile':
+        $voitureController->carDetaile();
+        break;
+    case 'paimentReservation':
+        $reseravtionController->paimentReservation();
+        break;
+    case 'reservationUser':
+      $reseravtionController->ReservationClient();
+        break;
     default:
         require_once __DIR__ . '/views/auth/auth.php';
         break;
