@@ -252,8 +252,7 @@ class Voiture
         }
         return $voitures;
     } catch (Exception $e) {
-        // Logger::log($e->getMessage()); // حيد Logger مؤقتا باش تشوف الخطأ إلا كان
-        error_log("Erreur SQL: " . $e->getMessage()); 
+        Logger::log($e->getMessage()); 
         return [];
     }
 }
