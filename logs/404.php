@@ -23,7 +23,7 @@
         Ne vous inquiétez pas, on peut vous ramener à la maison.
     </p>
 
-    <a href="index.php" class="px-8 py-3 bg-[#135bec] hover:bg-blue-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-500/30">
+    <a href="index.php?action=home" class="px-8 py-3 bg-[#135bec] hover:bg-blue-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-500/30">
         Retour à l'accueil
     </a>
 
