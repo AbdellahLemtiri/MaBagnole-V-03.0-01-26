@@ -77,7 +77,7 @@
         <span class="material-symbols-outlined">category</span>
         Catégories
       </a>
-      <a href="index.php?Action=usersAdmin"  class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+      <a href="index.php?action=usersAdmin"  class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
         <span class="material-symbols-outlined">group</span>
         Clients
       </a>
