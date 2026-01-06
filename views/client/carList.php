@@ -76,9 +76,8 @@
             background: #334155;
         }
 
-        /* Range Slider Styling */
         input[type=range] {
-            -webkit-appearance: none;
+          
             background: transparent;
         }
 
@@ -562,7 +561,7 @@
         }
 
     function likeCar(){
-        
+
     }
         init();
     </script>
