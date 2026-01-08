@@ -77,7 +77,7 @@
         }
 
         input[type=range] {
-          
+
             background: transparent;
         }
 
@@ -125,13 +125,14 @@
             <div class="flex items-center gap-8">
                 <a href="index.php?action=carList" class="flex items-center gap-3 group">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-purple-600 text-white flex items-center justify-center shadow-lg group-hover:shadow-primary/50 transition-all duration-300">
-                        <span class="material-symbols-rounded text-2xl">directions_car</span>
+                        <span class="material-symbols-rounded text-2xl"></span>
                     </div>
                     <h2 class="text-xl font-bold tracking-tight">Ma Bagnole</h2>
                 </a>
                 <div class="hidden lg:flex items-center gap-8">
-                    <a href="#" class="text-sm font-medium text-text-muted dark:text-gray-400 hover:text-primary transition-colors" href="index.php">Véhicules</a>
-                    <a class="text-sm font-bold text-primary" href="index.php?action=reservationUser">Mes Réservations</a>
+                    <a href="" class=" text-sm font-bold text-primary">Véhicules</a>
+                    <a class="text-sm font-medium text-text-muted dark:text-gray-400 hover:text-primary transition-colors    " href="index.php?action=reservationUser">Mes Réservations</a>
+                    <a class="text-sm font-medium text-text-muted dark:text-gray-400 hover:text-primary transition-colors    " href="index.php?action=ArticleUser">Blog</a>
                 </div>
             </div>
 
@@ -158,8 +159,7 @@
 
         <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-10">
             <div>
-                <div class="flex gap-2 text-sm text-text-muted dark:text-gray-400 mb-2 font-medium">
-                    <a href="#" class="hover:text-primary">Accueil</a> / <span>Flotte</span>
+                <div class="flex gap-2 text-sm text-text-muted dark:text-gray-400 mb-2 font-medium">             
                 </div>
                 <h1 class="text-4xl md:text-5xl font-black mb-2 dark:text-white">Notre Flotte <span class="text-primary">Premium</span></h1>
                 <p class="text-text-muted dark:text-gray-400 text-lg">Découvrez le luxe et la performance.</p>
@@ -207,7 +207,7 @@
 
                 <div id="vehiclesGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 </div>
-          
+
                 <div id="emptyState" class="hidden flex-col items-center justify-center py-20 text-center">
                     <div class="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
                         <span class="material-symbols-rounded text-4xl text-gray-400">no_crash</span>
@@ -230,7 +230,6 @@
             <p class="text-sm text-text-muted">© 2024 LuxeDrive. Fait avec passion pour le code.</p>
         </div>
     </footer>
-
     <script>
         let state = {
             vehicles: [],
@@ -389,14 +388,14 @@
             applyFilters();
         };
 
-        // --- 5. RENDER GRID (UI) ---
+
         function renderGrid() {
             gridEl.innerHTML = '';
 
             if (state.vehicles.length === 0) {
                 gridEl.classList.add('hidden');
                 emptyStateEl.classList.remove('hidden');
-                emptyStateEl.style.display = 'flex'; // Fix display issue
+                emptyStateEl.style.display = 'flex';
                 return;
             }
 
@@ -420,7 +419,7 @@
                     <img src="${v.image}" alt="${v.model}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://placehold.co/600x400?text=Voiture'">
                     
             
-                          <button onclick="likeCar()" class="absolute top-4 right-4 p-2 rounded-full bg-white/90 dark:bg-black/60 backdrop-blur hover:scale-110 transition-transform text-gray-400 hover:text-red-500">
+                          <button onclick="toggleFavorite(this, ${v.id})" class="absolute top-4 right-4 p-2 rounded-full bg-white/90 dark:bg-black/60 backdrop-blur hover:scale-110 transition-transform text-gray-400 hover:text-red-500">
                     <span class="material-symbols-rounded text-xl filled">favorite</span>
                 </button>
                     <span class="absolute top-4 left-4 bg-black/50 backdrop-blur text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-white/10">
@@ -493,7 +492,8 @@
             </button>
         `;
 
-            for (let i = 1; i <= totalPages; i++) {
+            for (let i = 1; i <= totalPages; i++)
+            {
                 html += `
                 <button onclick="changePage(${i})" class="w-10 h-10 flex items-center justify-center rounded-full font-bold transition-all ${state.currentPage === i ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-110' : 'bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800'}">
                     ${i}
@@ -518,7 +518,7 @@
             });
         }
 
-        // --- 6. UTILS ---
+
         function toggleTheme() {
             const html = document.documentElement;
             if (html.classList.contains('dark')) {
@@ -560,9 +560,53 @@
             }, 3000);
         }
 
-    function likeCar(){
 
-    }
+        async function toggleFavorite(btn, idVoiture) {
+
+            const icon = btn.querySelector('.material-symbols-rounded');
+
+            btn.style.transform = "scale(0.9)";
+            setTimeout(() => btn.style.transform = "scale(1)", 150);
+
+            try {
+
+                const payload = {
+                    idV: idVoiture
+                };
+
+                const response = await fetch('http://localhost/MaBagnoleV1/public/api/toggleFavoris.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+
+                const result = await response.json();
+
+
+                if (result.status === 'success') {
+                    if (result.action === 'added') {
+                        icon.classList.remove('text-gray-400');
+                        icon.classList.add('text-red-500', 'filled');
+                        console.log(idVoiture + "ajoutee");
+                    } else {
+                        icon.classList.remove('text-red-500', 'filled');
+                        icon.classList.add('text-gray-400');
+                        console.log(idVoiture);
+                    }
+                } else if (result.message === 'Non connecté') {
+                    alert("Veuillez vous connecter pour ajouter aux favoris !");
+                    window.location.href = '/MaBagnoleV1/views/auth/login.php';
+                } else {
+                    console.error('Erreur API:', result.message);
+                }
+
+            } catch (error) {
+                console.error('Erreur technique:', error);
+            }
+        }
         init();
     </script>
 </body>
