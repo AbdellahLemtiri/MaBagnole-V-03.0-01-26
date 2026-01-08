@@ -94,3 +94,32 @@ INSERT INTO reagir_avis (idAvis, idClient, typeReaction) VALUES
 (1, 3, 'like'), (1, 4, 'like'), (2, 2, 'dislike'), 
 (3, 5, 'like'), (4, 6, 'like'), (5, 7, 'dislike'), 
 (6, 8, 'like'), (7, 2, 'like'), (8, 3, 'like'), (9, 4, 'like');
+
+INSERT INTO themes (nomTheme, description, imageTheme) VALUES 
+('Moteurs et Mécanique', 'Tout sur le fonctionnement interne des voitures.', 'mecanique.jpg'),
+('Électrique et Hybride', 'L''avenir de l''automobile et les nouvelles technologies.', 'electrique.png'),
+('Entretien DIY', 'Conseils pour réparer sa voiture soi-même.', 'diy.jpg'),
+('Sport Automobile', 'Actualités sur la F1, le Rallye et les circuits.', 'sport.jpg');
+
+INSERT INTO tags (nomTag) VALUES 
+('Turbo'), ('Batterie'), ('Occasion'), ('Luxe'), ('Sécurité'), ('Vitesse');
+INSERT INTO articles (titre, contenu, imageArticle, idTheme, idUser, status) VALUES 
+('Le guide du Turbo', 'Le turbocompresseur permet d''augmenter la puissance...', 'turbo_guide.jpg', 1, 1, 'published'),
+('Tesla Model S en 2026', 'Analyse des performances de la nouvelle version...', 'tesla2026.jpg', 2, 1, 'published'),
+('Changer ses plaquettes', 'Tutoriel étape par étape pour freiner en sécurité.', 'freins.jpg', 3, 2, 'pending');
+
+
+INSERT INTO article_tags (idArticle, idTag) VALUES 
+(1, 1), -- Article 1 lié au Tag 1 (Turbo)
+(1, 6), -- Article 1 lié au Tag 6 (Vitesse)
+(2, 2); -- Article 2 lié au Tag 2 (Batterie)
+
+INSERT INTO comments (contenu, idArticle, idUser, status) VALUES 
+('Super article, j''ai enfin compris le rôle du wastegate !', 1, 2, 'active'),
+('Est-ce que l''autonomie est réelle sur ce modèle ?', 2, 1, 'active');
+
+
+INSERT INTO article_favoris (idUser, idArticle) VALUES 
+(1, 1),
+(2, 1),
+(2, 2);
