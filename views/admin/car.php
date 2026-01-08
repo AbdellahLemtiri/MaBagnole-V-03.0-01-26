@@ -77,7 +77,7 @@
         <span class="material-symbols-outlined">category</span>
         Catégories
       </a>
-      <a href="index.php?action=usersAdmin"  class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+      <a href="index.php?action=usersAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
         <span class="material-symbols-outlined">group</span>
         Clients
       </a>
@@ -85,6 +85,10 @@
         <span class="material-symbols-outlined">reviews</span>
         Avis & Notes
       </a>
+      <a href="admin_articles.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined">article</span> Articles</a>
+      <a href="admin_themes.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined">category</span> Thèmes</a>
+      <a href="admin_tags.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined">label</span> Tags</a>
+      <a href="#"  class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined filled">comment</span> Commentaires</a>
     </nav>
 
     <div class="p-4 border-t border-gray-100 dark:border-gray-700">
@@ -401,8 +405,8 @@
 
             <div>
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Boite</label>
-              <select required name="boite" id="modal_boit"   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"  >
-                <option  value="Manuelle">Manuelle</option>
+              <select required name="boite" id="modal_boit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <option value="Manuelle">Manuelle</option>
                 <option value="Automatique">Automatique</option>
               </select>
             </div>
@@ -419,7 +423,7 @@
             <div>
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Catégorie</label>
               <select name="categorie_id" id="modal_categorie" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                <option id="catinp" value="" ></option>
+                <option id="catinp" value=""></option>
                 <?php foreach ($categories as $cat): ?>
                   <option value="<?= $cat['id_c'] ?>"> <?= htmlspecialchars($cat['libelle']) ?> </option>
                 <?php endforeach; ?>
@@ -562,7 +566,7 @@
       const categorie = button.getAttribute('data-categorie');
       const idCategorie = button.getAttribute('data-idCategorie');
 
-      
+
       document.getElementById('modal_id').value = id;
       document.getElementById('modal_marque').value = marque;
       document.getElementById('modal_modele').value = modele;
@@ -573,16 +577,16 @@
       document.getElementById('modal_status').value = status;
       document.getElementById('catinp').innerText = categorie;
       document.getElementById('catinp').value = idCategorie;
-      
-     
+
+
       document.getElementById('modal_image_input').value = image;
       document.getElementById('modal_image_preview').src = image;
 
-    
+
       modal.classList.remove('hidden');
     }
 
-    
+
     function closeEditModal() {
       const modal = document.getElementById('editModal');
       modal.classList.add('hidden');

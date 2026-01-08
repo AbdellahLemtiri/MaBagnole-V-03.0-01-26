@@ -55,64 +55,47 @@
 
 <body
   class="bg-gray-50 dark:bg-dark text-slate-800 dark:text-gray-200 antialiased h-screen flex overflow-hidden selection:bg-primary selection:text-white transition-colors duration-300">
-  <aside
-    class="w-72 bg-white dark:bg-surface border-r border-gray-200 dark:border-gray-800 hidden md:flex flex-col z-20 shadow-xl shadow-gray-200/50 dark:shadow-none">
+   <aside class="w-72 bg-white dark:bg-surface border-r border-gray-200 dark:border-gray-800 hidden md:flex flex-col z-20 shadow-xl shadow-gray-200/50 dark:shadow-none">
     <div class="p-6 flex items-center gap-3">
-      <div
-        class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
         <span class="material-symbols-outlined text-[24px]">directions_car</span>
       </div>
       <div>
-        <h1
-          class="text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
-          MaBagnole
-        </h1>
-        <p
-          class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
-          Admin Panel
-        </p>
+        <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">MaBagnole</h1>
+        <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Admin Panel</p>
       </div>
     </div>
 
     <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
-      <p
-        class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-2">
-        Gestion
-      </p>
+      <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-2">Gestion</p>
 
-      <a
-        href="index.php?action=carAdmin"
-        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
-        <span class="material-symbols-outlined">dashboard</span>
+      <a href="#"  class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined filled">dashboard</span>
         Tableau de bord
       </a>
-      <a
-        href="#"
-        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+      <a href="index.php?action=categories"   class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
         <span class="material-symbols-outlined">category</span>
         Catégories
       </a>
-      <a
-        href="#"
-        class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all">
-        <span class="material-symbols-outlined filled">group</span>
+      
+      <a href="index.php?action=usersAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all">
+        <span class="material-symbols-outlined">group</span>
         Clients
       </a>
-      <a
-        href="#"
-        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
         <span class="material-symbols-outlined">reviews</span>
         Avis & Notes
       </a>
+      <a href="admin_articles.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined">article</span> Articles</a>
+      <a href="admin_themes.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined">category</span> Thèmes</a>
+      <a href="admin_tags.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined">label</span> Tags</a>
+      <a href="#"  class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined filled">comment</span> Commentaires</a>
     </nav>
 
     <div class="p-4 border-t border-gray-100 dark:border-gray-700">
-      <button
-        onclick="toggleTheme()"
-        class="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all font-medium">
+      <button onclick="toggleTheme()" class="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all font-medium">
         <span class="material-symbols-outlined dark:hidden">dark_mode</span>
-        <span
-          class="material-symbols-outlined hidden dark:block text-yellow-400">light_mode</span>
+        <span class="material-symbols-outlined hidden dark:block text-yellow-400">light_mode</span>
         <span class="dark:text-gray-300">Mode Sombre</span>
       </button>
     </div>
