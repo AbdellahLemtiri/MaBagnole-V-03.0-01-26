@@ -50,7 +50,7 @@ CREATE TABLE reservations (
     idUser INT NOT NULL,
     FOREIGN KEY (idVoiture) REFERENCES voitures(idV) ON DELETE CASCADE,
     FOREIGN KEY (idUser) REFERENCES users(idUser) ON DELETE CASCADE
-) ; 
+); 
 
 
 CREATE TABLE options (
@@ -80,7 +80,7 @@ CREATE TABLE avis (
     idClient INT NOT NULL,
     FOREIGN KEY (idReservation) REFERENCES reservations(idReservation) ON DELETE CASCADE,
     FOREIGN KEY (idClient) REFERENCES users(idUser) ON DELETE CASCADE
-) 
+);
 
 -- . Table: Favoris
 CREATE TABLE favoris (
@@ -136,4 +136,62 @@ BEGIN
 END //
 
 DELIMITER ;
+
+USE MaBagnole;
+
+DROP TABLE IF EXISTS themes
+
+CREATE TABLE themes (
+    idTheme INT PRIMARY KEY AUTO_INCREMENT,
+    nomTheme VARCHAR(100) NOT NULL,
+    description TEXT,
+    imageTheme VARCHAR(255) 
+);
+ 
+CREATE TABLE articles (
+    idArticle INT PRIMARY KEY AUTO_INCREMENT,
+    titre VARCHAR(255) NOT NULL,
+    contenu TEXT NOT NULL,
+    imageArticle VARCHAR(255), 
+    videoArticle VARCHAR(255),  
+    dateCreation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pending', 'published', 'rejected') DEFAULT 'pending',
+    idTheme INT NOT NULL,
+    idUser INT NOT NULL, 
+    FOREIGN KEY (idTheme) REFERENCES themes(idTheme) ON DELETE CASCADE,
+    FOREIGN KEY (idUser) REFERENCES users(idUser) ON DELETE CASCADE
+);
+ 
+CREATE TABLE tags (
+    idTag INT PRIMARY KEY AUTO_INCREMENT,
+    nomTag VARCHAR(50) NOT NULL UNIQUE
+);
+ 
+CREATE TABLE article_tags (
+    idArticle INT NOT NULL,
+    idTag INT NOT NULL,
+    PRIMARY KEY (idArticle, idTag),
+    FOREIGN KEY (idArticle) REFERENCES articles(idArticle) ON DELETE CASCADE,
+    FOREIGN KEY (idTag) REFERENCES tags(idTag) ON DELETE CASCADE
+);
+
+ 
+CREATE TABLE comments (
+    idComment INT PRIMARY KEY AUTO_INCREMENT,
+    contenu TEXT NOT NULL,
+    dateCommentaire DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('active', 'hidden') DEFAULT 'active',  
+    idArticle INT NOT NULL,
+    idUser INT NOT NULL,
+    FOREIGN KEY (idArticle) REFERENCES articles(idArticle) ON DELETE CASCADE,
+    FOREIGN KEY (idUser) REFERENCES users(idUser) ON DELETE CASCADE
+);
+
+CREATE TABLE article_favoris (
+    idUser INT NOT NULL,
+    idArticle INT NOT NULL,
+    PRIMARY KEY (idUser, idArticle),
+    FOREIGN KEY (idUser) REFERENCES users(idUser) ON DELETE CASCADE,
+    FOREIGN KEY (idArticle) REFERENCES articles(idArticle) ON DELETE CASCADE
+);
 
