@@ -1,28 +1,17 @@
-<?php
-use App\Models\Reservation;
-
-if (!isset($_SESSION['userId'])) {
-    header('Location: login.php');
-    exit;
-}
-
-
-$reservationModel = new Reservation();
-$mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId']);
-?>
 
 <!DOCTYPE html>
 <html class="light" lang="fr">
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Mes Réservations - MaBagnole</title>
-    
+
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
-    
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script>
         tailwind.config = {
@@ -47,8 +36,14 @@ $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId'])
                     },
                     keyframes: {
                         slideUp: {
-                            '0%': { transform: 'translateY(10px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                            '0%': {
+                                transform: 'translateY(10px)',
+                                opacity: '0'
+                            },
+                            '100%': {
+                                transform: 'translateY(0)',
+                                opacity: '1'
+                            }
                         }
                     }
                 },
@@ -57,10 +52,22 @@ $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId'])
     </script>
     <style>
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
-        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
     </style>
 </head>
 
@@ -86,7 +93,7 @@ $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId'])
                     <span class="material-symbols-rounded dark:hidden">dark_mode</span>
                     <span class="material-symbols-rounded hidden dark:block">light_mode</span>
                 </button>
-                
+
                 <div class="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
                     <div class="text-right hidden md:block">
                         <p class="text-sm font-bold leading-none"><?= $_SESSION['nom'] ?? 'Client' ?></p>
@@ -101,7 +108,7 @@ $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId'])
     </header>
 
     <main class="flex-1 max-w-[1440px] mx-auto w-full px-6 lg:px-12 pt-32 pb-12">
-        
+
         <div class="flex justify-between items-end mb-10">
             <div>
                 <div class="flex gap-2 text-sm text-text-muted dark:text-gray-400 mb-2 font-medium">
@@ -109,7 +116,7 @@ $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId'])
                 </div>
                 <h1 class="text-3xl md:text-4xl font-black dark:text-white">Mes <span class="text-primary">Réservations</span></h1>
             </div>
-            
+
             <div class="bg-primary/10 text-primary px-4 py-2 rounded-xl font-bold text-sm">
                 <?= count($mesReservations) ?> Réservations
             </div>
@@ -142,10 +149,10 @@ $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId'])
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                            
+
                             <?php foreach ($mesReservations as $res): ?>
                                 <tr class="group hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
-                                    
+
                                     <td class="p-6">
                                         <div class="flex items-center gap-4">
                                             <div class="w-16 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 overflow-hidden">
@@ -183,22 +190,22 @@ $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId'])
                                     </td>
 
                                     <td class="p-6">
-                                        <?php 
-                                            // Logic couleurs badges
-                                            $status = strtolower($res['status']);
-                                            $badgeClass = '';
-                                            $icon = '';
-                                            
-                                            if ($status === 'en cours') {
-                                                $badgeClass = 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400';
-                                                $icon = 'hourglass_top';
-                                            } elseif ($status === 'terminee' || $status === 'terminée') {
-                                                $badgeClass = 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400';
-                                                $icon = 'check_circle';
-                                            } else {
-                                                $badgeClass = 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400';
-                                                $icon = 'cancel';
-                                            }
+                                        <?php
+
+                                        $status = strtolower($res['status']);
+                                        $badgeClass = '';
+                                        $icon = '';
+
+                                        if ($status === 'en cours') {
+                                            $badgeClass = 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400';
+                                            $icon = 'hourglass_top';
+                                        } elseif ($status === 'terminee') {
+                                            $badgeClass = 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400';
+                                            $icon = 'check_circle';
+                                        } else {
+                                            $badgeClass = 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400';
+                                            $icon = 'cancel';
+                                        }
                                         ?>
                                         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold <?= $badgeClass ?>">
                                             <span class="material-symbols-rounded text-[16px]"><?= $icon ?></span>
@@ -207,12 +214,13 @@ $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId'])
                                     </td>
 
                                     <td class="p-6 text-right">
-                                        <?php if($status === 'terminee' || $status === 'terminée'): ?>
-                                            <a href="laisser_avis.php?id=<?= $res['idVoiture'] ?>" class="inline-flex items-center gap-2 px-4 py-2 bg-text-main dark:bg-white text-white dark:text-text-main rounded-xl text-xs font-bold hover:opacity-90 transition-all">
-                                                <span class="material-symbols-rounded text-[16px]">star</span>
-                                                Noter
-                                            </a>
-                                        <?php elseif($status === 'en cours'): ?>
+                                        <?php if ($status === 'terminee' || $status === 'terminée'): ?>
+                                            <button
+                                                onclick="openAvisModal(<?php echo $res['idReservation']; ?>)"
+                                                class="inline-flex items-center gap-2 px-4 py-2 bg-text-main dark:bg-white text-white dark:text-text-main rounded-xl text-xs font-bold hover:opacity-90 transition-all">
+                                                <span class="material-symbols-rounded text-[16px]">star</span> Laisser un avis
+                                            </button>
+                                        <?php elseif ($status === 'en cours'): ?>
                                             <button onclick="alert('Fonctionnalité d\'annulation à implémenter')" class="text-xs font-bold text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 px-3 py-2 rounded-lg transition-colors">
                                                 Annuler
                                             </button>
@@ -229,11 +237,72 @@ $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId'])
         <?php endif; ?>
 
     </main>
+    <div id="avisModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300">
 
+        <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-2xl shadow-2xl p-6 transform transition-all scale-95" id="modalContent">
+
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white">
+                    Évaluer votre expérience
+                </h3>
+                <button onclick="closeAvisModal()" class="text-gray-400 hover:text-red-500 transition-colors">
+                    <span class="material-symbols-rounded text-2xl">close</span>
+                </button>
+            </div>
+
+            <form id="avisForm" action="index.php?action=addAvis" method="POST" onsubmit="submitAvis(event)">
+                <input type="hidden" name="idReservation" id="modalIdReservation">
+                <input type="hidden" name="note" id="noteValue" value="0">
+                <input type="hidden" name="idUser" id="" value="<?=    $_SESSION['userId']  ?>">
+
+                <div class="flex flex-col items-center mb-6">
+                    <p class="text-sm text-gray-500 mb-2">Notez le véhicule</p>
+                    <div class="flex gap-2" id="starsContainer">
+                        <button type="button" onclick="setRating(1)" class="star-btn text-gray-300 hover:text-yellow-400 transition-colors">
+                            <span class="material-symbols-rounded text-4xl">star</span>
+                        </button>
+                        <button type="button" onclick="setRating(2)" class="star-btn text-gray-300 hover:text-yellow-400 transition-colors">
+                            <span class="material-symbols-rounded text-4xl">star</span>
+                        </button>
+                        <button type="button" onclick="setRating(3)" class="star-btn text-gray-300 hover:text-yellow-400 transition-colors">
+                            <span class="material-symbols-rounded text-4xl">star</span>
+                        </button>
+                        <button type="button" onclick="setRating(4)" class="star-btn text-gray-300 hover:text-yellow-400 transition-colors">
+                            <span class="material-symbols-rounded text-4xl">star</span>
+                        </button>
+                        <button type="button" onclick="setRating(5)" class="star-btn text-gray-300 hover:text-yellow-400 transition-colors">
+                            <span class="material-symbols-rounded text-4xl">star</span>
+                        </button>
+                    </div>
+                    <p id="ratingText" class="text-sm font-medium text-yellow-500 mt-2 h-5"></p>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Commentaire
+                    </label>
+                    <textarea
+                        name="commentaire"
+                        rows="4"
+                        class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"
+                        placeholder="Partagez votre avis sur ce véhicule..."
+                        required></textarea>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeAvisModal()" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">
+                        Annuler
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-all">
+                        Publier l'avis
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script>
         const html = document.documentElement;
-        
-        // Check Local Storage
+
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             html.classList.add('dark');
             html.classList.remove('light');
@@ -253,6 +322,67 @@ $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId'])
                 localStorage.theme = 'dark';
             }
         }
+
+
+  
+        function openAvisModal(idReservation) {
+            const modal = document.getElementById('avisModal');
+            const inputId = document.getElementById('modalIdReservation');
+
+           
+            inputId.value = idReservation;
+
+            document.getElementById('avisForm').reset();
+            setRating(0); 
+
+            modal.classList.remove('hidden');
+           
+            setTimeout(() => {
+                modal.querySelector('#modalContent').classList.remove('scale-95');
+                modal.querySelector('#modalContent').classList.add('scale-100');
+            }, 10);
+        }
+
+    
+        function closeAvisModal() {
+            const modal = document.getElementById('avisModal');
+
+            modal.querySelector('#modalContent').classList.remove('scale-100');
+            modal.querySelector('#modalContent').classList.add('scale-95');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        }
+
+     
+        function setRating(note) {
+            const stars = document.querySelectorAll('.star-btn span');
+            const inputNote = document.getElementById('noteValue');
+            const text = document.getElementById('ratingText');
+
+            // Update Hidden Input
+            inputNote.value = note;
+
+            // Labels pour le fun
+            const labels = ["", "Mauvais 😠", "Moyen 😐", "Bien 🙂", "Très bien 😀", "Excellent 🤩"];
+            text.textContent = labels[note] || "";
+
+            stars.forEach((star, index) => {
+                if (index < note) {
+                  
+                    star.classList.remove('text-gray-300');
+                    star.classList.add('text-yellow-400', 'filled');
+                } else {
+                  
+                    star.classList.remove('text-yellow-400', 'filled');
+                    star.classList.add('text-gray-300');
+                }
+            });
+        }
+
+  
     </script>
 </body>
+
 </html>

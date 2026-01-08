@@ -85,7 +85,6 @@ $idUser = $_SESSION['userId'];
     </nav>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-
         <nav class="flex mb-8 text-sm text-slate-500 font-medium">
             <a href="index.php?action=carList" class="hover:text-primary transition-colors">Véhicules</a>
             <span class="mx-3 text-gray-300 dark:text-gray-700">/</span>
@@ -231,7 +230,7 @@ $idUser = $_SESSION['userId'];
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">lieu</label>
-                            <textarea name="lieu" id="" rows="2" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-2.5 text-sm focus:ring-primary focus:border-primary"></textarea>
+                            <textarea name="lieu" id="" rows="2" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-2.5 text-sm focus:ring-primary focus:border-primary"  required></textarea>
                         </div>
                         <div class="bg-gray-50 dark:bg-surface rounded-2xl p-5 mt-6 border border-gray-100 dark:border-gray-800">
                             <div class="flex justify-between items-center mb-2">
@@ -258,7 +257,7 @@ $idUser = $_SESSION['userId'];
     </div>
 
     <script>
-        // 1. DARK MODE TOGGLE LOGIC
+
         function toggleTheme() {
             const html = document.documentElement;
             if (html.classList.contains('dark')) {
