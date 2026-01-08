@@ -2,16 +2,21 @@
 session_start();
 require_once __DIR__ . '/App/Autoloader.php';
 App\Autoloader::register();
+
 use public\api\listCarClient;
 use App\Controllers\AuthController;
 use App\Controllers\AdminController;
 use App\Controllers\VoitureController;
 use App\Controllers\ReseravtionController;
+use App\Controllers\AvisController;
+use App\Controllers\ArticleController;
 
+$avisController = new AvisController();
 $reseravtionController = new ReseravtionController();
 $authController = new AuthController();
 $adminController = new AdminController();
 $voitureController = new VoitureController();
+$articleController = new ArticleController;
 $action = $_POST['action'] ?? $_GET['action'] ?? 'auth';
 
 switch ($action) {
@@ -70,7 +75,26 @@ switch ($action) {
         $reseravtionController->paimentReservation();
         break;
     case 'reservationUser':
-      $reseravtionController->ReservationClient();
+        $reseravtionController->ReservationClient();
+        break;
+
+    case 'addAvis':
+        $avisController->addAvis();
+        break;
+    case 'ArticleUser':
+        $articleController->getAllArticleClient();
+        break;
+    case 'approveArticle':
+        $articleController->approveArticle();
+        break;
+    case 'rejectArticle':
+        $articleController->rejectArticle();
+        break;
+    case 'ArticleAdmin':
+        $articleController->getAllArticleAdmin();
+        break;
+    case 'deleteArticle':
+        $articleController->deleteArticle();
         break;
     default:
         require_once __DIR__ . '/views/auth/auth.php';
