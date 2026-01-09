@@ -56,7 +56,7 @@
 <body
     class="bg-gray-50 dark:bg-dark text-slate-800 dark:text-gray-200 antialiased h-screen flex overflow-hidden selection:bg-primary selection:text-white transition-colors duration-300">
 
-       <aside class="w-72 bg-white dark:bg-surface border-r border-gray-200 dark:border-gray-800 hidden md:flex flex-col z-20 shadow-xl shadow-gray-200/50 dark:shadow-none">
+    <aside class="w-72 bg-white dark:bg-surface border-r border-gray-200 dark:border-gray-800 hidden md:flex flex-col z-20 shadow-xl shadow-gray-200/50 dark:shadow-none">
         <div class="p-6 flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
                 <span class="material-symbols-outlined text-[24px]">directions_car</span>
@@ -74,39 +74,39 @@
                 <span class="material-symbols-outlined">dashboard</span>
                 Tableau de bord
             </a>
-            
+
             <a href="index.php?action=categories" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
                 <span class="material-symbols-outlined">category</span>
                 Catégories
             </a>
-            
+
             <a href="index.php?action=usersAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
                 <span class="material-symbols-outlined">group</span>
                 Clients
             </a>
-            
+
             <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
                 <span class="material-symbols-outlined">reviews</span>
                 Avis & Notes
             </a>
 
-            <a href="article.php"  class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all" >
-                <span class="material-symbols-outlined">article</span> 
+            <a href="article.php" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all">
+                <span class="material-symbols-outlined">article</span>
                 Articles
             </a>
 
             <a href="themes.php" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
-                <span class="material-symbols-outlined">category</span> 
+                <span class="material-symbols-outlined">category</span>
                 Thèmes
             </a>
 
-            <a href="tags.php"  class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
-                <span class="material-symbols-outlined filled">label</span> 
+            <a href="tags.php" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+                <span class="material-symbols-outlined filled">label</span>
                 Tags
             </a>
 
             <a href="comments.php" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
-                <span class="material-symbols-outlined">comment</span> 
+                <span class="material-symbols-outlined">comment</span>
                 Commentaires
             </a>
         </nav>
@@ -230,7 +230,7 @@
                                 <?php else: ?>
 
                                     <?php foreach ($articles as $article):
-                                     
+
                                         $statusClass = '';
                                         $statusLabel = '';
                                         $isPending = false;
@@ -240,7 +240,7 @@
                                                 $statusClass = 'bg-success/10 text-success border-success/20';
                                                 $statusLabel = 'Publié';
                                                 break;
-                                            case 'pending': 
+                                            case 'pending':
                                                 $statusClass = 'bg-warning/10 text-warning border-warning/20';
                                                 $statusLabel = 'En attente';
                                                 $isPending = true;
@@ -314,8 +314,15 @@
                                                                 <span class="material-symbols-outlined text-[20px]">close</span>
                                                             </button>
                                                         </form>
-                                                    <?php else: ?>
-                                                        <button onclick="openEditModal(<?= $article->getIdArticle() ?>)" class="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Modifier">
+                                                    <?php else:
+
+                                                        $id = $article->getIdArticle();
+                                                        $theme = $article->getNomTheme();
+                                                        $contenu = $article->getContenu();
+                                                        $titre = $article->getTitre();
+                                                    ?>
+
+                                                        <button onclick="openEditModal(<?= $id, $titre, $contenu ?> )" class="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Modifier">
                                                             <span class="material-symbols-outlined text-[20px]">edit</span>
                                                         </button>
                                                         <form action="index.php" method="POST" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
@@ -349,11 +356,11 @@
         </div>
     </main>
 
-   <div id="articleModal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center px-4 py-6">
+    <div id="articleModal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center px-4 py-6">
         <div class="absolute inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
-        
+
         <div class="modal-content relative w-full max-w-4xl bg-white dark:bg-surface dark:border dark:border-gray-700 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            
+
             <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-surface">
                 <h2 class="text-xl font-bold dark:text-white flex items-center gap-2">
                     <span class="material-symbols-outlined text-primary">edit_document</span>
@@ -365,25 +372,25 @@
             </div>
 
             <div class="flex-1 overflow-y-auto custom-scroll p-6 md:p-8 bg-gray-50 dark:bg-dark">
-                <form action="save_article.php" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <form action="index.php?actionn=saveArticle" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <input type="hidden" name="id" id="modal_id">
+                    <input type="hidden" name="action" value="saveArticle">
 
                     <div class="lg:col-span-2 space-y-5">
                         <div class="space-y-2">
                             <label class="block text-sm font-semibold text-slate-700 dark:text-gray-300">Titre</label>
-                            <input type="text" name="titre" id="modal_titre" placeholder="Titre de l'article" 
+                            <input type="text" name="titre" id="modal_titre" placeholder="Titre de l'article"
                                 class="w-full bg-white dark:bg-surface border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-primary rounded-xl px-4 py-3 dark:text-white transition-colors">
                         </div>
-                        
+
                         <div class="space-y-2">
                             <label class="block text-sm font-semibold text-slate-700 dark:text-gray-300">Contenu</label>
-                            <textarea name="contenu" id="modal_contenu" rows="12" placeholder="Rédigez l'article..." 
+                            <textarea name="contenu" id="modal_contenu" rows="12" placeholder="Rédigez l'article..."
                                 class="w-full bg-white dark:bg-surface border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-primary rounded-xl px-4 py-3 dark:text-white transition-colors"></textarea>
                         </div>
                     </div>
 
                     <div class="space-y-6">
-                        
                         <div class="bg-white dark:bg-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700">
                             <label class="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-3">Image de couverture</label>
                             <div class="aspect-video rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 flex flex-col items-center justify-center text-slate-400 hover:border-primary hover:text-primary transition-colors cursor-pointer relative">
@@ -438,7 +445,6 @@
     </div>
 
     <script>
-        // Theme Logic
         function toggleTheme() {
             if (document.documentElement.classList.contains("dark")) {
                 document.documentElement.classList.remove("dark");
@@ -452,7 +458,7 @@
             document.documentElement.classList.add("dark");
         }
 
-        // Modal Logic
+
         const modal = document.getElementById('articleModal');
 
         function openModal() {
