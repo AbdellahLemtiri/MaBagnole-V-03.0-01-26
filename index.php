@@ -10,6 +10,7 @@ use App\Controllers\VoitureController;
 use App\Controllers\ReseravtionController;
 use App\Controllers\AvisController;
 use App\Controllers\ArticleController;
+use App\Controllers\ThemeController;
 
 $avisController = new AvisController();
 $reseravtionController = new ReseravtionController();
@@ -17,6 +18,7 @@ $authController = new AuthController();
 $adminController = new AdminController();
 $voitureController = new VoitureController();
 $articleController = new ArticleController;
+$themeController = new ThemeController();
 $action = $_POST['action'] ?? $_GET['action'] ?? 'auth';
 
 switch ($action) {
@@ -95,6 +97,18 @@ switch ($action) {
         break;
     case 'deleteArticle':
         $articleController->deleteArticle();
+        break;
+    case 'themeAdmin':
+        $adminController->affichierToutTheme();
+        break;
+    case 'updateTheme':
+        $adminController->updateTheme();
+        break;
+    case 'addTheme':
+        $adminController->addTheme();
+        break;
+    case 'deleteTheme':
+        $adminController->deleteTheme();
         break;
     default:
         require_once __DIR__ . '/views/auth/auth.php';
