@@ -92,7 +92,6 @@ class Categorie
             $conn = Database::getInstance()->getConnection();
             $sql = "  SELECT DISTINCT titre  FROM categories ORDER BY titre DESC";
             $stmt = $conn->query($sql);
-
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $categories = [];
 
@@ -117,8 +116,8 @@ class Categorie
         try {
             $conn = Database::getInstance()->getConnection();
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(":titre", $this->titre);
-            $stmt->bindParam(":description", $this->description);
+            $stmt->bindParam(" :titre", $this->titre);
+            $stmt->bindParam(" :description", $this->description);
             return $stmt->execute();
         } catch (Exception $e) {
             Logger::log($e->getMessage());
