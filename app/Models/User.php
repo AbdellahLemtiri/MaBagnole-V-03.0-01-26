@@ -164,7 +164,8 @@ class User
                 $_SESSION['userRole'] = $userData['role'];
 
                 return $userData['role'];
-            } else {
+            }
+            else {
                 return "mot_de_passe_incorrect";
             }
         } catch (Exception $e) {
