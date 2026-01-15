@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Controllers;
+
 use App\Models\Categorie;
+
 class CategorieController
 {
-        public function ajouterCategorie()
+    public function AddUpdateCategorie()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'add_categorie') {
             $titre = $_POST['titre'];
@@ -15,15 +18,15 @@ class CategorieController
             $cat->setDescription($description);
             $cat->setIcone($icone);
 
-            $cat->create();
-            header("Location: index.php?action=categories");
-            exit;
+            if ($cat->create()) {
+                header("Location: /MaBagnoleV1/categories?msg=true");
+                exit;
+            } else {
+                header("Location: /MaBagnoleV1/categories?msg=false");
+                exit;
+            }
         }
-    }
-
-    public function modifierCategorie()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update_categorie') {
+          if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update_categorie') {
             $id = $_POST['id'];
             $titre = $_POST['titre'];
             $description = $_POST['description'];
@@ -35,23 +38,32 @@ class CategorieController
             $cat->setDescription($description);
             $cat->setIcone($icone);
 
-            $cat->update();
-            header("Location: index.php?action=categories");
-            exit;
+            if ($cat->update()) {
+                header("Location: /MaBagnoleV1/categories?msg=true");
+                exit;
+            } else {
+                header("Location: /MaBagnoleV1/categories?msg=false");
+                exit;
+            }
         }
     }
 
+  
 
-    public function supprimerCategorie()
+
+    public function deleterCategorie()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'delete_categorie') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'deleteCategorie') {
             $id = $_POST['id'];
             $cat = new Categorie();
             $cat->setIdC($id);
-            $cat->delete();
-            header("Location: index.php?action=categories");
-            exit;
+            if ($cat->delete()) {
+                header("Location: /MaBagnoleV1/categories?msj=true");
+                exit;
+            } else {
+                header("Location: /MaBagnoleV1/categories?msj=false");
+                exit;
+            }
         }
     }
 }
- 
