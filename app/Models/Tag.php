@@ -17,33 +17,31 @@ class Tag
         $this->db = Database::getInstance();
     }
 
-public function getNomTag()
-{
-    return $this->nomTag;
-}
-public function setNomTag($nom)
-{
-    $this->nomTag = $nom;
-}
+    public function getNomTag()
+    {
+        return $this->nomTag;
+    }
+    public function setNomTag($nom)
+    {
+        $this->nomTag = $nom;
+    }
 
-public function getidTag()
-{
-    return $this->idTag;
-}
-public function setidTag($nom)
-{
-    $this->idTag = $nom;
-}
+    public function getidTag()
+    {
+        return $this->idTag;
+    }
+    public function setidTag($nom)
+    {
+        $this->idTag = $nom;
+    }
     public function getAll()
     {
         $conn = $this->db->getConnection();
         $sql = "SELECT * FROM tags ORDER BY nomTag ASC";
         $stmt = $conn->query($sql);
-        try 
-        {
+        try {
             return $stmt->fetchAll(PDO::FETCH_CLASS, Tag::class);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             Logger::log($e->getMessage());
             return [];
         }
@@ -57,47 +55,38 @@ public function setidTag($nom)
                 JOIN article_tags at ON t.idTag = at.idTag
                 WHERE at.idArticle = ?";
 
-        $stmt = $conn->prepare($sql);
-
-        $stmt->execute([$idArticle]);
-        try 
-        {
+        try {
             $stmt = $conn->prepare($sql);
+            $stmt->execute([$idArticle]);
             return $stmt->fetchAll(PDO::FETCH_CLASS, Tag::class);
-        } 
-        catch (Exception $e) 
-        {
+        } catch (Exception $e) {
+
             Logger::log($e->getMessage());
             return [];
         }
     }
 
-
     public function create()
     {
         $conn = $this->db->getConnection();
         $sql = "INSERT INTO tags (nomTag) VALUES (?)";
-        try 
-        {
+        try {
             $stmt = $conn->prepare($sql);
             return $stmt->execute([$this->nomTag]);
-        } 
-        catch (Exception $e) 
-        {
+        } catch (Exception $e) {
             Logger::log($e->getMessage());
             return false;
         }
     }
 
-      public function updateTag()
+    public function updateTag()
     {
         $conn = $this->db->getConnection();
         $sql = "UPDATE tags set nomTag = ? WHERE idTag = ?";
         try {
             $stmt = $conn->prepare($sql);
-            return $stmt->execute([$this->nomTag,$this->idTag]);
-        } 
-        catch (Exception $e) {
+            return $stmt->execute([$this->nomTag, $this->idTag]);
+        } catch (Exception $e) {
             Logger::log($e->getMessage());
             return false;
         }
@@ -116,4 +105,6 @@ public function setidTag($nom)
             return false;
         }
     }
+
+ 
 }
