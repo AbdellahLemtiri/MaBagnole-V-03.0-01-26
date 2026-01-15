@@ -17,7 +17,7 @@
                 extend: {
                     colors: {
                         "primary": "#4F46E5",
-                        /* Indigo Premium */
+                     
                         "primary-dark": "#4338CA",
                         "background-light": "#F8FAFC",
                         "background-dark": "#0F172A",
@@ -58,7 +58,7 @@
         }
     </script>
     <style>
-        /* Custom Scrollbar */
+            
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -66,7 +66,7 @@
         ::-webkit-scrollbar-track {
             background: transparent;
         }
-
+                                       
         ::-webkit-scrollbar-thumb {
             background: #CBD5E1;
             border-radius: 4px;
@@ -109,14 +109,14 @@
             background: #334155;
         }
 
-        /* Smooth Loading */
+       
         .vehicle-card {
             animation: slideUp 0.4s ease-out forwards;
         }
     </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-white min-h-screen flex flex-col transition-colors duration-300">
+<body style="width: 100%;" class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-white min-h-screen flex flex-col transition-colors duration-300">
 
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3"></div>
 
@@ -132,7 +132,7 @@
                 <div class="hidden lg:flex items-center gap-8">
                     <a href="" class=" text-sm font-bold text-primary">Véhicules</a>
                     <a class="text-sm font-medium text-text-muted dark:text-gray-400 hover:text-primary transition-colors    " href="index.php?action=reservationUser">Mes Réservations</a>
-                    <a class="text-sm font-medium text-text-muted dark:text-gray-400 hover:text-primary transition-colors    " href="index.php?action=ArticleUser">Blog</a>
+                    <a class="text-sm font-medium text-text-muted dark:text-gray-400 hover:text-primary transition-colors    " href="index.php?action=themeClient">Blog</a>
                 </div>
             </div>
 
@@ -168,10 +168,10 @@
             <div class="flex items-center gap-3 bg-white dark:bg-card-dark p-1 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
                 <span class="pl-3 text-sm font-medium text-text-muted">Trier:</span>
                 <select id="sortSelect" class="border-none bg-transparent text-sm font-bold text-gray-800 dark:text-white focus:ring-0 cursor-pointer py-2 pr-8">
-                    <option value="relevance">Pertinence</option>
-                    <option value="price_asc">Prix: Croissant</option>
-                    <option value="price_desc">Prix: Décroissant</option>
-                    <option value="rating">Mieux Notés</option>
+                    <option class="dark:bg-background-dark" value="relevance">Pertinence</option>
+                    <option class="dark:bg-background-dark" value="price_asc">Prix: Croissant</option>
+                    <option class="dark:bg-background-dark"  value="price_desc">Prix: Décroissant</option>
+                    <option class="dark:bg-background-dark"  value="rating">Mieux Notés</option>
                 </select>
             </div>
         </div>
@@ -218,7 +218,6 @@
                         Effacer les filtres
                     </button>
                 </div>
-
                 <div class="flex items-center justify-center gap-2 mt-12" id="pagination">
                 </div>
             </div>
@@ -227,7 +226,8 @@
 
     <footer class="bg-white dark:bg-card-dark border-t border-gray-100 dark:border-gray-800 py-10 mt-auto transition-colors">
         <div class="max-w-[1440px] mx-auto px-6 text-center">
-            <p class="text-sm text-text-muted">© 2024 LuxeDrive. Fait avec passion pour le code.</p>
+            <p class="text-sm text-text-muted">© 2026 Ma Bagnole by lemtiri . Fait avec passion pour le code.</p>
+                                               <!-- 31-12-2025 -->
         </div>
     </footer>
     <script>
@@ -479,45 +479,59 @@
             activeFiltersEl.innerHTML = html;
         }
 
-        function renderPagination() {
-            const totalPages = Math.ceil(state.vehicles.length / state.itemsPerPage);
-            if (totalPages <= 1) {
-                paginationEl.innerHTML = '';
-                return;
-            }
+// 1. renderPagination (B9at kif ma hiya)
+function renderPagination() {
+    const totalPages = Math.ceil(state.vehicles.length / state.itemsPerPage);
+    if (totalPages <= 1) {
+        paginationEl.innerHTML = '';
+        return;
+    }
 
-            let html = `
-            <button onclick="changePage(${state.currentPage - 1})" ${state.currentPage === 1 ? 'disabled' : ''} class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors">
-                <span class="material-symbols-rounded">chevron_left</span>
-            </button>
-        `;
+    let html = `
+    <button onclick="changePage(${state.currentPage - 1})" ${state.currentPage === 1 ? 'disabled' : ''} class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors">
+        <span class="material-symbols-rounded">chevron_left</span>
+    </button>`;
 
-            for (let i = 1; i <= totalPages; i++)
-            {
-                html += `
-                <button onclick="changePage(${i})" class="w-10 h-10 flex items-center justify-center rounded-full font-bold transition-all ${state.currentPage === i ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-110' : 'bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800'}">
-                    ${i}
-                </button>
-            `;
-            }
+    for (let i = 1; i <= totalPages; i++) {
+        const activeClass = 'bg-primary text-white shadow-lg shadow-primary/30 scale-110 border-transparent';
+        const inactiveClass = 'bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800';
+        
+        html += `
+        <button onclick="changePage(${i})" class="w-10 h-10 flex items-center justify-center rounded-full font-bold transition-all ${state.currentPage === i ? activeClass : inactiveClass}">
+            ${i}
+        </button>`;
+    }
 
-            html += `
-            <button onclick="changePage(${state.currentPage + 1})" ${state.currentPage === totalPages ? 'disabled' : ''} class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors">
-                <span class="material-symbols-rounded">chevron_right</span>
-            </button>
-        `;
-            paginationEl.innerHTML = html;
-        }
+    html += `
+    <button onclick="changePage(${state.currentPage + 1})" ${state.currentPage === totalPages ? 'disabled' : ''} class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors">
+        <span class="material-symbols-rounded">chevron_right</span>
+    </button>`;
+    
+    paginationEl.innerHTML = html;
+}
 
-        window.changePage = function(page) {
-            state.currentPage = page;
-            renderGrid();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
+// 2. CHANGE PAGE (L-w7ida li khassha tkoun)
+window.changePage = function(page) {
+    const totalPages = Math.ceil(state.vehicles.length / state.itemsPerPage);
 
+    // Validation
+    if (page < 1 || page > totalPages) return;
+
+    // A. Beddel l-page f state
+    state.currentPage = page;
+
+    // B. Affiche l-contenu jdid (Tomobilat)
+    renderGrid();
+
+    // C. Scroll lfo9 (UX)
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+
+    // D. *** UPDATE BUTTONS *** (Hadi hiya li ghatrd lik l-loun zra9)
+    renderPagination();
+}
 
         function toggleTheme() {
             const html = document.documentElement;
@@ -591,12 +605,15 @@
                         icon.classList.remove('text-gray-400');
                         icon.classList.add('text-red-500', 'filled');
                         console.log(idVoiture + "ajoutee");
-                    } else {
+                    } 
+                    else {
                         icon.classList.remove('text-red-500', 'filled');
                         icon.classList.add('text-gray-400');
                         console.log(idVoiture);
                     }
-                } else if (result.message === 'Non connecté') {
+                } 
+                
+                else if (result.message === 'Non connecté') {
                     alert("Veuillez vous connecter pour ajouter aux favoris !");
                     window.location.href = '/MaBagnoleV1/views/auth/login.php';
                 } else {
