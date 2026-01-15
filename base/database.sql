@@ -1,9 +1,13 @@
--- 1. Création de la base de données
+--  Création de la base de données
 DROP DATABASE IF EXISTS MaBagnole;
 CREATE DATABASE MaBagnole;
 USE MaBagnole;
 
---_____________  Table: User (Utilisateurs)_____________________________
+--_____________(MaBagnole)__________________--
+
+
+--  Table : users
+
 CREATE TABLE users (                                                           
     idUser INT NOT NULL PRIMARY KEY AUTO_INCREMENT,                           
     name VARCHAR(50) NOT NULL,                                             
@@ -15,6 +19,7 @@ CREATE TABLE users (
     role ENUM('admin','client') DEFAULT 'client'
 )  
 
+--  Table : categories
 
 CREATE TABLE categories (
     idCategorie INT PRIMARY KEY AUTO_INCREMENT,
@@ -23,6 +28,7 @@ CREATE TABLE categories (
     description VARCHAR(250)
 )  
 
+--  Table : voitures
 
 CREATE TABLE voitures (
     idV INT PRIMARY KEY AUTO_INCREMENT, 
@@ -39,6 +45,7 @@ CREATE TABLE voitures (
     FOREIGN KEY (idC) REFERENCES categories(idCategorie) ON DELETE CASCADE
 )  
 
+--  Table : reservations
 
 CREATE TABLE reservations (
     idReservation INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -54,6 +61,8 @@ CREATE TABLE reservations (
 
 ALTER Table reservations ADD COLUMN totalPrix DECIMAL(10,2);
 
+--  Table : options
+ 
 CREATE TABLE options (
     idOption INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     titre VARCHAR(255) NOT NULL,
@@ -61,6 +70,7 @@ CREATE TABLE options (
     prix DECIMAL(10, 2) NOT NULL 
 )  
 
+--  Table : option_reservation
 
 CREATE TABLE option_reservation (
     idOptionReservation INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -70,7 +80,8 @@ CREATE TABLE option_reservation (
     FOREIGN KEY (idOption) REFERENCES options(idOption) ON DELETE CASCADE
 )  
 
--- 8. Table: Avis 
+--  Table: Avis 
+
 CREATE TABLE avis (
     idAvis INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     commentaire VARCHAR(255) NOT NULL,
@@ -83,7 +94,8 @@ CREATE TABLE avis (
     FOREIGN KEY (idClient) REFERENCES users(idUser) ON DELETE CASCADE
 );
 
--- . Table: Favoris
+--  Table: Favoris
+
 CREATE TABLE favoris (
     idFavoris INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     idClient INT NOT NULL,
@@ -92,15 +104,19 @@ CREATE TABLE favoris (
     FOREIGN KEY (idV) REFERENCES voitures(idV) ON DELETE CASCADE
 )  
 
--- . Table: ReagirAvis 
+--  Table: ReagirAvis 
+
 CREATE TABLE reagir_avis (
     idReagirAvis INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     idAvis INT NOT NULL,
     idClient INT NOT NULL,
-    typeReaction ENUM('like', 'dislike') NOT NULL, -- Ajout pour savoir si c'est like ou dislike
+    typeReaction ENUM('like', 'dislike') NOT NULL,  
     FOREIGN KEY (idAvis) REFERENCES avis(idAvis) ON DELETE CASCADE,
     FOREIGN KEY (idClient) REFERENCES users(idUser) ON DELETE CASCADE
 );
+
+
+--  View : ListeVehicules
 
 CREATE OR REPLACE VIEW ListeVehicules AS
 SELECT 
@@ -110,6 +126,7 @@ FROM voitures v
 LEFT JOIN categories c ON v.idC = c.idCategorie;
 
 
+--  View : Pour une suel vihicule
 CREATE OR REPLACE VIEW uneVehicule AS
 SELECT 
     v.*, 
@@ -117,12 +134,12 @@ SELECT
 FROM voitures v 
 LEFT JOIN categories c ON v.idC = c.idCategorie;
 
+
 ALTER TABLE reservations 
 ADD totalPrix DECIMAL(10, 2) NOT NULL AFTER status;
 DROP PROCEDURE IF EXISTS AjouterReservation;
-
 DELIMITER //
-
+--  PROCEDURE : Pour Ajoute un Reservation 
 CREATE PROCEDURE AjouterReservation(
     IN p_dateDebut DATE,
     IN p_dateFin DATE,
@@ -142,6 +159,8 @@ USE MaBagnole;
 
 DROP TABLE IF EXISTS themes
 
+--  Table : themes
+
 CREATE TABLE themes (
     idTheme INT PRIMARY KEY AUTO_INCREMENT,
     nomTheme VARCHAR(100) NOT NULL,
@@ -152,6 +171,7 @@ CREATE TABLE themes (
 ALTER TABLE themes 
 CHANGE iconTheme iconeTheme varchar(50);
 
+--  Table : articles
 
 CREATE TABLE articles (
     idArticle INT PRIMARY KEY AUTO_INCREMENT,
@@ -167,11 +187,14 @@ CREATE TABLE articles (
     FOREIGN KEY (idUser) REFERENCES users(idUser) ON DELETE CASCADE
 );
  
+ --  Table : tags
 CREATE TABLE tags (
     idTag INT PRIMARY KEY AUTO_INCREMENT,
     nomTag VARCHAR(50) NOT NULL UNIQUE
 );
  
+ --  Table : article_tags
+
 CREATE TABLE article_tags (
     idArticle INT NOT NULL,
     idTag INT NOT NULL,
@@ -180,7 +203,7 @@ CREATE TABLE article_tags (
     FOREIGN KEY (idTag) REFERENCES tags(idTag) ON DELETE CASCADE
 );
 
- 
+ --  Table : comments
 CREATE TABLE comments (
     idComment INT PRIMARY KEY AUTO_INCREMENT,
     contenu TEXT NOT NULL,
@@ -192,6 +215,10 @@ CREATE TABLE comments (
     FOREIGN KEY (idUser) REFERENCES users(idUser) ON DELETE CASCADE
 );
 
+
+
+--  Table : article_favoris
+
 CREATE TABLE article_favoris (
     idUser INT NOT NULL,
     idArticle INT NOT NULL,
@@ -200,18 +227,5 @@ CREATE TABLE article_favoris (
     FOREIGN KEY (idArticle) REFERENCES articles(idArticle) ON DELETE CASCADE
 );
 
+--_-_-__-_-__-_-__-_-__-_-__-_-___the end ___-_-__-_-__-_-__-_-__-_-__-_-__-_--
 
-SELECT c.idComment, c.contenu, c.dateCommentaire, c.idUser, c.status, u.name, u.LastName FROM comments c JOIN users u ON c.idUser = u.idUser
-                WHERE c.idArticle = 113 AND c.status = 'active' AND u.status = 1
-                ORDER BY c.dateCommentaire DESC
-
-
-ALTER TABLE avis ADD COLUMN idVoiture INT(11)
-
-ALTER TABLE avis  ADD CONSTRAINT FOREIGN KEY (idVoiture) REFERENCES voitures(idV) 
-
-
-
-
-SELECT a.* , u.name,u.`LastName`FROM avis a INNER join users u  on a.`idClient` = u.`idUser` INNER JOIN voitures v on a.`idVoiture`
- = v.`idV`
