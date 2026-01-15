@@ -26,9 +26,15 @@ class ReseravtionController
             $res->setIdVoiture($idVoiture);
             $res->setTotalPrix($Prixtotal);
             $res->setLieuChange($lieu);
-            $res->addReseravtion();
-            header("Location: index.php?action=carList&msg=reservie avec succes");
-            exit;
+            if ($res->addReseravtion()) {
+            
+                header("Location: /MaBagnoleV1/carList?msg=success");
+                exit;
+            } else {
+                
+                header("Location: /MaBagnoleV1/carList?msg=error");
+                exit;
+            }
         }
     }
 
@@ -39,12 +45,36 @@ class ReseravtionController
             $status = $_POST['new_status'];
             $reservation = new Reservation();
             if ($reservation->updateStatus($id, $status)) {
-                header("Location: index.php?action=reservation&msg=true");
+                header("Location:/MaBagnoleV1/reservation?msg=true");
                 exit;
             } else {
-                header("Location: index.php?action=reservation&msg=false");
+                header("Location:/MaBagnoleV1/reservation?msg=false");
                 exit;
             }
+        }
+    }
+    public function cancelReservation() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            if (session_status() === PHP_SESSION_NONE) session_start();
+
+             
+
+            $idReservation = $_POST['id_reservation'];
+            $idUser = $_SESSION['user_id'];
+
+            $reservationModel = new Reservation();
+
+         
+            $success = $reservationModel->annulerReservation($idReservation);
+
+            if ($success) {
+              
+                header('Location: reservationUser?msg=true');
+            } else {
+                header('Location: reservationUser?msg=false');
+            }
+            exit();
         }
     }
 }
