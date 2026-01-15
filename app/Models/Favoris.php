@@ -39,7 +39,7 @@ class Favoris
             return $stmt->fetch() ? true : false;
 
         } catch (Exception $e) {
-            Logger::log($e->getMessage());
+            Logger::log('like' . $e->getMessage());
             return false;
         }
     }
