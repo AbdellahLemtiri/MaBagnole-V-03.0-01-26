@@ -79,7 +79,7 @@ class Theme
             }
             return $themes;
         } catch (Exception $e) {
-            Logger::log("article".$e->getMessage());
+            Logger::log("article" . $e->getMessage());
             return [];
         }
     }
@@ -87,11 +87,10 @@ class Theme
 
     public function getThemeById(int $id)
     {
-
-
         $conn = $this->db->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM themes WHERE idTheme = ?");
+        $sql = "SELECT * FROM themes WHERE idTheme = ?";
         try {
+            $stmt = $conn->prepare($sql);
             $stmt->execute([$id]);
             $res =  $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -130,7 +129,7 @@ class Theme
 
         try {
             $stmt = $conn->prepare($sql);
-            return $stmt->execute([':id'=>$this->idTheme,':nom'=>$this->nomTheme, ':description'=> $this->description, ':icon' =>$this->iconeTheme]);
+            return $stmt->execute([':id' => $this->idTheme, ':nom' => $this->nomTheme, ':description' => $this->description, ':icon' => $this->iconeTheme]);
         } catch (Exception $e) {
             Logger::log($e->getMessage());
             return false;
@@ -150,5 +149,4 @@ class Theme
             return false;
         }
     }
-   
 }
