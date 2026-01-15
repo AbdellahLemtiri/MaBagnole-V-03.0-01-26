@@ -34,7 +34,7 @@ class VoitureController
 
     public function carList()
     {
-        require_once 'views/client/carList.php';
+        require_once '../App/views/client/carList.php';
     }
 
 
@@ -63,7 +63,7 @@ class VoitureController
                         $v->setMarqueV($marques[$i]);
                         $v->setMatriculeV($matricules[$i]);
                         $v->setPrixJourV($prix[$i]);
-                        $v->setIdCV($categories[$i]);
+                        $v->setIdCV((int)$categories[$i]);
                         $v->setBoiteV($boites[$i]);
                         $v->setPlacesV($places[$i]);
                         $v->setCarburantV($carburants[$i]);
@@ -77,7 +77,7 @@ class VoitureController
                     }
                 }
             }
-            header("Location: index.php?action=carAdmin&msg=" . $successCount . " voitures ajoutées avec succès");
+            header("Location: /MaBagnoleV1/carAdmin?msg=true");
             exit;
         }
     }
@@ -90,14 +90,14 @@ class VoitureController
 
             if ($v->deleteVoiture()) {
 
-                header("Location: index.php?action=carAdmin&msg=Supprimé avec succès");
+                header("Location: /MaBagnoleV1/carAdmin?msg=true");
                 exit;
             } else {
-                header("Location: index.php?action=carAdmin&error=Erreur de suppression");
+                header("Location: /MaBagnoleV1/carAdmin?msg=false");
                 exit;
             }
         } else {
-            header("Location: index.php?action=carAdmin&error=Action non autorisée");
+            header("Location: /MaBagnoleV1/carAdmin?msg=false");
             exit;
         }
     }
@@ -115,12 +115,13 @@ class VoitureController
             $v->setCarburantV($_POST['carburant']);
             $v->setStatusV($_POST['status']);
             $v->setImageUrlV($_POST['image']);
-            $v->setIdCV($_POST['categorie_id']);
+            $v->setIdCV((int)$_POST['categorie_id']);
+            $v->setPlacesV((int)$_POST['places']);
 
             if ($v->updateVoiture()) {
-                header("Location: index.php?action=carAdmin&msg=Voiture modifiée avec succès");
+                header("Location: /MaBagnoleV1/carAdmin?msg=true");
             } else {
-                header("Location: index.php?action=carAdmin&error=Erreur lors de la modification");
+                header("Location: /MaBagnoleV1/carAdmin?msg=false");
             }
             exit;
         }
