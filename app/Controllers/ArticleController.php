@@ -10,34 +10,9 @@ class ArticleController
 
 {
 
-    public function getAllArticleClient()
-    {
 
-        if (!isset($_SESSION['userId'])) {
-            header('Location: index.php?action=auth');
-            exit();
-        } else {
-            $idUser = $_SESSION['userId'];
-            $articleModel = new Article();
-            $themeModel = new Theme();
-            $tagModel = new Tag();
-            $articles = $articleModel->getAllPublished();
-            $themes = $themeModel->getAllTheme();
-            $tags = $tagModel->getAll();
-            $articles = $articleModel->getAllPublished();
-            $tags = $tagModel->getAll();
-            require_once 'views/client/blog.php';
-        }
-    }
 
-    public function getAllArticleAdmin()
-    {
-        $obj = new Article();
-        $articles =  $obj->getAllArticle();
-        $counArticlepublished = $obj->getCountArticlesPublished();
-        $CountArticlesPending = $obj->getCountArticlesPending();
-        require_once 'views/admin/article.php';
-    }
+
     public function approveArticle()
     {
         if (isset($_POST['id']) && $_POST['action'] == "approveArticle") {
@@ -46,14 +21,14 @@ class ArticleController
             $obj->setIdArticle($id);
             $obj->setStatus('published');
             if ($obj->updateStatus()) {
-                header('Location: index.php?action=ArticleAdmin&msj=true');
+                header('Location: /MaBagnoleV1/ArticleAdmin?msj=true');
                 exit;
             } else {
-                header('Location: index.php?action=ArticleAdmin&msj=false');
+                header('Location: /MaBagnoleV1/ArticleAdmin?msj=false');
                 exit;
             }
         } else {
-            header('Location: index.php?action=ArticleAdmin&msj=incomplete');
+            header('Location: /MaBagnoleV1/ArticleAdmin?msj=incomplete');
             exit;
         }
     }
@@ -79,14 +54,14 @@ class ArticleController
             $obj->setIdArticle($id);
             $obj->setStatus('rejected');
             if ($obj->updateStatus()) {
-                header('Location: index.php?action=ArticleAdmin&msj=true');
+                header('Location: /MaBagnoleV1/ArticleAdmin?msj=true');
                 exit;
             } else {
-                header('Location: index.php?action=ArticleAdmin&msj=false');
+                header('Location: /MaBagnoleV1/ArticleAdmin?msj=false');
                 exit;
             }
         } else {
-            header('Location: index.php?action=ArticleAdmin&msj=incomplete');
+            header('Location: /MaBagnoleV1/ArticleAdmin?msj=incomplete');
             exit;
         }
     }
@@ -97,50 +72,59 @@ class ArticleController
             $obj = new Article();
             $obj->setIdArticle($id);
             if ($obj->deleteArticle()) {
-                header('Location: index.php?action=ArticleAdmin&msj=true');
+                header('Location: /MaBagnoleV1/ArticleAdmin?msj=true');
                 exit;
             } else {
-                header('Location: index.php?action=ArticleAdmin&msj=false');
+                header('Location: /MaBagnoleV1/ArticleAdmin?msj=false');
                 exit;
             }
         } else {
-            header('Location: index.php?action=ArticleAdmin&msj=incomplete');
+            header('Location: /MaBagnoleV1/ArticleAdmin?msj=incomplete');
             exit;
         }
     }
     public function saveArticle()
     {
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'saveArticle') {
-            $id = $_POST['id'];
-            $titre = $_POST['titre'];
-            $contenu = $_POST['contenu'];
-            $theme_id = $_POST['theme_id'];
-            $imagePath = null;
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['theme_id'], $_POST['titre']) && $_POST['action'] === 'saveArticle') {
+
+
+            $theme_id = (int)$_POST['theme_id'];
+            $titre =  ($_POST['titre']);
+            $contenu =  ($_POST['contenu']);
+
+
+            $redirectId = $theme_id;
+
+            $imagePath = '';
+
 
             if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
                 $allowed = ['jpg', 'jpeg', 'png', 'webp'];
                 $filename = $_FILES['image']['name'];
-                $filetype = $_FILES['image']['type'];
                 $filesize = $_FILES['image']['size'];
-
-
                 $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
+
                 if (!in_array($ext, $allowed)) {
-                    header('Location: index.php?action=ArticleTheme&idTheme=' . $id . '&msj=formaInvalide');
-                    exit;
-                }
-                if ($filesize > 4 * 1024 * 1024) {
-                    header('Location: index.php?action=ArticleTheme&idTheme=' . $id . '&msj=tailleInvalide');
-                    exit;
+                    header('Location: /MaBagnoleV1/ArticleTheme?idTheme=' . $redirectId . '&msg=invalid_type');
+                    exit();
                 }
 
-                //  un nom unique pour 
+
+                if ($filesize > 8 * 1024 * 1024) {
+                    header('Location: /MaBagnoleV1/ArticleTheme?idTheme=' . $redirectId . '&msg=too_large');
+                    exit();
+                }
+
+
                 $newFilename = "article_" . uniqid() . "." . $ext;
-                // Définir le dossier de destination
-                $uploadDir = "images/";
-                // Créer le dossier 
+
+                $uploadDir = "/assets/images/articles/";
+ 
+
                 if (!is_dir($uploadDir)) {
                     mkdir($uploadDir, 0755, true);
                 }
@@ -148,32 +132,33 @@ class ArticleController
                 $destination = $uploadDir . $newFilename;
 
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-
                     $imagePath = $destination;
                 } else {
-                    header('Location: index.php?action=ArticleTheme&idTheme=' . $id . '&msj=ereurImage');
-                    exit;
+                    header('Location: /MaBagnoleV1/ArticleTheme?idTheme=' . $redirectId . '&msg=upload_error');
+                    exit();
                 }
             }
 
 
-            
             $article = new Article();
+            $article->setTitre($titre);
             $article->setContenu($contenu);
             $article->setIdTheme($theme_id);
-            $article->setTitre($titre);
             $article->setImageArticle($imagePath);
-            $article->setidUser(1);
-            if ($article->createArticle([])) {
-                header('Location: index.php?action=ArticleTheme&idTheme=' . $id . '&msj=succes');
-                exit;
-            } else {
-                header('Location: index.php?action=ArticleTheme&idTheme=' . $id . '&msj=ereurdb');
-                exit;
-            }
+            $article->setidUser($_SESSION['userId']);
 
-            
-        
+            if ($article->createArticle()) {
+                header('Location: /MaBagnoleV1/ArticleTheme?idTheme=' . $redirectId . '&msg=true');
+                exit();
+            } else {
+                header('Location: /MaBagnoleV1/ArticleTheme?idTheme=' . $redirectId . '&msg=db_error');
+                exit();
+            }
+        } else {
+
+            $fallbackId = isset($_POST['theme_id']) ? $_POST['theme_id'] : '';
+            header('Location: /MaBagnoleV1/ArticleTheme?idTheme=' . $fallbackId . '&msg=false');
+            exit();
         }
     }
 }
