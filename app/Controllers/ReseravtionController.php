@@ -26,15 +26,25 @@ class ReseravtionController
             $res->setIdVoiture($idVoiture);
             $res->setTotalPrix($Prixtotal);
             $res->setLieuChange($lieu);
-            $res->ajouterReservation();
+            $res->addReseravtion();
             header("Location: index.php?action=carList&msg=reservie avec succes");
             exit;
         }
     }
-    public function ReservationClient()
+
+    public function updateStatusRsevation()
     {
-        $reservationModel = new Reservation();
-        $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId']);
-        require_once 'views/client/reservation.php';
+        if (isset($_POST['id_reservation']) && $_POST['action'] === 'updateStatusRservation') {
+            $id = $_POST['id_reservation'];
+            $status = $_POST['new_status'];
+            $reservation = new Reservation();
+            if ($reservation->updateStatus($id, $status)) {
+                header("Location: index.php?action=reservation&msg=true");
+                exit;
+            } else {
+                header("Location: index.php?action=reservation&msg=false");
+                exit;
+            }
+        }
     }
 }
