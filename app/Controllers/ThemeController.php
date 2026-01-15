@@ -7,7 +7,7 @@ use App\Models\Theme;
 class ThemeController
 {
 
-   
+
     public function updateTheme()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['nom'])) {
@@ -21,14 +21,14 @@ class ThemeController
             $obj->seticoneTheme($icon);
             $obj->setIdTheme($id);
             if ($obj->updateTheme()) {
-                header('Location: index.php?action=themeAdmin&msj=true');
+                header('Location: /MaBagnoleV1/themeAdmin?msg=true');
                 exit;
             } else {
-                header('Location: index.php?action=themeAdmin&msj=false');
+                header('Location: /MaBagnoleV1/themeAdmin?msg=false');
                 exit;
             }
         } else {
-            header('Location: index.php?action=themeAdimn&msj=incomplete');
+            header('Location: /MaBagnoleV1/themeAdimn?msg=incomplete');
             exit;
         }
     }
@@ -44,14 +44,14 @@ class ThemeController
             $obj->seticoneTheme($icon);
 
             if ($obj->createTheme()) {
-                header('Location: index.php?action=themeAdmin&msj=true');
+                header('Location: /MaBagnoleV1/themeAdmin?msg=true');
                 exit;
             } else {
-                header('Location: index.php?action=themeAdmin&msj=false');
+                header('Location: /MaBagnoleV1/themeAdmin?msg=false');
                 exit;
             }
         } else {
-            header('Location: index.php?action=themeAdimn&msj=incomplete');
+            header('Location: /MaBagnoleV1/themeAdimn?msg=incomplete');
             exit;
         }
     }
@@ -64,14 +64,14 @@ class ThemeController
             $theme = new Theme();
             $theme->setIdTheme($id);
             if ($theme->delete($id)) {
-                header('Location: index.php?action=themeAdmin&msj=true');
+                header('Location: /MaBagnoleV1/themeAdmin?msg=true');
                 exit;
             } else {
-                header('Location: index.php?action=themeAdmin&msj=false');
+                header('Location: /MaBagnoleV1/themeAdmin?msg=false');
                 exit;
             }
         } else {
-            header('Location: index.php?action=themeAdimn&msj=incomplete');
+            header('Location: /MaBagnoleV1/themeAdimn?msg=incomplete');
             exit;
         }
     }
