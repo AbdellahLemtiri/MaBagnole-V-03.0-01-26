@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html class="light" lang="fr">
 
@@ -70,11 +71,14 @@
         <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
             <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-2">Gestion</p>
 
-            <a href="dashboard.php" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+            <a href="index.php?action=reservation" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
                 <span class="material-symbols-outlined">dashboard</span>
                 Tableau de bord
             </a>
-
+            <a href="index.php?action=carAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+                <span class="material-symbols-outlined">garage</span>
+                Cars
+            </a>
             <a href="index.php?action=categories" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
                 <span class="material-symbols-outlined">category</span>
                 Catégories
@@ -85,30 +89,24 @@
                 Clients
             </a>
 
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
-                <span class="material-symbols-outlined">reviews</span>
-                Avis & Notes
-            </a>
 
-            <a href="article.php" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all">
+
+            <a href="index.php?action=ArticleAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all">
                 <span class="material-symbols-outlined">article</span>
                 Articles
             </a>
 
-            <a href="themes.php" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+            <a href="index.php?action=themeAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
                 <span class="material-symbols-outlined">category</span>
                 Thèmes
             </a>
 
-            <a href="tags.php" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+            <a href="index.php?action=tagsAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
                 <span class="material-symbols-outlined filled">label</span>
                 Tags
             </a>
 
-            <a href="comments.php" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
-                <span class="material-symbols-outlined">comment</span>
-                Commentaires
-            </a>
+            
         </nav>
 
         <div class="p-4 border-t border-gray-100 dark:border-gray-700">
@@ -132,12 +130,7 @@
                     <span class="material-symbols-outlined absolute left-3 top-2.5 text-gray-400 text-[20px]">search</span>
                     <input type="text" placeholder="Rechercher..." class="pl-10 pr-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 dark:text-white w-64 transition-all">
                 </div>
-                <button
-                    onclick="openModal()"
-                    class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors shadow-lg shadow-primary/30">
-                    <span class="material-symbols-outlined text-[20px]">add</span>
-                    <span class="hidden sm:inline">Nouvel Article</span>
-                </button>
+             
                 <div
                     class="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden border-2 border-white dark:border-gray-600 shadow-sm">
                     <img
@@ -161,7 +154,7 @@
                             </p>
                             <h3
                                 class="text-3xl font-bold text-slate-800 dark:text-white mt-1">
-                                42
+                                <?= count($articles) ?>
                             </h3>
                         </div>
                         <div
@@ -179,7 +172,7 @@
                             </p>
                             <h3
                                 class="text-3xl font-bold text-slate-800 dark:text-white mt-1">
-                                35
+                                <?= $counArticlepublished ?>
                             </h3>
                         </div>
                         <div
@@ -197,7 +190,7 @@
                             </p>
                             <h3
                                 class="text-3xl font-bold text-slate-800 dark:text-white mt-1">
-                                7
+                                <?= $CountArticlesPending ?>
                             </h3>
                         </div>
                         <div
@@ -249,7 +242,7 @@
                                                 $statusClass = 'bg-danger/10 text-danger border-danger/20';
                                                 $statusLabel = 'Refusé';
                                                 break;
-                                            default: // brouillon
+                                            default: 
                                                 $statusClass = 'bg-gray-100 text-gray-500 border-gray-200';
                                                 $statusLabel = 'Brouillon';
                                                 break;
@@ -322,9 +315,7 @@
                                                         $titre = $article->getTitre();
                                                     ?>
 
-                                                        <button onclick="openEditModal(<?= $id, $titre, $contenu ?> )" class="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Modifier">
-                                                            <span class="material-symbols-outlined text-[20px]">edit</span>
-                                                        </button>
+                                                      
                                                         <form action="index.php" method="POST" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
                                                             <input type="hidden" name="id" value="<?= $article->getIdArticle() ?>">
                                                             <input type="hidden" name="action" value="deleteArticle">
@@ -356,94 +347,7 @@
         </div>
     </main>
 
-    <div id="articleModal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center px-4 py-6">
-        <div class="absolute inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
-
-        <div class="modal-content relative w-full max-w-4xl bg-white dark:bg-surface dark:border dark:border-gray-700 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-
-            <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-surface">
-                <h2 class="text-xl font-bold dark:text-white flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary">edit_document</span>
-                    Éditeur d'Article
-                </h2>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-danger transition-colors">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
-            </div>
-
-            <div class="flex-1 overflow-y-auto custom-scroll p-6 md:p-8 bg-gray-50 dark:bg-dark">
-                <form action="index.php?actionn=saveArticle" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <input type="hidden" name="id" id="modal_id">
-                    <input type="hidden" name="action" value="saveArticle">
-
-                    <div class="lg:col-span-2 space-y-5">
-                        <div class="space-y-2">
-                            <label class="block text-sm font-semibold text-slate-700 dark:text-gray-300">Titre</label>
-                            <input type="text" name="titre" id="modal_titre" placeholder="Titre de l'article"
-                                class="w-full bg-white dark:bg-surface border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-primary rounded-xl px-4 py-3 dark:text-white transition-colors">
-                        </div>
-
-                        <div class="space-y-2">
-                            <label class="block text-sm font-semibold text-slate-700 dark:text-gray-300">Contenu</label>
-                            <textarea name="contenu" id="modal_contenu" rows="12" placeholder="Rédigez l'article..."
-                                class="w-full bg-white dark:bg-surface border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-primary rounded-xl px-4 py-3 dark:text-white transition-colors"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="space-y-6">
-                        <div class="bg-white dark:bg-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700">
-                            <label class="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-3">Image de couverture</label>
-                            <div class="aspect-video rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 flex flex-col items-center justify-center text-slate-400 hover:border-primary hover:text-primary transition-colors cursor-pointer relative">
-                                <input type="file" name="image" id="modal_image" class="absolute inset-0 opacity-0 cursor-pointer">
-                                <span class="material-symbols-outlined text-3xl">image</span>
-                                <span class="text-xs mt-1">Upload</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-white dark:bg-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700 space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Statut</label>
-                                <select name="statut" id="modal_statut" class="w-full bg-gray-50 dark:bg-dark border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-sm dark:text-white focus:border-primary focus:ring-primary">
-                                    <option value="publie">✅ Publié</option>
-                                    <option value="brouillon">📝 Brouillon</option>
-                                    <option value="attente">⏳ En attente</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Catégorie</label>
-                                <select name="theme_id" id="modal_theme" class="w-full bg-gray-50 dark:bg-dark border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-sm dark:text-white focus:border-primary focus:ring-primary">
-                                    <option value="1">Mécanique</option>
-                                    <option value="2">Essais</option>
-                                    <option value="3">Lifestyle</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Tags</label>
-                                <div class="flex flex-wrap gap-2">
-                                    <label class="cursor-pointer">
-                                        <input type="checkbox" name="tags[]" value="1" class="peer hidden">
-                                        <span class="px-2 py-1 rounded text-xs border border-gray-200 dark:border-gray-700 dark:text-gray-400 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all">#BMW</span>
-                                    </label>
-                                    <label class="cursor-pointer">
-                                        <input type="checkbox" name="tags[]" value="2" class="peer hidden">
-                                        <span class="px-2 py-1 rounded text-xs border border-gray-200 dark:border-gray-700 dark:text-gray-400 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all">#Sport</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="w-full py-3 bg-primary hover:bg-primary-hover text-white rounded-xl font-bold shadow-lg shadow-primary/30 transition-all">
-                            Sauvegarder
-                        </button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-
+     
     <script>
         function toggleTheme() {
             if (document.documentElement.classList.contains("dark")) {
@@ -461,21 +365,10 @@
 
         const modal = document.getElementById('articleModal');
 
-        function openModal() {
-            document.getElementById('modal_id').value = '';
-            modal.classList.remove('hidden');
-        }
+        
 
-        function openEditModal(id, titre, contenu, themeId, image, status, tags) {
-            document.getElementById('modal_id').value = id;
-            document.getElementById('modal_titre').value = titre;
-            document.getElementById('modal_contenu').value = contenu;
-            modal.classList.remove('hidden');
-        }
-
-        function closeModal() {
-            modal.classList.add('hidden');
-        }
+         
+ 
 
         window.onclick = function(event) {
             if (event.target == modal) {

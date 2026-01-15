@@ -69,26 +69,41 @@
     <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
       <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-2">Gestion</p>
 
-      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all">
-        <span class="material-symbols-outlined filled">dashboard</span>
+      <a href="index.php?action=reservation" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined">dashboard</span>
         Tableau de bord
       </a>
-      <a href="index.php?action=categories" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+      <a href="index.php?action=carAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all">
+        <span class="material-symbols-outlined">garage</span>
+        Cars
+      </a>
+      <a href="index.php?action=categories"  class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
         <span class="material-symbols-outlined">category</span>
         Catégories
       </a>
-      <a href="index.php?action=usersAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+
+      <a href="index.php?action=usersAdmin"  class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
         <span class="material-symbols-outlined">group</span>
         Clients
       </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
-        <span class="material-symbols-outlined">reviews</span>
-        Avis & Notes
+
+
+
+      <a href="index.php?action=ArticleAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined">article</span>
+        Articles
       </a>
-      <a href="admin_articles.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined">article</span> Articles</a>
-      <a href="admin_themes.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined">category</span> Thèmes</a>
-      <a href="admin_tags.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined">label</span> Tags</a>
-      <a href="#"  class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"><span class="material-symbols-outlined filled">comment</span> Commentaires</a>
+
+      <a href="index.php?action=themeAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined">category</span>
+        Thèmes
+      </a>
+
+      <a href="index.php?action=tagsAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined filled">label</span>
+        Tags
+      </a>
+ 
     </nav>
 
     <div class="p-4 border-t border-gray-100 dark:border-gray-700">
@@ -119,74 +134,12 @@
     <div class="flex-1 overflow-y-auto p-6 md:p-8 scroll-smooth">
       <div class="max-w-7xl mx-auto space-y-8">
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-white dark:bg-surface p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Revenu Total</p>
-                <h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-2">124k <span class="text-sm text-slate-400">DH</span></h3>
-              </div>
-              <div class="p-3 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-xl">
-                <span class="material-symbols-outlined">payments</span>
-              </div>
-            </div>
-            <div class="mt-4 flex items-center text-xs font-medium text-green-600">
-              <span class="material-symbols-outlined text-[16px] mr-1">trending_up</span>
-              +12% depuis le mois dernier
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-surface p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Réservations</p>
-                <h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-2">45</h3>
-              </div>
-              <div class="p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-xl">
-                <span class="material-symbols-outlined">calendar_month</span>
-              </div>
-            </div>
-            <div class="mt-4 flex items-center text-xs font-medium text-blue-600">
-              <span class="material-symbols-outlined text-[16px] mr-1">hourglass_top</span>
-              5 en attente
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-surface p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Véhicules</p>
-                <h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-2">28</h3>
-              </div>
-              <div class="p-3 bg-purple-50 dark:bg-purple-900/20 text-purple-600 rounded-xl">
-                <span class="material-symbols-outlined">directions_car</span>
-              </div>
-            </div>
-            <div class="mt-4 flex items-center text-xs font-medium text-slate-500">
-              2 en maintenance
-            </div>
-          </div>
-          <div class="bg-white dark:bg-surface p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Avis Clients</p>
-                <h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-2">4.8</h3>
-              </div>
-              <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 rounded-xl">
-                <span class="material-symbols-outlined">star</span>
-              </div>
-            </div>
-            <div class="mt-4 flex items-center text-xs font-medium text-slate-500">
-              Basé sur 120 avis
-            </div>
-          </div>
-        </div>
+        
 
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white dark:bg-surface p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
           <div class="flex gap-2">
             <button class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-slate-700 dark:text-white rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">Tous</button>
-            <button class="px-4 py-2 bg-transparent text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg text-sm font-medium transition-colors">Disponibles</button>
-            <button class="px-4 py-2 bg-transparent text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg text-sm font-medium transition-colors">Loués</button>
+         
           </div>
           <div class="flex gap-3">
             <button onclick="openModal()" class="flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-blue-700 text-white rounded-lg text-sm font-bold shadow-lg shadow-blue-500/30 transition-all transform active:scale-95">

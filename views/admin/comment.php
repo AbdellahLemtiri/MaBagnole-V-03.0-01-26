@@ -116,12 +116,7 @@
         Tags
       </a>
 
-      <a
-        href="comments.php"
-        class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all">
-        <span class="material-symbols-outlined filled">comment</span>
-        Commentaires
-      </a>
+     
     </nav>
 
     <div class="p-4 border-t border-gray-100 dark:border-gray-700">

@@ -1,43 +1,3 @@
-<?php
-
-// $reservations = Reservation::getAllReservations(); 
-$reservations = [
-  (object)[
-    'id' => 1024,
-    'client_nom' => 'Amine Tounsi',
-    'client_email' => 'amine@gmail.com',
-    'voiture_image' => 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=300&q=80',
-    'voiture_nom' => 'Chevrolet Camaro',
-    'date_debut' => '2024-06-01',
-    'date_fin' => '2024-06-05',
-    'total' => 2500.00,
-    'status' => 'en attente'
-  ],
-  (object)[
-    'id' => 1023,
-    'client_nom' => 'Sarah Benali',
-    'client_email' => 'sarah.b@hotmail.com',
-    'voiture_image' => 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=300&q=80',
-    'voiture_nom' => 'Tesla Model 3',
-    'date_debut' => '2024-05-20',
-    'date_fin' => '2024-05-22',
-    'total' => 1800.00,
-    'status' => 'confirmee'
-  ],
-  (object)[
-    'id' => 1020,
-    'client_nom' => 'Omar Kabbaj',
-    'client_email' => 'o.kabbaj@company.ma',
-    'voiture_image' => 'https://images.unsplash.com/photo-1605559424843-9e4c2287f38d?auto=format&fit=crop&w=300&q=80',
-    'voiture_nom' => 'Mercedes G-Class',
-    'date_debut' => '2024-04-10',
-    'date_fin' => '2024-04-15',
-    'total' => 12000.00,
-    'status' => 'terminee'
-  ]
-];
-?>
-
 <!DOCTYPE html>
 <html class="light" lang="fr">
 
@@ -58,42 +18,44 @@ $reservations = [
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', "sans-serif"]
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
           },
           colors: {
             primary: {
-              DEFAULT: "#4F46E5",
-              hover: "#4338CA",
-              light: "#EEF2FF"
-            }, // Indigo Theme
+              DEFAULT: "#2563EB",
+              hover: "#1D4ED8",
+              light: "#EFF6FF"
+            },
             secondary: "#64748B",
             success: "#10B981",
             warning: "#F59E0B",
             danger: "#EF4444",
             dark: "#0F172A",
-            surface: "#1E293B",
-          },
-        },
-      },
+            surface: "#1E293B"
+          }
+        }
+      }
     };
   </script>
   <style>
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
     .glass-effect {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
     }
 
     .dark .glass-effect {
-      background: rgba(15, 23, 42, 0.9);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(15, 23, 42, 0.95);
     }
   </style>
 </head>
 
 <body class="bg-gray-50 dark:bg-dark text-slate-800 dark:text-gray-200 antialiased h-screen flex overflow-hidden transition-colors duration-300">
 
-   
+
   <aside class="w-72 bg-white dark:bg-surface border-r border-gray-200 dark:border-gray-800 hidden md:flex flex-col z-20 shadow-xl shadow-gray-200/50 dark:shadow-none">
     <div class="p-6 flex items-center gap-3">
       <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
@@ -107,29 +69,43 @@ $reservations = [
 
     <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
       <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-2">Gestion</p>
-     
-      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all">
-        <span class="material-symbols-outlined filled">dashboard</span>
+
+      <a href="index.php?action=reservation" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all">
+        <span class="material-symbols-outlined">dashboard</span>
         Tableau de bord
       </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
-        <span class="material-symbols-outlined filled">directions_car</span>
-      Cars
+      <a href="index.php?action=carAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined">garage</span>
+        Cars
       </a>
       <a href="index.php?action=categories" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
         <span class="material-symbols-outlined">category</span>
         Catégories
       </a>
-      </a>
 
       <a href="index.php?action=usersAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
         <span class="material-symbols-outlined">group</span>
         Clients
+      </a>
 
-        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
-          <span class="material-symbols-outlined">reviews</span>
-          Avis & Notes
-        </a>
+
+
+      <a href="index.php?action=articleAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined">article</span>
+        Articles
+      </a>
+
+      <a href="index.php?action=themeAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined">category</span>
+        Thèmes
+      </a>
+
+      <a href="index.php?action=tagsAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined filled">label</span>
+        Tags
+      </a>
+
+
     </nav>
 
     <div class="p-4 border-t border-gray-100 dark:border-gray-700">
@@ -155,7 +131,7 @@ $reservations = [
     </header>
 
     <div class="flex-1 overflow-y-auto p-6 md:p-8 scroll-smooth">
-       
+
       <div class="max-w-7xl mx-auto space-y-8">
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -188,7 +164,7 @@ $reservations = [
           </div>
         </div>
 
-       
+
         <div class="bg-white dark:bg-surface rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
@@ -202,111 +178,102 @@ $reservations = [
                   <th class="p-5 text-xs font-bold text-slate-500 uppercase tracking-wide text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-gray-100 dark:divide-gray-700 text-sm">
+             <tbody class="divide-y divide-gray-100 dark:divide-gray-700 text-sm">
+    <?php foreach ($reservations as $res): ?>
+        <tr class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+            
+            <td class="p-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-10 rounded-lg bg-gray-100 overflow-hidden">
+                        <img src="<?= $res->getVoiture()->getImageUrlV() ?>" class="w-full h-full object-cover" alt="Car">
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-900 dark:text-white">
+                            <?= $res->getVoiture()->getMarqueV() ?> <?= $res->getVoiture()->getModeleV() ?>
+                        </p>
+                        <p class="text-xs text-slate-500">ID: #<?= $res->getIdReservation() ?></p>
+                    </div>
+                </div>
+            </td>
 
-                <?php if (empty($reservations)): ?>
-                  <tr>
-                    <td colspan="6" class="p-10 text-center text-slate-500">Aucune réservation trouvée.</td>
-                  </tr>
+            <td class="p-5">
+                <div>
+                    <p class="font-medium text-slate-900 dark:text-white">
+                        <?= $res->getClient()->getLastName() ?> <?= $res->getClient()->getName() ?>
+                    </p>
+                    <p class="text-xs text-slate-500 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[10px]">mail</span>
+                        <?= $res->getClient()->getEmail() ?>
+                    </p>
+                </div>
+            </td>
+
+            <td class="p-5">
+                <div class="flex flex-col text-xs font-medium">
+                    <span class="text-slate-900 dark:text-gray-300">
+                        <?= date('d M', strtotime($res->getDateDebut())) ?>
+                        <span class="text-slate-400">➔</span>
+                        <?= date('d M Y', strtotime($res->getDateFin())) ?>
+                    </span>
+                    <?php
+                    $start = new DateTime($res->getDateDebut());
+                    $end = new DateTime($res->getDateFin());
+                    $days = $end->diff($start)->days;
+                    ?>
+                    <span class="text-slate-400 mt-0.5"><?= $days ?> Jours</span>
+                </div>
+            </td>
+
+            <td class="p-5 font-bold text-slate-900 dark:text-white">
+                <?= number_format($res->getTotalPrix(), 2) ?> DH
+            </td>
+
+            <td class="p-5">
+                <?php 
+             
+                $statusColor = match($res->getStatus()) {
+                    'en cours' => 'bg-orange-100 text-orange-600 border-orange-200',
+                    'terminee' => 'bg-green-100 text-green-600 border-green-200',
+                    'annulee'  => 'bg-red-100 text-red-600 border-red-200',
+                    default    => 'bg-gray-100 text-gray-600'
+                };
+                ?>
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold border <?= $statusColor ?>">
+                    <?= ucfirst($res->getStatus()) ?>
+                </span>
+            </td>
+
+            <td class="p-5">
+                <?php if ($res->getStatus() === 'en cours'): ?>
+                    <div class="flex items-center gap-2">
+                        
+                        <form action="index.php" method="POST">
+                            <input type="hidden" name="action" value="updateStatusRservation">
+                            <input type="hidden" name="id_reservation" value="<?= $res->getIdReservation() ?>">
+                            <input type="hidden" name="new_status" value="terminee">
+                            <button type="submit" class="p-2 rounded-lg text-green-600 hover:bg-green-50 transition-colors" title="Terminer">
+                                <span class="material-symbols-outlined text-lg">check_circle</span>
+                            </button>
+                        </form>
+
+                        <form action="index.php" method="POST">
+                            <input type="hidden" name="action" value="updateStatusRservation">
+                            <input type="hidden" name="id_reservation" value="<?= $res->getIdReservation() ?>">
+                            <input type="hidden" name="new_status" value="annulee">
+                            <button type="submit" class="p-2 rounded-lg text-red-500 hover:bg-red-50 transition-colors" title="Annuler" onclick="return confirm('Wach mt2kd baghi t-annuli had reservation?');">
+                                <span class="material-symbols-outlined text-lg">cancel</span>
+                            </button>
+                        </form>
+                        
+                    </div>
                 <?php else: ?>
-                  <?php foreach ($reservations as $res): ?>
-                    <tr class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-
-                      <td class="p-5">
-                        <div class="flex items-center gap-3">
-                          <div class="w-12 h-10 rounded-lg bg-gray-100 overflow-hidden">
-                            <img src="<?= $res->voiture_image ?>" class="w-full h-full object-cover" alt="Car">
-                          </div>
-                          <div>
-                            <p class="font-bold text-slate-900 dark:text-white"><?= $res->voiture_nom ?></p>
-                            <p class="text-xs text-slate-500">ID: #<?= $res->id ?></p>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td class="p-5">
-                        <div>
-                          <p class="font-medium text-slate-900 dark:text-white"><?= $res->client_nom ?></p>
-                          <p class="text-xs text-slate-500 flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[10px]">mail</span>
-                            <?= $res->client_email ?>
-                          </p>
-                        </div>
-                      </td>
-
-                      <td class="p-5">
-                        <div class="flex flex-col text-xs font-medium">
-                          <span class="text-slate-900 dark:text-gray-300"><?= date('d M', strtotime($res->date_debut)) ?> <span class="text-slate-400">➔</span> <?= date('d M Y', strtotime($res->date_fin)) ?></span>
-
-                          <?php
-                          $start = new DateTime($res->date_debut);
-                          $end = new DateTime($res->date_fin);
-                          $days = $end->diff($start)->days;
-                          ?>
-                          <span class="text-slate-400 mt-0.5"><?= $days ?> Jours</span>
-                        </div>
-                      </td>
-
-                      <td class="p-5 font-bold text-slate-900 dark:text-white">
-                        <?= number_format($res->total, 2) ?> DH
-                      </td>
-
-                      <td class="p-5">
-                        <?php
-                        $status = strtolower($res->status);
-                        $badgeClass = '';
-                        $icon = '';
-                        $text = '';
-
-                        if ($status == 'en attente') {
-                          $badgeClass = 'bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
-                          $icon = 'hourglass_top';
-                          $text = 'En attente';
-                        } elseif ($status == 'confirmee' || $status == 'en cours') {
-                          $badgeClass = 'bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20';
-                          $icon = 'verified';
-                          $text = 'Confirmée';
-                        } elseif ($status == 'terminee') {
-                          $badgeClass = 'bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400 border border-green-200 dark:border-green-500/20';
-                          $icon = 'check_circle';
-                          $text = 'Terminée';
-                        } else {
-                          $badgeClass = 'bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400 border border-red-200 dark:border-red-500/20';
-                          $icon = 'cancel';
-                          $text = 'Annulée';
-                        }
-                        ?>
-                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold <?= $badgeClass ?>">
-                          <span class="material-symbols-outlined text-[14px]"><?= $icon ?></span>
-                          <?= $text ?>
-                        </span>
-                      </td>
-
-                      <td class="p-5 text-right">
-                        <div class="flex items-center justify-end gap-2">
-                          <?php if ($status == 'en attente'): ?>
-                            <button title="Valider" class="p-2 rounded-lg text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors">
-                              <span class="material-symbols-outlined text-[20px]">check</span>
-                            </button>
-                            <button title="Refuser" class="p-2 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                              <span class="material-symbols-outlined text-[20px]">close</span>
-                            </button>
-                          <?php else: ?>
-                            <button title="Détails" class="p-2 rounded-lg text-slate-400 hover:text-primary-DEFAULT hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                              <span class="material-symbols-outlined text-[20px]">visibility</span>
-                            </button>
-                          <?php endif; ?>
-
-                          <button class="p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                            <span class="material-symbols-outlined text-[20px]">more_vert</span>
-                          </button>
-                        </div>
-                      </td>
-
-                    </tr>
-                  <?php endforeach; ?>
+                    <span class="text-xs text-gray-400 italic">Aucune action</span>
                 <?php endif; ?>
-              </tbody>
+            </td>
+
+        </tr>
+    <?php endforeach; ?>
+</tbody>
             </table>
           </div>
 
