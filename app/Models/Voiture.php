@@ -143,7 +143,7 @@ class Voiture
       prixVehicule=$this->prixJr, idCategorie=$this->idC";
     }
 
-    public function ajouteVoiture(): bool
+    public function createVoiture(): bool
     {
         try {
             $conn = Database::getInstance()->getConnection();
