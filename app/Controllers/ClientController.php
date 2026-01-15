@@ -9,26 +9,29 @@ use App\Models\CommentArticle;
 use App\Models\Voiture;
 use App\Models\Avis;
 use App\Models\Reservation;
+
 class ClientController
 {
-   
+    public function __construct()
+    {
+        CheckAuthController::checkClient();
+    }
+    public function carList()
+    {
+        require_once '../App/views/client/carList.php';
+    }
 
     public function pageThemeClient()
     {
+        $articles = (new Article())->getThreeLastArticles();
         $obj = new Theme();
         $themes = $obj->getAllTheme();
-        require_once 'views/client/theme.php';
+        require_once '../App/views/client/theme.php';
     }
 
     public function ArticleTheme()
     {
-        $id = $_REQUEST['idTheme'] ?? null;
-
-        if (!$id) {
-            header('Location: /index.php');
-            exit();
-        }
-
+        $id = $_REQUEST['idTheme'];
         $themeModel = new Theme();
         $tagModel = new Tag();
         $articleModel = new Article();
@@ -37,8 +40,8 @@ class ClientController
         $page = isset($_GET['page']) && (int)$_GET['page'] > 0 ? (int)$_GET['page'] : 1;
         $offset = ($page - 1) * $limit;
 
-        $articleModel->setIdTheme($id);
-        $totalArticles = $articleModel->getCountArticleTheme($id);
+        $articleModel->setIdTheme((int)$id);
+        $totalArticles = $articleModel->getCountArticleTheme((int)$id);
         $totalPages = ceil($totalArticles / $limit);
 
 
@@ -46,23 +49,27 @@ class ClientController
 
         $themes = $themeModel->getAllTheme();
         $tags = $tagModel->getAll();
-        //  Affichage
-        require_once 'views/client/articles.php';
+
+        require '../App/views/client/articles.php';
+        require_once '../App/views/admin/includes/alerts.php';
+
     }
 
     public function DetaileArticleTheme()
     {
-        if (isset($_GET['idArticle']) && $_GET['action'] === 'lireDetaileArticle') {
-            $idArticle = $_GET['idArticle'];
-            $comments = (new CommentArticle())->getCommentsByArticle($idArticle);
+        if (isset($_GET['idArticle'])) {
+            $idArticle = (int) $_GET['idArticle'];
+            $comments = (new CommentArticle())->getCommentsByArticle((int)$idArticle);
+
             $theme = new Theme();
             $tag = new Tag();
-            $tagsArticles =  $tag->getTagsByArticle($idArticle);
+            $tagsArticles =  $tag->getTagsByArticle((int)$idArticle);
             $themes = $theme->getAllTheme();
             $obj = new Article();
-            $obj->setIdArticle($idArticle);
+            $obj->setIdArticle((int)$idArticle);
             $article = $obj->getArticleById();
-            require_once 'views/client/detaileArticle.php';
+            require_once '../App/views/client/detaileArticle.php';
+            require_once '../App/views/admin/includes/alerts.php';
         }
     }
 
@@ -73,13 +80,17 @@ class ClientController
             $v = new Voiture();
             $comments =  (new Avis())->getAllAVisByIdVoiture($id);
             $voiture = $v->getVoitureById($id);
-            require_once 'views/client/carDetaile.php';
+            require_once '../App/views/client/carDetaile.php';
+            require_once '../App/views/admin/includes/alerts.php';
         }
     }
-       public function ReservationClient()
+    public function ReservationClient()
     {
         $reservationModel = new Reservation();
         $mesReservations = $reservationModel->getReservationsByUser($_SESSION['userId']);
-        require_once 'views/client/reservation.php';
+        require_once '../App/views/client/reservation.php';
+        require_once '../App/views/admin/includes/alerts.php';
     }
+
+    
 }
