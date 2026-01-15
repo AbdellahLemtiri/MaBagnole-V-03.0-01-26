@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Catégories - Admin MaBagnole</title>
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.tailwindcss.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1"
+    rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/dataTables.tailwindcss.min.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link rel="stylesheet" href="/MaBagnoleV1/public/assets/css/admin/categorie.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body class="bg-gray-50 dark:bg-dark text-slate-800 dark:text-gray-200 antialiased h-screen flex overflow-hidden selection:bg-primary selection:text-white transition-colors duration-300">
+
+  <aside class="w-72 bg-white dark:bg-surface border-r border-gray-200 dark:border-gray-800 hidden md:flex flex-col z-20 shadow-xl shadow-gray-200/50 dark:shadow-none">
+    <a href="reservation" class="flex items-center m-3 ">
+      <div class="w-16 h-16 rounded-full bg-primary/60 border border-primary/20 flex items-center justify-center text-white shadow-[0_0_15px_rgba(99,102,241,0.3)] transition-transform duration-300 group-hover:scale-110 overflow-hidden">
+
+        <img src="public/assets/images/logo/logoMaBangole.png"
+          alt="MaBagnole Logo"
+          class="w-full h-full object-cover drop-shadow-sm relative z-10">
+      </div>
+    </a>
+    <p class="text-[12px] p-2 font-semibold text-slate-400 uppercase tracking-wider">Admin Panel</p>
+
+    <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+      <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-2">Gestion</p>
+
+      <a href="reservation" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined">dashboard</span>
+        Tableau de bord
+      </a>
+      <a href="carAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined">garage</span>
+        Cars
+      </a>
+      <a href="categories" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all">
+        <span class="material-symbols-outlined">category</span>
+        Catégories
+      </a>
+
+      <a href="usersAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined">group</span>
+        Clients
+      </a>
+
+
+
+      <a href="ArticleAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined">article</span>
+        Articles
+      </a>
+
+      <a href="themeAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined">category</span>
+        Thèmes
+      </a>
+
+      <a href="tagsAdmin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-primary transition-all font-medium">
+        <span class="material-symbols-outlined filled">label</span>
+        Tags
+      </a>
+
+
+    </nav>
+
+    <div class="p-4 border-t border-gray-100 dark:border-gray-700">
+      <button onclick="toggleTheme()" class="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-slate-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all font-medium">
+        <span class="material-symbols-outlined dark:hidden">dark_mode</span>
+        <span class="material-symbols-outlined hidden dark:block text-yellow-400">light_mode</span>
+        <span class="dark:text-gray-300">Mode Sombre</span>
+      </button>
+    </div>
+    <div class="p-4 border-t border-gray-100 dark:border-gray-700">
+      <a href="logout" class=" text-[11px] text-danger font-semibold hover:opacity-80">Se déconnecter</a>
+    </div>
+  </aside>
+
+  <main class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+
+    <header class="h-20 bg-white/80 dark:bg-surface/80 glass-effect border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-8 z-10 sticky top-0">
+      <h2 class="text-xl font-bold text-slate-800 dark:text-white">Gestion des Catégories</h2>
+
+    </header>
+
+    <div class="flex-1 overflow-y-auto p-6 md:p-8 scroll-smooth">
+      <div class="max-w-5xl mx-auto space-y-8">
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white dark:bg-surface p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Catégories</p>
+              <h3 class="text-3xl font-bold text-slate-800 dark:text-white mt-1"></h3>
+            </div>
+            <div class="p-3 bg-purple-50 dark:bg-purple-900/20 text-purple-600 rounded-xl">
+              <span class="material-symbols-outlined">category</span>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-surface p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Catégorie Populaire</p>
+              <h3 class="text-2xl font-bold text-slate-800 dark:text-white mt-1">SUV / 4x4</h3>
+            </div>
+            <div class="p-3 bg-orange-50 dark:bg-orange-900/20 text-orange-600 rounded-xl">
+              <span class="material-symbols-outlined">trending_up</span>
+            </div>
+          </div>
+
+          <button onclick="openModal('add')" class="bg-primary hover:bg-blue-700 text-white p-6 rounded-2xl shadow-lg shadow-blue-500/30 transition-all transform hover:scale-[1.02] flex flex-col items-center justify-center gap-2 border border-blue-500 cursor-pointer">
+            <span class="material-symbols-outlined text-[32px]">add_circle</span>
+            <span class="font-bold text-lg">Nouvelle Catégorie</span>
+          </button>
+        </div>
+
+        <div class="bg-white dark:bg-surface rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+          <div class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
+            <h3 class="font-bold text-lg text-slate-800 dark:text-white">Liste des Catégories</h3>
+
+          </div>
+
+          <div class="overflow-x-auto">
+            <table id="categories" class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-700">
+                  <th class="p-5 text-xs font-semibold text-slate-500 uppercase tracking-wide">Nom de la Catégorie</th>
+                  <th class="p-5 text-xs font-semibold text-slate-500 uppercase tracking-wide">Description</th>
+                  <th class="p-5 text-xs font-semibold text-slate-500 uppercase tracking-wide text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-700 text-sm">
+
+                <?php if (empty($categories)): ?>
+                  <tr>
+                    <td colspan="3" class="p-5 text-center text-gray-500">Aucune catégorie trouvée.</td>
+                  </tr>
+                <?php else: ?>
+                  <?php
+
+
+                  foreach ($categories as $cat): ?>
+                    <tr class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                      <td class="p-5">
+                        <div class="flex items-center gap-3">
+                          <?php
+                          $colors = ['bg-blue-100 text-blue-600', 'bg-green-100 text-green-600', 'bg-red-100 text-red-600', 'bg-purple-100 text-purple-600'];
+                          $colorClass = $colors[$cat->getIdC() % 4];
+                          ?>
+                          <div class="h-10 w-10 rounded-lg <?= $colorClass ?> dark:bg-opacity-20 flex items-center justify-center">
+                            <span class="material-symbols-outlined"><?= $cat->getIcone() ?></span>
+                          </div>
+                          <span class="font-bold text-slate-900 dark:text-white text-base">
+                            <?= htmlspecialchars($cat->getTitre()) ?>
+                          </span>
+                        </div>
+                      </td>
+
+                      <td class="p-5 text-slate-600 dark:text-slate-300 max-w-xs truncate">
+                        <?= htmlspecialchars($cat->getDescription() ?? 'Aucune description') ?>
+                      </td>
+
+                      <td class="p-5 text-center">
+                        <button
+                          onclick="openModal('edit', this)"
+                          data-id="<?= $cat->getIdC() ?>"
+                          data-libelle="<?= htmlspecialchars($cat->getTitre()) ?>"
+                          data-description="<?= htmlspecialchars($cat->getDescription() ?? '') ?>"
+                          data-icon="<?= htmlspecialchars($cat->getIcone() ?? 'category') ?>"
+                          class="p-2 text-slate-400 hover:text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors cursor-pointer">
+                          <span class="material-symbols-outlined text-[20px]">edit</span>
+                        </button>
+
+                        <form action="deleteCategorie" method="POST" class="inline-block ml-1" onsubmit="return confirm('Supprimer cette catégorie ?');">
+                          <input type="hidden" name="action" value="deleteCategorie">
+                          <input type="hidden" name="id" value="<?= $cat->getIdC() ?>">
+                          <button type="submit" class="p-2 text-slate-400 hover:text-danger hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-[20px]">delete</span>
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                  <?php endforeach; ?>
+                <?php endif; ?>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <div id="categoryModal" class="hidden fixed inset-0 z-50 flex justify-center items-center bg-gray-900/50 backdrop-blur-sm">
+    <div class="bg-white dark:bg-surface rounded-2xl shadow-xl w-full max-w-md p-6 transform transition-all">
+      <div class="flex justify-between items-center mb-5">
+        <h3 id="modalTitle" class="text-xl font-bold text-gray-900 dark:text-white">Nouvelle Catégorie</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form action="AddUpdateCategorie" method="POST" id="categoryForm">
+        <input type="hidden" name="action" id="formAction" value="add_categorie">
+        <input type="hidden" name="id" id="catId">
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nom de la catégorie</label>
+            <input type="text" name="titre" id="catLibelle" required class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-2.5 text-sm focus:ring-primary focus:border-primary">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+            <textarea name="description" id="catDesc" rows="3" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-2.5 text-sm focus:ring-primary focus:border-primary"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Icône (Google Icon Name)</label>
+            <input type="text" name="icone" id="catIcon" placeholder="ex: local_taxi" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-2.5 text-sm">
+            <p class="text-xs text-gray-500 mt-1">Trouvez les icônes sur <a href="https://fonts.google.com/icons" target="_blank" class="text-blue-500 underline">Google Fonts</a></p>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-6">
+          <button type="button" onclick="closeModal()" class="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium">Annuler</button>
+          <button type="submit" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-blue-700 text-white text-sm font-medium shadow-sm">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+ 
+  <script src="/MaBagnoleV1/public/assets/js/admin/categorie.js"></script>
+
+
+</body>
+
+</html>
