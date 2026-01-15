@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS MaBagnole;
 CREATE DATABASE MaBagnole;
 USE MaBagnole;
 
---_____________ 2. Table: User (Utilisateurs)_____________________________
+--_____________  Table: User (Utilisateurs)_____________________________
 CREATE TABLE users (                                                           
     idUser INT NOT NULL PRIMARY KEY AUTO_INCREMENT,                           
     name VARCHAR(50) NOT NULL,                                             
@@ -52,6 +52,7 @@ CREATE TABLE reservations (
     FOREIGN KEY (idUser) REFERENCES users(idUser) ON DELETE CASCADE
 ); 
 
+ALTER Table reservations ADD COLUMN totalPrix DECIMAL(10,2);
 
 CREATE TABLE options (
     idOption INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -69,7 +70,7 @@ CREATE TABLE option_reservation (
     FOREIGN KEY (idOption) REFERENCES options(idOption) ON DELETE CASCADE
 )  
 
--- 8. Table: Avis (Reviews)
+-- 8. Table: Avis 
 CREATE TABLE avis (
     idAvis INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     commentaire VARCHAR(255) NOT NULL,
@@ -91,7 +92,7 @@ CREATE TABLE favoris (
     FOREIGN KEY (idV) REFERENCES voitures(idV) ON DELETE CASCADE
 )  
 
--- . Table: ReagirAvis (Likes/Dislikes sur les avis - Bonus)
+-- . Table: ReagirAvis 
 CREATE TABLE reagir_avis (
     idReagirAvis INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     idAvis INT NOT NULL,
@@ -147,7 +148,11 @@ CREATE TABLE themes (
     description TEXT,
     imageTheme VARCHAR(255) 
 );
- 
+
+ALTER TABLE themes 
+CHANGE iconTheme iconeTheme varchar(50);
+
+
 CREATE TABLE articles (
     idArticle INT PRIMARY KEY AUTO_INCREMENT,
     titre VARCHAR(255) NOT NULL,
@@ -195,3 +200,18 @@ CREATE TABLE article_favoris (
     FOREIGN KEY (idArticle) REFERENCES articles(idArticle) ON DELETE CASCADE
 );
 
+
+SELECT c.idComment, c.contenu, c.dateCommentaire, c.idUser, c.status, u.name, u.LastName FROM comments c JOIN users u ON c.idUser = u.idUser
+                WHERE c.idArticle = 113 AND c.status = 'active' AND u.status = 1
+                ORDER BY c.dateCommentaire DESC
+
+
+ALTER TABLE avis ADD COLUMN idVoiture INT(11)
+
+ALTER TABLE avis  ADD CONSTRAINT FOREIGN KEY (idVoiture) REFERENCES voitures(idV) 
+
+
+
+
+SELECT a.* , u.name,u.`LastName`FROM avis a INNER join users u  on a.`idClient` = u.`idUser` INNER JOIN voitures v on a.`idVoiture`
+ = v.`idV`
