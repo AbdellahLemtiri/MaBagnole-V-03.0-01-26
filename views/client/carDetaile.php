@@ -1,5 +1,7 @@
 <?php
 
+
+
 $idUser = $_SESSION['userId'];
 ?>
 <!DOCTYPE html>
@@ -148,40 +150,181 @@ $idUser = $_SESSION['userId'];
 
                 </div>
 
-                <div class="bg-white dark:bg-card rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800/60">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Avis Clients ()</h2>
-                        <div class="flex items-center gap-1 text-yellow-500 font-bold bg-yellow-500/10 px-3 py-1 rounded-full border border-yellow-500/20">
-                            <span class="material-symbols-rounded filled text-[20px]">star</span> 4.8
-                        </div>
+              <div class="bg-white dark:bg-card rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800/60">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Avis Clients</h2>
+        <div class="flex items-center gap-1 text-yellow-500 font-bold bg-yellow-500/10 px-3 py-1 rounded-full border border-yellow-500/20">
+            <span class="material-symbols-rounded filled text-[20px]">star</span>
+        </div>
+    </div>
+
+    <?php $currentUserId = $_SESSION['user_id'] ?? 25; ?>
+
+    <div class="space-y-6">
+        <?php foreach ($comments as $comment):
+            $user = $comment->getUser();
+            $note = $comment->getNote();
+            $avisId = $comment->getIdAvis();
+           
+            $safeComment = addslashes(htmlspecialchars($comment->getCommentaire()));
+        ?>
+            <div class="border-b border-gray-100 dark:border-gray-700 pb-6 last:border-0 last:pb-0 relative">
+
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-primary text-white flex items-center justify-center font-bold shadow-md uppercase">
+                        <?= substr($user->getName(), 0, 1) ?>
                     </div>
 
-                    <div class="space-y-6">
-                        <div class="border-b border-gray-100 dark:border-gray-700 pb-6 last:border-0 last:pb-0">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-primary text-white flex items-center justify-center font-bold shadow-md">S</div>
-                                <div>
-                                    <p class="font-bold text-sm text-slate-900 dark:text-white">Sara Idrissi</p>
-                                    <p class="text-xs text-slate-400">Il y a 2 jours</p>
-                                </div>
-                                <div class="ml-auto flex text-yellow-400">
-                                    <span class="material-symbols-rounded filled text-[18px]">star</span>
-                                    <span class="material-symbols-rounded filled text-[18px]">star</span>
-                                    <span class="material-symbols-rounded filled text-[18px]">star</span>
-                                    <span class="material-symbols-rounded filled text-[18px]">star</span>
-                                    <span class="material-symbols-rounded filled text-[18px]">star</span>
+                    <div>
+                        <p class="font-bold text-sm text-slate-900 dark:text-white">
+                            <?= htmlspecialchars($user->getName() . " " . $user->getLastName()) ?>
+                        </p>
+                        <p class="text-xs text-slate-400">
+                            <?= method_exists($comment, 'getDatePublication') ? $comment->getDatePublication() : '' ?>
+                        </p>
+                    </div>
+
+                    <div class="ml-auto flex items-center gap-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                <span class="material-symbols-rounded text-[18px] <?= $i <= $note ? 'filled' : 'text-gray-300' ?>">star</span>
+                            <?php endfor; ?>
+                        </div>
+
+                        <?php if ($currentUserId == $comment->getIdClient()): ?>
+                            <div class="relative">
+                                <button onclick="toggleDropdown(<?= $avisId ?>)" class="p-1 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition">
+                                    <span class="material-symbols-rounded text-[24px]">more_vert</span>
+                                </button>
+
+                                <div id="dropdown-<?= $avisId ?>" class="hidden absolute right-0 top-8 w-40 bg-white dark:bg-slate-800 shadow-xl rounded-lg border border-gray-100 dark:border-gray-700 z-40 overflow-hidden">
+                                    
+                                    <button onclick="openEditModal(<?= $avisId ?>, <?= $note ?>, '<?= $safeComment ?>')" 
+                                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2">
+                                        <span class="material-symbols-rounded text-[16px]">edit</span> Modifier
+                                    </button>
+
+                                    <form action="index.php?action=deleteAvis" method="POST" onsubmit="return confirm('Supprimer cet avis ?');">
+                                        <input type="hidden" name="id_avis" value="<?= $avisId ?>">
+                                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2">
+                                            <span class="material-symbols-rounded text-[16px]">delete</span> Supprimer
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm italic">
-                                "Voiture très propre et confortable. Le service était impeccable. Je recommande vivement !"
-                            </p>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
+
+                <p class="text-slate-600 dark:text-slate-400 text-sm italic">
+                    <?= nl2br(htmlspecialchars($comment->getCommentaire())); ?>
+                </p>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<div id="editAvisModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-2xl shadow-2xl p-6 transform transition-all scale-95">
+        
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white">Modifier votre avis</h3>
+            <button onclick="closeEditModal()" class="text-gray-400 hover:text-red-500 transition-colors">
+                <span class="material-symbols-rounded text-2xl">close</span>
+            </button>
+        </div>
+
+        <form action="index.php" method="POST">
+            <input type="hidden" name="action" value="updateAvis">
+            <input type="hidden" name="idVoiture" value="<?= $comment->getIdVoiture() ?>">
+            <input type="hidden" name="idAvis" id="edit_idAvis">
+            <input type="hidden" name="note" id="edit_noteValue">
+            
+            <div class="flex flex-col items-center mb-6">
+                <p class="text-sm text-gray-500 mb-2">Votre note</p>
+                <div class="flex gap-2">
+                    <?php for($i=1; $i<=5; $i++): ?>
+                        <button type="button" onclick="setEditRating(<?= $i ?>)" class="text-gray-300 hover:text-yellow-400 transition-colors">
+                            <span class="material-symbols-rounded text-4xl" id="edit-star-<?= $i ?>">star</span>
+                        </button>
+                    <?php endfor; ?>
+                </div>
+                <p id="edit_ratingText" class="text-sm font-medium text-yellow-500 mt-2 h-5"></p>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Commentaire</label>
+                <textarea name="commentaire" id="edit_commentaire" rows="4" 
+                    class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none" 
+                    required></textarea>
+            </div>
+
+            <div class="flex gap-3">
+                <button type="button" onclick="closeEditModal()" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50">Annuler</button>
+                <button type="submit" class="flex-1 px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 shadow-lg shadow-blue-500/30">Mettre à jour</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // 1. Logic Dropdown Menu
+    function toggleDropdown(id) {
+        // Sdd ay menu akhor
+        document.querySelectorAll('[id^="dropdown-"]').forEach(el => {
+            if (el.id !== 'dropdown-' + id) el.classList.add('hidden');
+        });
+        // Toggle dyalna
+        const menu = document.getElementById('dropdown-' + id);
+        menu.classList.toggle('hidden');
+    }
+
+    // Sdd menu ila clikina bra
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.relative')) {
+            document.querySelectorAll('[id^="dropdown-"]').forEach(el => el.classList.add('hidden'));
+        }
+    });
+
+    // 2. Logic Modal Update
+    function openEditModal(id, note, commentaire) {
+        // Sdd dropdown 9bel mayt7al modal
+        document.querySelectorAll('[id^="dropdown-"]').forEach(el => el.classList.add('hidden'));
+
+        document.getElementById('edit_idAvis').value = id;
+        document.getElementById('edit_noteValue').value = note;
+        document.getElementById('edit_commentaire').value = commentaire;
+        
+        setEditRating(note); // Afficher njoum
+        
+        document.getElementById('editAvisModal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+        document.getElementById('editAvisModal').classList.add('hidden');
+    }
+
+    function setEditRating(note) {
+        document.getElementById('edit_noteValue').value = note;
+        const labels = ["", "Mauvais", "Moyen", "Bien", "Très bien", "Excellent"];
+        document.getElementById('edit_ratingText').textContent = labels[note] || "";
+
+        for (let i = 1; i <= 5; i++) {
+            const star = document.getElementById('edit-star-' + i);
+            if (i <= note) {
+                star.classList.remove('text-gray-300');
+                star.classList.add('text-yellow-400', 'filled');
+            } else {
+                star.classList.remove('text-yellow-400', 'filled');
+                star.classList.add('text-gray-300');
+            }
+        }
+    }
+</script>
             </div>
 
             <div class="lg:col-span-1">
-                <div class="sticky top-28 bg-white dark:bg-card rounded-[2rem] p-6 shadow-2xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700/50">
+                <div class=" top-28 bg-white dark:bg-card rounded-[2rem] p-6 shadow-2xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700/50">
 
                     <div class="mb-6 pb-6 border-b border-gray-100 dark:border-gray-800">
                         <p class="text-sm font-semibold text-slate-400 mb-1">Prix par jour</p>
@@ -230,7 +373,7 @@ $idUser = $_SESSION['userId'];
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">lieu</label>
-                            <textarea name="lieu" id="" rows="2" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-2.5 text-sm focus:ring-primary focus:border-primary"  required></textarea>
+                            <textarea name="lieu" id="" rows="2" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-2.5 text-sm focus:ring-primary focus:border-primary" required></textarea>
                         </div>
                         <div class="bg-gray-50 dark:bg-surface rounded-2xl p-5 mt-6 border border-gray-100 dark:border-gray-800">
                             <div class="flex justify-between items-center mb-2">
@@ -257,7 +400,6 @@ $idUser = $_SESSION['userId'];
     </div>
 
     <script>
-
         function toggleTheme() {
             const html = document.documentElement;
             if (html.classList.contains('dark')) {
@@ -313,7 +455,6 @@ $idUser = $_SESSION['userId'];
                 Prixtotal.value = total;
             }
 
-            // Animate Number (Simple)
             totalDisp.innerText = total + " DH";
 
         }
