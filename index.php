@@ -11,13 +11,16 @@ use App\Controllers\ReseravtionController;
 use App\Controllers\AvisController;
 use App\Controllers\ArticleController;
 use App\Controllers\ThemeController;
-
+use App\Controllers\ClientController;
+use App\Controllers\CategorieController;
+$CategorieController = new CategorieController();
+$clientController = new ClientController();
 $avisController = new AvisController();
 $reseravtionController = new ReseravtionController();
 $authController = new AuthController();
 $adminController = new AdminController();
 $voitureController = new VoitureController();
-$articleController = new ArticleController;
+$articleController = new ArticleController();
 $themeController = new ThemeController();
 $action = $_POST['action'] ?? $_GET['action'] ?? 'auth';
 
@@ -30,8 +33,16 @@ switch ($action) {
     case 'signup':
         $authController->signup();
         break;
+    /////////////////////////////////////
+    case 'updateStatusRservation':
+        $reseravtionController->updateStatusRsevation();
+        break;
+        case 'reservation':
+        $adminController->getAllReservation();
+        break;
+    //////////////////////////////////////
     case 'addVoiture':
-        $adminController->setVoiture();
+        $voitureController->setVoiture();
         break;
     case 'home':
         break;
@@ -39,31 +50,31 @@ switch ($action) {
         $adminController->afficherDashboard();
         break;
     case 'update_voiture':
-        $adminController->updateVoiture();
+        $voitureController->updateVoiture();
         break;
     case 'delete_voiture':
-        $adminController->deleteVoiture();
+        $voitureController->deleteVoiture();
         break;
+    ///////////////////////////////////////////
     case 'categories':
         $adminController->openCategory();
         break;
     case 'delete_categorie':
-        $adminController->supprimerCategorie();
+        $CategorieController->supprimerCategorie();
         break;
     case 'add_categorie':
-        $adminController->ajouterCategorie();
+        $CategorieController->ajouterCategorie();
         break;
     case 'update_categorie':
-        $adminController->modifierCategorie();
+        $CategorieController->modifierCategorie();
         break;
-
+    //////////////////////////////////////////////
     case 'usersAdmin':
         $adminController->usersAdmin();
         break;
     case 'activate_user':
         $adminController->ActiveUser();
         break;
-
     case 'block_user':
         $adminController->desActiveUser();
         break;
@@ -71,18 +82,21 @@ switch ($action) {
         $voitureController->carList();
         break;
     case 'CarDetaile':
-        $voitureController->carDetaile();
+        $clientController->carDetaile();
         break;
     case 'paimentReservation':
         $reseravtionController->paimentReservation();
         break;
-    case 'reservationUser':
-        $reseravtionController->ReservationClient();
+    case 'updateAvis':
+        $avisController->updateAvis();
         break;
-
+    case 'reservationUser':
+        $clientController->ReservationClient();
+        break;
     case 'addAvis':
         $avisController->addAvis();
         break;
+    //////////////////////////////////////////
     case 'ArticleUser':
         $articleController->getAllArticleClient();
         break;
@@ -98,17 +112,54 @@ switch ($action) {
     case 'deleteArticle':
         $articleController->deleteArticle();
         break;
+    /////////////////////////////////////////
     case 'themeAdmin':
-        $adminController->affichierToutTheme();
+        $adminController->affichierToutThemeAdmin();
         break;
     case 'updateTheme':
-        $adminController->updateTheme();
+        $themeController->updateTheme();
         break;
     case 'addTheme':
-        $adminController->addTheme();
+        $themeController->addTheme();
         break;
     case 'deleteTheme':
-        $adminController->deleteTheme();
+        $themeController->deleteTheme();
+        break;
+    /////////////////////////////////////////////
+    case 'tagsAdmin':
+        $adminController->getAllTag();
+        break;
+    case 'addTags':
+        $adminController->addTag();
+        break;
+    case 'updateTag':
+        $adminController->updateTag();
+        break;
+    case 'deleteTag':
+        $adminController->deletTag();
+        break;
+    ////////////////////////////////////////
+    case 'updateTheme':
+        $themeController->updateTheme();
+        break;
+    case 'addTheme':
+        $themeController->addTheme();
+        break;
+    case 'deleteTheme':
+        $themeController->deleteTheme();
+        break;
+    ///////////////////////////////////////////
+    case 'themeClient':
+        $clientController->pageThemeClient();
+        break;
+    case 'ArticleTheme':
+        $clientController->ArticleTheme();
+        break;
+    case 'lireDetaileArticle':
+        $clientController->DetaileArticleTheme();
+        break;
+    case 'saveArticle':
+        $articleController->saveArticle();
         break;
     default:
         require_once __DIR__ . '/views/auth/auth.php';
