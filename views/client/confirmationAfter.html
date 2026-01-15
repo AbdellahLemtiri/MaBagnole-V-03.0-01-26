@@ -1,245 +1,471 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LuxeDrive - Booking Confirmed</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#135bec",
-                        "background-light": "#f6f6f8",
-                        "background-dark": "#101622",
-                        "card-dark": "#1A2230", 
-                    },
-                    fontFamily: {
-                        "display": ["Inter", "sans-serif"]
-                    },
-                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
-                },
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>LuxeDrive - Booking Confirmed</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#135bec",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "card-dark": "#1A2230",
             },
-        }
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
     </script>
-<style>
-        body { font-family: 'Inter', sans-serif; }
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
     </style>
-</head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col font-display transition-colors duration-200">
-<!-- Navbar -->
-<header class="sticky top-0 z-50 bg-white/80 dark:bg-card-dark/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex items-center justify-between h-16">
-<!-- Logo -->
-<div class="flex items-center gap-3">
-<div class="text-primary">
-<span class="material-symbols-outlined text-3xl">directions_car</span>
-</div>
-<h2 class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">LuxeDrive</h2>
-</div>
-<!-- Nav Links (Desktop) -->
-<div class="hidden md:flex items-center gap-8">
-<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Fleet</a>
-<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Locations</a>
-<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Services</a>
-<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Support</a>
-</div>
-<!-- User Actions -->
-<div class="flex items-center gap-4">
-<button class="flex items-center justify-center p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<div class="h-9 w-9 rounded-full bg-cover bg-center border-2 border-white dark:border-gray-700 shadow-sm" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD6rvdEo3_taFSkO-e4YyObx9cGAaA6OyKhgiALDJB0vehPza1DHpKz9Jttb7oR4EGmqasU04mRbPTo6iGU05qKlJiLLq0Qu7evClpUqrSVYemSnnDg1DcVc-J8qBYDMk2wX0YDy03GM8BVF97czPlYjf75N0JCrnU4nAS0njuemvmQKrSE5g57qjtR4JcNhAZ_MPT2Q8agz9zF6KoRB8GbTSPfOQ3sCKdh9gtFwO52w_f4mMIy5d5nVK494GPdu5byWdr6DSke8g");'></div>
-</div>
-</div>
-</div>
-</header>
-<!-- Main Content -->
-<main class="flex-grow flex flex-col items-center justify-start pt-10 pb-20 px-4 md:px-8">
-<div class="w-full max-w-5xl space-y-8">
-<!-- Success Hero -->
-<div class="text-center space-y-4 animate-fade-in-up">
-<div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 mb-2">
-<span class="material-symbols-outlined text-5xl">check_circle</span>
-</div>
-<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">Booking Confirmed</h1>
-<p class="text-slate-500 dark:text-slate-400 max-w-lg mx-auto">
-                    Your reservation has been successfully processed. A confirmation email has been sent to <span class="text-slate-900 dark:text-white font-medium">[PHP_DATA_USER_EMAIL]</span>.
-                </p>
-<div class="pt-2">
-<span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary font-medium text-sm border border-primary/20">
-<span>Booking Reference:</span>
-<span class="font-bold tracking-wide">#[PHP_DATA_REF_ID]</span>
-<span class="material-symbols-outlined text-base cursor-pointer hover:text-primary/80" title="Copy Reference">content_copy</span>
-</span>
-</div>
-</div>
-<!-- Booking Details Grid -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-10">
-<!-- Left Column: Car & Map (8 cols) -->
-<div class="lg:col-span-8 flex flex-col gap-6">
-<!-- Vehicle Card -->
-<div class="bg-white dark:bg-card-dark rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden border border-gray-100 dark:border-gray-800 p-6">
-<div class="flex flex-col md:flex-row gap-6 items-center">
-<!-- Car Image -->
-<div class="w-full md:w-1/2 aspect-video rounded-lg bg-gray-50 dark:bg-gray-800 bg-center bg-contain bg-no-repeat" data-alt="Side view of a luxury SUV car model" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBkqk35-9HisBwMYW_bStz2OHT3UXmwjBP9kiCK8oRobsRpwVcgPXiGXg-fRh8WS0gEIXFhMcqNz6LA4gTbCF7KKdl1Z-tGB3trUVwIuRAx2jwHTGZlmV3pyOFJFqjrgi-ZM4GJ2rpfzfH_p3c-yth-HUmWAZdpUNheB50Imb_uc6rb1FEhKuZm-WzvizZKb1oAO1CQdf3Wb_iir2bpb1Mn4bDTQF_saTD6ITzxi9ec9zwS4mUAiiPrL3SdzhmeLz7iO-oezI8Mlg");'></div>
-<!-- Car Info -->
-<div class="flex-1 flex flex-col justify-center w-full">
-<div class="flex justify-between items-start mb-2">
-<div>
-<p class="text-xs font-semibold uppercase tracking-wider text-primary mb-1">Vehicle Category</p>
-<h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">[PHP_DATA_CAR_MODEL]</h3>
-<p class="text-slate-500 dark:text-slate-400 text-sm">[PHP_DATA_CAR_CLASS] - Luxury Series</p>
-</div>
-<div class="hidden md:block">
-<span class="material-symbols-outlined text-slate-300 dark:text-slate-600 text-4xl">local_taxi</span>
-</div>
-</div>
-<div class="h-px w-full bg-gray-100 dark:bg-gray-700 my-4"></div>
-<div class="grid grid-cols-3 gap-4">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 text-xs">
-<span class="material-symbols-outlined text-sm">settings</span>
-                                            Transmission
-                                        </div>
-<p class="text-sm font-medium text-slate-700 dark:text-slate-200">Automatic</p>
-</div>
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 text-xs">
-<span class="material-symbols-outlined text-sm">person</span>
-                                            Passengers
-                                        </div>
-<p class="text-sm font-medium text-slate-700 dark:text-slate-200">5 Adults</p>
-</div>
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 text-xs">
-<span class="material-symbols-outlined text-sm">luggage</span>
-                                            Luggage
-                                        </div>
-<p class="text-sm font-medium text-slate-700 dark:text-slate-200">3 Bags</p>
-</div>
-</div>
-<div class="mt-6">
-<button class="text-sm font-semibold text-primary hover:text-blue-700 dark:hover:text-blue-400 flex items-center gap-1 group w-fit">
-                                        View Vehicle Specs
-                                        <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Location Preview Card -->
-<div class="bg-white dark:bg-card-dark rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden border border-gray-100 dark:border-gray-800">
-<div class="p-4 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-800/50">
-<h4 class="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">map</span>
-                                Pickup Location
-                            </h4>
-<span class="text-xs text-slate-500">[PHP_DATA_PICKUP_LOC]</span>
-</div>
-<div class="h-48 w-full bg-cover bg-center relative" data-alt="Map view showing the pickup location pin" data-location="Los Angeles International Airport" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDcc1SL8Z6CgSZeY3ZDtetooyZwGLU_jREMb__DmzDeTre5f9WWYuihodP1qfnAsySHxol4LxLne2Tf-f0iwcu90o0fQGI4jp8KQ_3-c1jk71T_Zbuqw6Dcj7btS0qwN5yGLYK5SqZjjXmLeF_QLC6YGS9bJ-kCmM2cAu0ACRXhB15WCAbrLlunjFp-LbEWQXhCG5RBdklV_PWOHaMdwvjmfP7BvX5YNyWmoFY-mIyPn3H2sRpikbkxnRW2UXC77U0GSdbj9qTA-w");'>
-<div class="absolute inset-0 bg-black/5 dark:bg-black/20"></div>
-<div class="absolute bottom-4 right-4 bg-white dark:bg-card-dark px-3 py-1.5 rounded-lg shadow-md text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
-                                Get Directions <span class="material-symbols-outlined text-sm">open_in_new</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Right Column: Timeline & Price (4 cols) -->
-<div class="lg:col-span-4 flex flex-col gap-6">
-<!-- Timeline Card -->
-<div class="bg-white dark:bg-card-dark rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100 dark:border-gray-800 p-6">
-<h4 class="font-semibold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-<span class="material-symbols-outlined text-slate-400">schedule</span>
-                            Itinerary
-                        </h4>
-<div class="grid grid-cols-[32px_1fr] gap-x-3">
-<!-- Pickup -->
-<div class="flex flex-col items-center">
-<div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-<span class="material-symbols-outlined text-sm">flight_land</span>
-</div>
-<div class="w-[2px] bg-gray-100 dark:bg-gray-700 h-full my-1"></div>
-</div>
-<div class="pb-8">
-<p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Pick-up</p>
-<p class="text-slate-900 dark:text-white font-medium text-sm">[PHP_DATA_PICKUP_DATE]</p>
-<p class="text-slate-900 dark:text-white font-bold text-lg mb-1">[PHP_DATA_PICKUP_TIME]</p>
-<p class="text-slate-500 dark:text-slate-400 text-sm">[PHP_DATA_PICKUP_LOC]</p>
-</div>
-<!-- Return -->
-<div class="flex flex-col items-center">
-<div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-300 flex items-center justify-center">
-<span class="material-symbols-outlined text-sm">flight_takeoff</span>
-</div>
-</div>
-<div>
-<p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">Return</p>
-<p class="text-slate-900 dark:text-white font-medium text-sm">[PHP_DATA_RETURN_DATE]</p>
-<p class="text-slate-900 dark:text-white font-bold text-lg mb-1">[PHP_DATA_RETURN_TIME]</p>
-<p class="text-slate-500 dark:text-slate-400 text-sm">[PHP_DATA_RETURN_LOC]</p>
-</div>
-</div>
-</div>
-<!-- Price Summary Card -->
-<div class="bg-white dark:bg-card-dark rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100 dark:border-gray-800 p-6">
-<h4 class="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-<span class="material-symbols-outlined text-slate-400">receipt_long</span>
-                            Payment Summary
-                        </h4>
-<div class="space-y-3">
-<div class="flex justify-between text-sm">
-<span class="text-slate-600 dark:text-slate-400">Car Rental Charge</span>
-<span class="text-slate-900 dark:text-white font-medium">$450.00</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-600 dark:text-slate-400">Protection Package</span>
-<span class="text-slate-900 dark:text-white font-medium">$85.00</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-600 dark:text-slate-400">Taxes &amp; Fees</span>
-<span class="text-slate-900 dark:text-white font-medium">$53.50</span>
-</div>
-<div class="h-px w-full bg-gray-100 dark:bg-gray-700 my-2"></div>
-<div class="flex justify-between items-center">
-<span class="text-slate-900 dark:text-white font-bold">Total Paid</span>
-<span class="text-2xl font-bold text-primary">[PHP_DATA_TOTAL_PRICE]</span>
-</div>
-<div class="flex items-center gap-2 bg-slate-50 dark:bg-gray-800/50 p-2 rounded-lg mt-2">
-<span class="material-symbols-outlined text-slate-400">credit_card</span>
-<span class="text-xs text-slate-500 dark:text-slate-400">Paid with Mastercard ending in 4242</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom Actions -->
-<div class="flex flex-col-reverse sm:flex-row items-center justify-center gap-4 mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
-<button class="w-full sm:w-auto px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-lg">edit_calendar</span>
-                    Manage Booking
-                </button>
-<button class="w-full sm:w-auto px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-lg">download</span>
-                    Download Receipt
-                </button>
-<button class="w-full sm:w-auto px-8 py-3 rounded-lg bg-primary text-white font-medium text-sm shadow-lg shadow-primary/30 hover:bg-blue-600 transition-all transform active:scale-95 flex items-center justify-center gap-2">
-                    Return to Home
-                    <span class="material-symbols-outlined text-lg">home</span>
-</button>
-</div>
-</div>
-</main>
-<!-- Footer Simple -->
-<footer class="bg-white dark:bg-card-dark py-6 border-t border-gray-100 dark:border-gray-800">
-<div class="max-w-7xl mx-auto px-4 text-center">
-<p class="text-xs text-slate-400 dark:text-slate-500">© 2023 LuxeDrive Inc. All rights reserved.</p>
-</div>
-</footer>
-</body></html>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col font-display transition-colors duration-200"
+  >
+    <!-- Navbar -->
+    <header
+      class="sticky top-0 z-50 bg-white/80 dark:bg-card-dark/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <div class="flex items-center gap-3">
+            <div class="text-primary">
+              <span class="material-symbols-outlined text-3xl"
+                >directions_car</span
+              >
+            </div>
+            <h2
+              class="text-slate-900 dark:text-white text-lg font-bold tracking-tight"
+            >
+              LuxeDrive
+            </h2>
+          </div>
+          <!-- Nav Links (Desktop) -->
+          <div class="hidden md:flex items-center gap-8">
+            <a
+              class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
+              href="#"
+              >Fleet</a
+            >
+            <a
+              class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
+              href="#"
+              >Locations</a
+            >
+            <a
+              class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
+              href="#"
+              >Services</a
+            >
+            <a
+              class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
+              href="#"
+              >Support</a
+            >
+          </div>
+          <!-- User Actions -->
+          <div class="flex items-center gap-4">
+            <button
+              class="flex items-center justify-center p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+            </button>
+            <div
+              class="h-9 w-9 rounded-full bg-cover bg-center border-2 border-white dark:border-gray-700 shadow-sm"
+              data-alt="User profile picture placeholder"
+              style="
+                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD6rvdEo3_taFSkO-e4YyObx9cGAaA6OyKhgiALDJB0vehPza1DHpKz9Jttb7oR4EGmqasU04mRbPTo6iGU05qKlJiLLq0Qu7evClpUqrSVYemSnnDg1DcVc-J8qBYDMk2wX0YDy03GM8BVF97czPlYjf75N0JCrnU4nAS0njuemvmQKrSE5g57qjtR4JcNhAZ_MPT2Q8agz9zF6KoRB8GbTSPfOQ3sCKdh9gtFwO52w_f4mMIy5d5nVK494GPdu5byWdr6DSke8g');
+              "
+            ></div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content -->
+    <main
+      class="flex-grow flex flex-col items-center justify-start pt-10 pb-20 px-4 md:px-8"
+    >
+      <div class="w-full max-w-5xl space-y-8">
+        <!-- Success Hero -->
+        <div class="text-center space-y-4 animate-fade-in-up">
+          <div
+            class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 mb-2"
+          >
+            <span class="material-symbols-outlined text-5xl">check_circle</span>
+          </div>
+          <h1
+            class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white"
+          >
+            Booking Confirmed
+          </h1>
+          <p class="text-slate-500 dark:text-slate-400 max-w-lg mx-auto">
+            Your reservation has been successfully processed. A confirmation
+            email has been sent to
+            <span class="text-slate-900 dark:text-white font-medium"
+              >[PHP_DATA_USER_EMAIL]</span
+            >.
+          </p>
+          <div class="pt-2">
+            <span
+              class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary font-medium text-sm border border-primary/20"
+            >
+              <span>Booking Reference:</span>
+              <span class="font-bold tracking-wide">#[PHP_DATA_REF_ID]</span>
+              <span
+                class="material-symbols-outlined text-base cursor-pointer hover:text-primary/80"
+                title="Copy Reference"
+                >content_copy</span
+              >
+            </span>
+          </div>
+        </div>
+        <!-- Booking Details Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-10">
+          <!-- Left Column: Car & Map (8 cols) -->
+          <div class="lg:col-span-8 flex flex-col gap-6">
+            <!-- Vehicle Card -->
+            <div
+              class="bg-white dark:bg-card-dark rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden border border-gray-100 dark:border-gray-800 p-6"
+            >
+              <div class="flex flex-col md:flex-row gap-6 items-center">
+                <!-- Car Image -->
+                <div
+                  class="w-full md:w-1/2 aspect-video rounded-lg bg-gray-50 dark:bg-gray-800 bg-center bg-contain bg-no-repeat"
+                  data-alt="Side view of a luxury SUV car model"
+                  style="
+                    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBkqk35-9HisBwMYW_bStz2OHT3UXmwjBP9kiCK8oRobsRpwVcgPXiGXg-fRh8WS0gEIXFhMcqNz6LA4gTbCF7KKdl1Z-tGB3trUVwIuRAx2jwHTGZlmV3pyOFJFqjrgi-ZM4GJ2rpfzfH_p3c-yth-HUmWAZdpUNheB50Imb_uc6rb1FEhKuZm-WzvizZKb1oAO1CQdf3Wb_iir2bpb1Mn4bDTQF_saTD6ITzxi9ec9zwS4mUAiiPrL3SdzhmeLz7iO-oezI8Mlg');
+                  "
+                ></div>
+                <!-- Car Info -->
+                <div class="flex-1 flex flex-col justify-center w-full">
+                  <div class="flex justify-between items-start mb-2">
+                    <div>
+                      <p
+                        class="text-xs font-semibold uppercase tracking-wider text-primary mb-1"
+                      >
+                        Vehicle Category
+                      </p>
+                      <h3
+                        class="text-2xl font-bold text-slate-900 dark:text-white mb-1"
+                      >
+                        [PHP_DATA_CAR_MODEL]
+                      </h3>
+                      <p class="text-slate-500 dark:text-slate-400 text-sm">
+                        [PHP_DATA_CAR_CLASS] - Luxury Series
+                      </p>
+                    </div>
+                    <div class="hidden md:block">
+                      <span
+                        class="material-symbols-outlined text-slate-300 dark:text-slate-600 text-4xl"
+                        >local_taxi</span
+                      >
+                    </div>
+                  </div>
+                  <div
+                    class="h-px w-full bg-gray-100 dark:bg-gray-700 my-4"
+                  ></div>
+                  <div class="grid grid-cols-3 gap-4">
+                    <div class="flex flex-col gap-1">
+                      <div
+                        class="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 text-xs"
+                      >
+                        <span class="material-symbols-outlined text-sm"
+                          >settings</span
+                        >
+                        Transmission
+                      </div>
+                      <p
+                        class="text-sm font-medium text-slate-700 dark:text-slate-200"
+                      >
+                        Automatic
+                      </p>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <div
+                        class="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 text-xs"
+                      >
+                        <span class="material-symbols-outlined text-sm"
+                          >person</span
+                        >
+                        Passengers
+                      </div>
+                      <p
+                        class="text-sm font-medium text-slate-700 dark:text-slate-200"
+                      >
+                        5 Adults
+                      </p>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <div
+                        class="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 text-xs"
+                      >
+                        <span class="material-symbols-outlined text-sm"
+                          >luggage</span
+                        >
+                        Luggage
+                      </div>
+                      <p
+                        class="text-sm font-medium text-slate-700 dark:text-slate-200"
+                      >
+                        3 Bags
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-6">
+                    <button
+                      class="text-sm font-semibold text-primary hover:text-blue-700 dark:hover:text-blue-400 flex items-center gap-1 group w-fit"
+                    >
+                      View Vehicle Specs
+                      <span
+                        class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform"
+                        >arrow_forward</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Location Preview Card -->
+            <div
+              class="bg-white dark:bg-card-dark rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden border border-gray-100 dark:border-gray-800"
+            >
+              <div
+                class="p-4 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-800/50"
+              >
+                <h4
+                  class="font-semibold text-slate-900 dark:text-white flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-primary"
+                    >map</span
+                  >
+                  Pickup Location
+                </h4>
+                <span class="text-xs text-slate-500"
+                  >[PHP_DATA_PICKUP_LOC]</span
+                >
+              </div>
+              <div
+                class="h-48 w-full bg-cover bg-center relative"
+                data-alt="Map view showing the pickup location pin"
+                data-location="Los Angeles International Airport"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDcc1SL8Z6CgSZeY3ZDtetooyZwGLU_jREMb__DmzDeTre5f9WWYuihodP1qfnAsySHxol4LxLne2Tf-f0iwcu90o0fQGI4jp8KQ_3-c1jk71T_Zbuqw6Dcj7btS0qwN5yGLYK5SqZjjXmLeF_QLC6YGS9bJ-kCmM2cAu0ACRXhB15WCAbrLlunjFp-LbEWQXhCG5RBdklV_PWOHaMdwvjmfP7BvX5YNyWmoFY-mIyPn3H2sRpikbkxnRW2UXC77U0GSdbj9qTA-w');
+                "
+              >
+                <div class="absolute inset-0 bg-black/5 dark:bg-black/20"></div>
+                <div
+                  class="absolute bottom-4 right-4 bg-white dark:bg-card-dark px-3 py-1.5 rounded-lg shadow-md text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700"
+                >
+                  Get Directions
+                  <span class="material-symbols-outlined text-sm"
+                    >open_in_new</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Right Column: Timeline & Price (4 cols) -->
+          <div class="lg:col-span-4 flex flex-col gap-6">
+            <!-- Timeline Card -->
+            <div
+              class="bg-white dark:bg-card-dark rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100 dark:border-gray-800 p-6"
+            >
+              <h4
+                class="font-semibold text-slate-900 dark:text-white mb-6 flex items-center gap-2"
+              >
+                <span class="material-symbols-outlined text-slate-400"
+                  >schedule</span
+                >
+                Itinerary
+              </h4>
+              <div class="grid grid-cols-[32px_1fr] gap-x-3">
+                <!-- Pickup -->
+                <div class="flex flex-col items-center">
+                  <div
+                    class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center"
+                  >
+                    <span class="material-symbols-outlined text-sm"
+                      >flight_land</span
+                    >
+                  </div>
+                  <div
+                    class="w-[2px] bg-gray-100 dark:bg-gray-700 h-full my-1"
+                  ></div>
+                </div>
+                <div class="pb-8">
+                  <p
+                    class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1"
+                  >
+                    Pick-up
+                  </p>
+                  <p class="text-slate-900 dark:text-white font-medium text-sm">
+                    [PHP_DATA_PICKUP_DATE]
+                  </p>
+                  <p
+                    class="text-slate-900 dark:text-white font-bold text-lg mb-1"
+                  >
+                    [PHP_DATA_PICKUP_TIME]
+                  </p>
+                  <p class="text-slate-500 dark:text-slate-400 text-sm">
+                    [PHP_DATA_PICKUP_LOC]
+                  </p>
+                </div>
+                <!-- Return -->
+                <div class="flex flex-col items-center">
+                  <div
+                    class="w-8 h-8 rounded-full bg-slate-100 dark:bg-gray-700 text-slate-600 dark:text-slate-300 flex items-center justify-center"
+                  >
+                    <span class="material-symbols-outlined text-sm"
+                      >flight_takeoff</span
+                    >
+                  </div>
+                </div>
+                <div>
+                  <p
+                    class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1"
+                  >
+                    Return
+                  </p>
+                  <p class="text-slate-900 dark:text-white font-medium text-sm">
+                    [PHP_DATA_RETURN_DATE]
+                  </p>
+                  <p
+                    class="text-slate-900 dark:text-white font-bold text-lg mb-1"
+                  >
+                    [PHP_DATA_RETURN_TIME]
+                  </p>
+                  <p class="text-slate-500 dark:text-slate-400 text-sm">
+                    [PHP_DATA_RETURN_LOC]
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Price Summary Card -->
+            <div
+              class="bg-white dark:bg-card-dark rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-gray-100 dark:border-gray-800 p-6"
+            >
+              <h4
+                class="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2"
+              >
+                <span class="material-symbols-outlined text-slate-400"
+                  >receipt_long</span
+                >
+                Payment Summary
+              </h4>
+              <div class="space-y-3">
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-600 dark:text-slate-400"
+                    >Car Rental Charge</span
+                  >
+                  <span class="text-slate-900 dark:text-white font-medium"
+                    >$450.00</span
+                  >
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-600 dark:text-slate-400"
+                    >Protection Package</span
+                  >
+                  <span class="text-slate-900 dark:text-white font-medium"
+                    >$85.00</span
+                  >
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-600 dark:text-slate-400"
+                    >Taxes &amp; Fees</span
+                  >
+                  <span class="text-slate-900 dark:text-white font-medium"
+                    >$53.50</span
+                  >
+                </div>
+                <div
+                  class="h-px w-full bg-gray-100 dark:bg-gray-700 my-2"
+                ></div>
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-900 dark:text-white font-bold"
+                    >Total Paid</span
+                  >
+                  <span class="text-2xl font-bold text-primary"
+                    >[PHP_DATA_TOTAL_PRICE]</span
+                  >
+                </div>
+                <div
+                  class="flex items-center gap-2 bg-slate-50 dark:bg-gray-800/50 p-2 rounded-lg mt-2"
+                >
+                  <span class="material-symbols-outlined text-slate-400"
+                    >credit_card</span
+                  >
+                  <span class="text-xs text-slate-500 dark:text-slate-400"
+                    >Paid with Mastercard ending in 4242</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom Actions -->
+        <div
+          class="flex flex-col-reverse sm:flex-row items-center justify-center gap-4 mt-8 pt-6 border-t border-gray-200 dark:border-gray-800"
+        >
+          <button
+            class="w-full sm:w-auto px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2"
+          >
+            <span class="material-symbols-outlined text-lg">edit_calendar</span>
+            Manage Booking
+          </button>
+          <button
+            class="w-full sm:w-auto px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-600 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2"
+          >
+            <span class="material-symbols-outlined text-lg">download</span>
+            Download Receipt
+          </button>
+          <button
+            class="w-full sm:w-auto px-8 py-3 rounded-lg bg-primary text-white font-medium text-sm shadow-lg shadow-primary/30 hover:bg-blue-600 transition-all transform active:scale-95 flex items-center justify-center gap-2"
+          >
+            Return to Home
+            <span class="material-symbols-outlined text-lg">home</span>
+          </button>
+        </div>
+      </div>
+    </main>
+    <!-- Footer Simple -->
+    <footer
+      class="bg-white dark:bg-card-dark py-6 border-t border-gray-100 dark:border-gray-800"
+    >
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-xs text-slate-400 dark:text-slate-500">
+          © 2023 LuxeDrive Inc. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -78,20 +78,21 @@
             <div class="flex items-center gap-8">
                 <a href="index.php?action=carList" class="flex items-center gap-3 group">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-purple-600 text-white flex items-center justify-center shadow-lg group-hover:shadow-primary/50 transition-all duration-300">
-                        <span class="material-symbols-rounded text-2xl">directions_car</span>
+                        <span class="material-symbols-rounded text-2xl"></span>
                     </div>
                     <h2 class="text-xl font-bold tracking-tight">Ma Bagnole</h2>
                 </a>
                 <div class="hidden lg:flex items-center gap-8">
-                    <a class="text-sm font-medium text-text-muted dark:text-gray-400 hover:text-primary transition-colors" href="index.php?action=carList">Véhicules</a>
-                    <a class="text-sm font-bold text-primary" href="index.php?action=reservationUser">Mes Réservations</a>
+                    <a href="index.php?action=carList" class="text-sm font-medium text-text-muted dark:text-gray-400 hover:text-primary transition-colors ">Véhicules</a>
+                    <a class="text-sm font-bold text-primary " href="">Mes Réservations</a>
+                    <a class="text-sm font-medium text-text-muted dark:text-gray-400 hover:text-primary transition-colors " href="index.php?action=themeClient">Blog</a>
                 </div>
             </div>
 
             <div class="flex items-center gap-4">
                 <button onclick="toggleTheme()" class="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                    <span class="material-symbols-rounded dark:hidden">dark_mode</span>
-                    <span class="material-symbols-rounded hidden dark:block">light_mode</span>
+                    <span class="material-symbols-rounded  dark:hidden">dark_mode</span>
+                    <span id="modet" class="material-symbols-rounded  hidden ">light</span>
                 </button>
 
                 <div class="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
@@ -152,12 +153,14 @@
 
                             <?php foreach ($mesReservations as $res): ?>
                                 <tr class="group hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
-
+                                <?= $res['idVoiture'] ?>
+                          
                                     <td class="p-6">
                                         <div class="flex items-center gap-4">
                                             <div class="w-16 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 overflow-hidden">
                                                 <img src="<?= htmlspecialchars($res['image']) ?>" class="w-full h-full object-cover" alt="Car">
-                                            </div>
+                                            </div>      <?= $res['idVoiture'] ?>
+                                
                                             <div>
                                                 <p class="font-bold text-text-main dark:text-white text-sm">
                                                     <?= htmlspecialchars($res['marque'] . ' ' . $res['modele']) ?>
@@ -214,9 +217,12 @@
                                     </td>
 
                                     <td class="p-6 text-right">
-                                        <?php if ($status === 'terminee' || $status === 'terminée'): ?>
+                                        <?php if ($status === 'terminee' || $status === 'terminée'):
+                                            $idRes = $res['idReservation'];
+                                            $idVoit =$res['idVoiture'] ;
+                                            ?>
                                             <button
-                                                onclick="openAvisModal(<?php echo $res['idReservation']; ?>)"
+                                                onclick="openAvisModal(<?= $idRes ?>,<?= $idVoit ?>)"
                                                 class="inline-flex items-center gap-2 px-4 py-2 bg-text-main dark:bg-white text-white dark:text-text-main rounded-xl text-xs font-bold hover:opacity-90 transition-all">
                                                 <span class="material-symbols-rounded text-[16px]">star</span> Laisser un avis
                                             </button>
@@ -252,6 +258,7 @@
 
             <form id="avisForm" action="index.php?action=addAvis" method="POST" onsubmit="submitAvis(event)">
                 <input type="hidden" name="idReservation" id="modalIdReservation">
+                <input type="hidden" name="idVoiture" id="modalIdVoiture">
                 <input type="hidden" name="note" id="noteValue" value="0">
                 <input type="hidden" name="idUser" id="" value="<?=    $_SESSION['userId']  ?>">
 
@@ -303,35 +310,45 @@
     <script>
         const html = document.documentElement;
 
+        const ligthMode = document.getElementById('ligthMode');
+
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             html.classList.add('dark');
             html.classList.remove('light');
-        } else {
+        } 
+        else{
             html.classList.remove('dark');
             html.classList.add('light');
         }
 
+        const modet = document.getElementById('modet');
         function toggleTheme() {
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
                 html.classList.add('light');
                 localStorage.theme = 'light';
-            } else {
+                modet.classList.add('hidden');
+            } else 
+            {
                 html.classList.add('dark');
                 html.classList.remove('light');
                 localStorage.theme = 'dark';
+                modet.classList.remove('hidden');
+
+
             }
         }
+     
 
 
   
-        function openAvisModal(idReservation) {
+        function openAvisModal(idReservation,idVoiture) {
             const modal = document.getElementById('avisModal');
             const inputId = document.getElementById('modalIdReservation');
-
+           const inputIdVoiture = document.getElementById('modalIdVoiture')
            
             inputId.value = idReservation;
-
+            inputIdVoiture.value = idVoiture;
             document.getElementById('avisForm').reset();
             setRating(0); 
 
@@ -343,7 +360,6 @@
             }, 10);
         }
 
-    
         function closeAvisModal() {
             const modal = document.getElementById('avisModal');
 
