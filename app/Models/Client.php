@@ -92,28 +92,13 @@ class Client extends User
         }
     }
 
-   
-    public static function activateUser(int $id): bool
-    {
-        $conn = Database::getInstance()->getConnection();
-     
-        $sql = "UPDATE users SET status = '1' WHERE idUser = :id";
-        
-        try {
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-            return $stmt->execute();
-        } catch (PDOException $e) { 
-            Logger::log($e->getMessage());
-            return false;
-        }
-    }
 
-    public static function blockUser(int $id): bool
+    public static function activateClient(int $id): bool
     {
         $conn = Database::getInstance()->getConnection();
-        $sql = "UPDATE users SET status = '0' WHERE idUser = :id";
-        
+
+        $sql = "UPDATE users SET status = '1' WHERE idUser = :id";
+
         try {
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(":id", $id, PDO::PARAM_INT);
@@ -121,6 +106,37 @@ class Client extends User
         } catch (PDOException $e) {
             Logger::log($e->getMessage());
             return false;
+        }
+    }
+
+    public static function blockClient(int $id): bool
+    {
+        $conn = Database::getInstance()->getConnection();
+        $sql = "UPDATE users SET status = '0' WHERE idUser = :id";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            Logger::log($e->getMessage());
+            return false;
+        }
+    }
+
+    public static function getCountUserActif() : int 
+    {
+        $conn = Database::getInstance()->getConnection();
+        $sql = "SELECT count(*) as nombre FROM users WHERE status = 1";
+
+        try {
+            $stmt = $conn->query($sql);
+          $count =   $stmt->fetchColumn();
+          return $count;
+
+        } catch (Exception $e) {
+            Logger::log($e->getMessage());
+            return 0;
         }
     }
 }
