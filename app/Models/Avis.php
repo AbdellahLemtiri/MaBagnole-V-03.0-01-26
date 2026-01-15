@@ -139,12 +139,12 @@ class Avis
     public function softdelet(): bool
     {
         $conn = $this->db->getConnection();
-        $sql = "UPDATE avis set sataus = 0 Where idAvis = :id";
+        $sql = "UPDATE avis set status = 0 Where idAvis = :id";
 
         try {
 
             $stmt = $conn->prepare($sql);
-            $stmt->bindParm(':id', $this->idAvis);
+            $stmt->bindValue(':id', $this->idAvis);
             $stmt->execute();
             return true;
         } catch (Exception $e) {

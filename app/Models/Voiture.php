@@ -31,7 +31,7 @@ class Voiture
     {
         return $this->idV;
     }
-    public function setIdV(int $idV)
+    public function setIdV(int $idV): void
     {
         $this->idV = $idV;
     }
@@ -40,7 +40,7 @@ class Voiture
     {
         return $this->marque;
     }
-    public function setMarqueV(string $marque)
+    public function setMarqueV(string $marque): void
     {
         $this->marque = $marque;
     }
@@ -49,7 +49,7 @@ class Voiture
     {
         return $this->modele;
     }
-    public function setModeleV(string $modele)
+    public function setModeleV(string $modele): void
     {
         $this->modele = $modele;
     }
@@ -58,7 +58,7 @@ class Voiture
     {
         return $this->matricule;
     }
-    public function setMatriculeV(string $matricule)
+    public function setMatriculeV(string $matricule): void
     {
         $this->matricule = $matricule;
     }
@@ -67,7 +67,7 @@ class Voiture
     {
         return $this->prixJr;
     }
-    public function setPrixJourV(float $prix)
+    public function setPrixJourV(float $prix): void
     {
         if ($prix > 0) $this->prixJr = $prix;
     }
@@ -76,7 +76,7 @@ class Voiture
     {
         return $this->image;
     }
-    public function setImageUrlV(string $url)
+    public function setImageUrlV(string $url): void
     {
         $this->image = $url;
     }
@@ -85,7 +85,7 @@ class Voiture
     {
         return $this->boite;
     }
-    public function setBoiteV(string $boite)
+    public function setBoiteV(string $boite): void
     {
         $this->boite = $boite;
     }
@@ -94,7 +94,7 @@ class Voiture
     {
         return $this->carburant;
     }
-    public function setCarburantV(string $carburant)
+    public function setCarburantV(string $carburant): void
     {
         $this->carburant = $carburant;
     }
@@ -103,7 +103,7 @@ class Voiture
     {
         return $this->places;
     }
-    public function setPlacesV(int $places)
+    public function setPlacesV(int $places): void
     {
         $this->places = $places;
     }
@@ -112,7 +112,7 @@ class Voiture
     {
         return $this->idC;
     }
-    public function setIdCV(int $idC)
+    public function setIdCV(int $idC): void
     {
         $this->idC = $idC;
     }
@@ -121,7 +121,7 @@ class Voiture
     {
         return $this->status;
     }
-    public function setStatusV(int $status)
+    public function setStatusV(int $status): void
     {
         $this->status = $status;
     }
@@ -131,12 +131,12 @@ class Voiture
         return $this->categoryName;
     }
 
-    public function setCategoryName(string $name)
+    public function setCategoryName(string $name): void
     {
         $this->categoryName = $name;
     }
 
-
+    
     public function __toString(): string
     {
         return "VOITURE idVoiture  =$this->idV, marqueVehicule=$this->marque, modeleVehicule=$this->modele, places=$this->places,statusVehicule=$this->status, imageVehicule=$this->image, typeBoiteVehicule=$this->boite, typeCarburantVehicule=$this->carburant
@@ -214,47 +214,46 @@ class Voiture
         }
     }
 
-    public static function getAllVoitures(): array
-    {
-        try {
+  public static function getAllVoitures(): array
+{
+    try {
+     
+        $sql = "SELECT * FROM ListeVehicules where status = '1'";
 
-            $sql = "SELECT * FROM ListeVehicules where status = 1";
+        $stmt = Database::getInstance()->getConnection()->prepare($sql);
+      
+        $stmt->execute(); 
 
-            $stmt = Database::getInstance()->getConnection()->prepare($sql);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $stmt->execute();
+        $voitures = [];
+        foreach ($result as $row) {
+            $v = new Voiture();
+            
+            $v->setIdV($row['idV'] ); 
+            $v->setMarqueV($row['marque']);
+            $v->setModeleV($row['modele']);
+            $v->setMatriculeV($row['matricule']);
+            $v->setPrixJourV($row['prixJr']); 
+            $v->setImageUrlV($row['image'] );
+            $v->setBoiteV($row['boite']);
+            $v->setCarburantV($row['carburant']);
+            $v->setPlacesV($row['places']);
+            $v->setIdCV($row['idC'] );
+            $v->setStatusV($row['status']);
 
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $voitures = [];
-            foreach ($result as $row) {
-                $v = new Voiture();
-
-
-
-                $v->setIdV($row['idV']);
-                $v->setMarqueV($row['marque']);
-                $v->setModeleV($row['modele']);
-                $v->setMatriculeV($row['matricule']);
-                $v->setPrixJourV($row['prixJr']);
-                $v->setImageUrlV($row['image']);
-                $v->setBoiteV($row['boite']);
-                $v->setCarburantV($row['carburant']);
-                $v->setPlacesV($row['places']);
-                $v->setIdCV($row['idC']);
-                $v->setStatusV($row['status']);
-
-
+         
                 $v->setCategoryName($row['category_name']);
+          
 
-
-                $voitures[] = $v;
-            }
-            return $voitures;
-        } catch (Exception $e) {
-            Logger::log($e->getMessage());
-            return [];
+            $voitures[] = $v;
         }
+        return $voitures;
+    } catch (Exception $e) {
+        Logger::log($e->getMessage()); 
+        return [];
     }
+}
 
     public static function getVoitureById($id)
     {

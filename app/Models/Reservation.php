@@ -67,7 +67,10 @@ class Reservation
     {
         return $this->idReservation;
     }
-
+    public function setIdReservation(int $idReservation)
+    {
+        return $this->idReservation = $idReservation;
+    }
     public function getDateDebut()
     {
         return $this->dateDebut;
@@ -147,31 +150,58 @@ class Reservation
 
     public function getReservationsByUser($userId)
     {
+        // 1. La requête SQL (Zedt idVoiture bach nasta3mloha)
         $sql = "SELECT r.*, v.marque, v.modele, v.image 
-                FROM reservations r
-                JOIN voitures v ON r.idVoiture = v.idV
-                WHERE r.idUser = :idUser
-                ORDER BY r.dateDebut DESC";
+            FROM reservations r
+            JOIN voitures v ON r.idVoiture = v.idV
+            WHERE r.idUser = :idUser
+            ORDER BY r.idReservation DESC"; // Men l'a7san order by ID
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([':idUser' => $userId]);
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([':idUser' => $userId]);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // Kanjibo data 3adia (Tableau associatif)
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $reservationsObjects = [];
+
+            foreach ($rows as $row) {
+
+                $reservation = new Reservation();
+                $reservation->setIdReservation($row['idReservation']);
+                $reservation->setDateDebut($row['dateDebut']);
+                $reservation->setDateFin($row['dateFin']);
+                $reservation->setLieuChange($row['lieuChange']);
+                $reservation->setStatus($row['status']);
+                $reservation->setTotalPrix($row['totalPrix']);
+                $reservation->setIdVoiture($row['idVoiture']);
+                $reservation->setIdUser($row['idUser']);
+
+
+                $voiture = new Voiture();
+
+                $voiture->setMarqueV($row['marque']);
+                $voiture->setModeleV($row['modele']);
+                $voiture->setImageUrlV($row['image']);
+
+
+                $reservation->setVoiture($voiture);
+
+
+                $reservationsObjects[] = $reservation;
+            }
+
+            return $reservationsObjects;
+        } catch (PDOException $e) {
+
+            error_log("Erreur dans getReservationsByUser: " . $e->getMessage());
+            return [];
+        }
     }
 
 
-    public static function getAllReservations()
-    {
-        $db = Database::getInstance()->getConnection();
-        $sql = "SELECT r.*, v.marque, v.modele, u.nom, u.prenom 
-                FROM reservations r
-                JOIN voitures v ON r.idVoiture = v.idV
-                JOIN users u ON r.idUser = u.idUser
-                ORDER BY r.idReservation DESC";
 
-        $stmt = $db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
 
     public function isVoitureAvailable($voitureId, $start, $end)
@@ -193,7 +223,7 @@ class Reservation
         return $result['count'] == 0;
     }
 
-    public function getAllReservationsBY()
+    public function getAllReservation()
     {
         $db = Database::getInstance()->getConnection();
         $sql = "SELECT r.*, v.marque, v.modele,v.image,u.email, u.name, u.LastName 
@@ -219,24 +249,54 @@ class Reservation
                 $res->setVoiture($voiture);
             }
             return $resultat;
-        } 
-        catch (Exception $e) {
+        } catch (Exception $e) {
             Logger::log($e->getMessage());
             return [];
         }
     }
-    public function updateStatus($id,$status) : bool
+    public function updateStatus($id, $status): bool
     {
         $db = Database::getInstance()->getConnection();
 
         $sql = "UPDATE reservations set status = :status WHERE idReservation = :id";
         try {
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':status',$status );
-        $stmt->bindValue(':id',$id );
-        $stmt->execute();
-        return true;
-        }catch(Exception $e){
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':status', $status);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            return true;
+        } catch (Exception $e) {
+            Logger::log($e->getMessage());
+            return false;
+        }
+    }
+
+    static function getTotalRevenu(): float
+    {
+        $sql = "SELECT sum(totalPrix) from reservations where status != 'annulee'";
+        try {
+            $db = Database::getInstance()->getConnection();
+            $stmt = $db->query($sql);
+            $revenu = $stmt->fetchColumn();
+            return $revenu;
+        } catch (Exception $e) {
+            Logger::log($e->getMessage());
+            return 0;
+        }
+    }
+
+    public function annulerReservation($idReservation):bool
+    {
+
+        $sql = "UPDATE reservations  set status = 'annulee'  WHERE idReservation = :idRes ";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ':idRes' => $idReservation
+            ]);
+         return true;
+        } catch (PDOException $e) {
             Logger::log($e->getMessage());
             return false;
         }

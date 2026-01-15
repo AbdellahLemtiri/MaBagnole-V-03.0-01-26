@@ -24,8 +24,7 @@ class CommentArticle
     {
        $this->db = Database::getInstance();
     }
-
-    // Getters & Setters
+ 
     public function getIdComment() { return $this->idComment; }
     public function setIdComment($id) { $this->idComment = $id; }
 
@@ -47,10 +46,10 @@ class CommentArticle
     public function getAuthor(): User { return $this->author; }
     public function setAuthor(User $user) { $this->author = $user; }
  
-    public function getCommentsByArticle(): array
+   public function getCommentsByArticle($idArticle): array
     {
         $conn = $this->db->getConnection();
-       
+        
         $sql = "SELECT c.*, u.name, u.LastName 
                 FROM comments c 
                 JOIN users u ON c.idUser = u.idUser
@@ -59,7 +58,9 @@ class CommentArticle
 
         try {
             $stmt = $conn->prepare($sql);
-            $stmt->execute([$this->idArticle]);
+           
+            $stmt->execute([$idArticle]);
+            
             $comments = [];
             $results = $stmt->fetchAll(PDO::FETCH_OBJ);
             
@@ -87,10 +88,10 @@ class CommentArticle
         }
     }
  
-    public function addComment($idArticle, $idUser, $content)
+    public function addComment($idArticle, $idUser, $content):bool
     {
         $conn = $this->db->getConnection();
-        $sql = "INSERT INTO comments (idArticle, idUser, contenu, dateCommentaire, status) VALUES (?, ?, ?, NOW(), 'active')";
+        $sql = "INSERT INTO comments (idArticle, idUser, contenu) VALUES (?, ?, ?)";
         try {
             $stmt = $conn->prepare($sql);
             return $stmt->execute([$idArticle, $idUser, $content]);
@@ -100,7 +101,7 @@ class CommentArticle
         }
     }
  
-    public function updateComment($idComment, $content, $idUser)
+    public function updateComment($idComment, $content, $idUser):bool
     {
         $conn = $this->db->getConnection();
        
@@ -115,10 +116,10 @@ class CommentArticle
     }
 
  
-    public function deleteComment($idComment, $idUser)
+    public function deleteComment($idComment, $idUser):bool
     {
         $conn = $this->db->getConnection();
-        $sql = "DELETE FROM comments WHERE idComment = ? AND idUser = ?";
+        $sql = "UPDATE  comments  set status = 'hidden' WHERE idComment = ? AND idUser = ?";
         try {
             $stmt = $conn->prepare($sql);
             return $stmt->execute([$idComment, $idUser]);

@@ -138,9 +138,10 @@ class Article
         $this->contenu = $contenu;
     }
 
-    public function getImageArticle(): string
+     public function getImageArticle(): string
     {
-        return $this->imageArticle;
+    
+        return !empty($this->imageArticle) ? $this->imageArticle : 'https://images.unsplash.com/photo-1593055498218-bb5b6f3c1b18';
     }
     public function setImageArticle(string $img): void
     {
@@ -296,23 +297,21 @@ class Article
             JOIN themes t ON a.idTheme = t.idTheme 
             JOIN users u ON a.idUser = u.idUser 
             WHERE t.idTheme = :idtheme 
-            LIMIT :limitt OFFSET :offset"; // Beddelt l-tartib (Standard)
+            LIMIT :limitt OFFSET :offset";
 
         try {
             $stmt = $conn->prepare($sql);
 
-            // Hna l-sir: Khdem b bindValue bach t-specifi raqam (PARAM_INT)
             $stmt->bindValue(':idtheme', (int)$this->idTheme, PDO::PARAM_INT);
             $stmt->bindValue(':limitt', (int)$limit, PDO::PARAM_INT);
             $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
 
             $stmt->execute();
 
-            // PDO::FETCH_CLASS kat-fiyyet l-data l-objet
             $articles = $stmt->fetchAll(PDO::FETCH_CLASS, self::class);
 
             foreach ($articles as $art) {
-                // Khidma d les objets (Theme & Client) rak dertiha mzyan
+
                 $themeObj = new Theme();
                 $themeObj->setIdTheme($art->idTheme);
                 $themeObj->setNomTheme($art->nomTheme);
@@ -375,44 +374,69 @@ class Article
             return false;
         }
     }
+ 
     public function getThreeLastArticles(): array
     {
-        $coon = $this->db->getConnection();
-        $sql = "SELECT * FROM articles order by `idArticle` ASC limit 3";
+        $conn = $this->db->getConnection();
+        $sql = "SELECT a.*, t.nomTheme, t.iconeTheme, u.name, u.LastName, u.email 
+            FROM articles a 
+            JOIN themes t ON a.idTheme = t.idTheme 
+            JOIN users u ON a.idUser = u.idUser 
+            order by a.idArticle DESC limit 3
+           ";
+
         try {
-            $stmt =  $coon->query($sql);
-            $res = $stmt->fetchAll(PDO::FETCH_CLASS, Article::class);
-            return $res;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+
+            $articles = $stmt->fetchAll(PDO::FETCH_CLASS, self::class);
+
+            foreach ($articles as $art) {
+
+                $themeObj = new Theme();
+                $themeObj->setIdTheme($art->idTheme);
+                $themeObj->setNomTheme($art->nomTheme);
+                $themeObj->seticoneTheme($art->iconeTheme);
+                $art->theme = $themeObj;
+
+                $clientObj = new Client();
+                $clientObj->setName($art->name);
+                $clientObj->setLastName($art->LastName);
+                if (isset($art->email)) {
+                    $clientObj->setEmail($art->email);
+                }
+                $art->author = $clientObj;
+            }
+            return $articles;
         } catch (Exception $e) {
-            Logger::log($e->getMessage());
+            Logger::log("Erreur dans getAllPublishedByTheme : " . $e->getMessage());
             return [];
         }
     }
-
-    public function getCountArticlesPublished():int 
+    public function getCountArticlesPublished(): int
     {
-        $conn=$this->db->getConnection();
+        $conn = $this->db->getConnection();
         $sql = "SELECT count(*) as nombre FROM articles WHERE status = 'published' ";
-        try{
-           $stmt = $conn->query($sql);
-          $count = $stmt->fetchColumn();
-          return $count;
-        }catch(Exception $e){
+        try {
+            $stmt = $conn->query($sql);
+            $count = $stmt->fetchColumn();
+            return $count;
+        } catch (Exception $e) {
             Logger::log($e->getMessage());
             return 0;
         }
     }
 
 
-      public function getCountArticlesPending():int 
+    public function getCountArticlesPending(): int
     {
-        $conn=$this->db->getConnection();
+        $conn = $this->db->getConnection();
         $sql = "SELECT count(*) as nombre FROM articles WHERE status = 'pending' ";
-        try{
-           $stmt = $conn->query($sql);
-          $count = $stmt->fetchColumn();
-          return $count;
-        }catch(Exception $e){
+        try {
+            $stmt = $conn->query($sql);
+            $count = $stmt->fetchColumn();
+            return $count;
+        } catch (Exception $e) {
             Logger::log($e->getMessage());
             return 0;
         }
