@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/App/Autoloader.php';
+require_once __DIR__ . '../App/Autoloader.php';
 App\Autoloader::register();
 
 use public\api\listCarClient;
