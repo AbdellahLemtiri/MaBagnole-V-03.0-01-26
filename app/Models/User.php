@@ -164,13 +164,29 @@ class User
                 $_SESSION['userRole'] = $userData['role'];
 
                 return $userData['role'];
-            }
-            else {
+            } else {
                 return "mot_de_passe_incorrect";
             }
         } catch (Exception $e) {
             Logger::log($e->getMessage());
             return "erreur_technique";
+        }
+    }
+
+
+    static function logout(): bool
+    {
+        try {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            $_SESSION = [];
+            session_destroy();
+            return true;
+        } catch (Exception $e) {
+            Logger::log($e->getMessage());
+            return false;
         }
     }
 }
